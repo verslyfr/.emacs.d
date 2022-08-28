@@ -1,0 +1,12 @@
+#+title: Emacs Configuration README
+#+author: FR Lyvers
+#+date: 2022-08-28
+
+This repository contains my configuration for emacs. My approach for managing the configuration has continued to evolve. In the latest incarnation, it is just one large ~init.el~ file.
+
+I am using the default package manager in emacs. I may need to change this decision at some point.
+
+To install this use:
+
+
+ 
