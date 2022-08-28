@@ -642,7 +642,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :config
   (visual-line-mode t)
   (org-babel-do-load-languages 'org-babel-load-languages
-                               '((python . t)
+                               '(             ; (python . t)
                                  (emacs-lisp . t)
                                  (shell . t))))
 (add-hook 'org-mode-hook 'org-num-mode)
