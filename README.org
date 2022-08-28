@@ -6,7 +6,12 @@ This repository contains my configuration for emacs. My approach for managing th
 
 I am using the default package manager in emacs. I may need to change this decision at some point.
 
-To install this use:
+To use this repository, apply something like the following
 
+#+begin_src shell
+cd ~
+git clone https://github.com/verslyfr/.emacs.d.git .emacs.d
+cd .emacs.d
+git clone https://github.com/fniessen/org-macros
+#+end_src
 
- 
