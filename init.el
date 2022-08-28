@@ -104,6 +104,7 @@
 (savehist-mode 1)                  ; save history for ordering commands
 (set-language-environment "UTF-8")
 (show-paren-mode 1)
+(global-visual-line-mode t)
 
 ;;;;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
