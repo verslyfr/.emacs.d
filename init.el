@@ -617,7 +617,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :custom
   (org-agenda-files '("~/OneDrive/notes"))
   (org-agenda-file-regexp "\\`[^.].*\\.txt\\'")
-  (org-todo-keywords '((sequence "TODO" "WAITING" "|" "DONE" "CANCELLED")))
+  (org-todo-keywords '((sequence "TODO(t)" "WAIT(w@)" "|" "DONE(d)" "CANCEL(c)")))
   (org-support-shift-select t)          ; shift works in special headings
   (org-hide-emphasis-markers t)
   (org-emphasis-alist
