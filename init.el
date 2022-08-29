@@ -428,8 +428,10 @@
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
+  :bind (:map markdown-mode-map 
+              ("M-SPC h" . markdown-preview))
   :custom
-  (markdown-command "pandoc --toc --standalone " "Use pandoc for markdown generation.")
+  (markdown-command "pandoc -d html " "Use pandoc for markdown generation.")
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode)))
