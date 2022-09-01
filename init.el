@@ -1022,11 +1022,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 (use-package yasnippet
   :ensure t
-  :init
-  (setq yas-snippet-dirs
-        '("~/.emacs.d/snippets/"        ; standard location
-          "~/.emacs.d/my-snippets/"     ; my snippets
-          ))
+  :demand t
+  :config
   (yas-global-mode))
 
 (use-package yasnippet-snippets
