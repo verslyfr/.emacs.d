@@ -654,9 +654,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :ensure t
   :commands org-modern-mode
   :init
-  (when (display-graphic-p)
+;;  (when (display-graphic-p)             
     (add-hook 'org-mode-hook #'org-modern-mode)
-    )
+;;    )
   )
 
 ;;; org-roam
