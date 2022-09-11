@@ -643,6 +643,37 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-ellipsis " ▾")
   (org-html-validation-link nil)
   :config
+  ;; todo.txt is found relative to org-directory
+  (setq org-capture-templates
+        '(
+          ;; Templates for tasks
+          ("t" "Tasks")
+          ("tt" "Todo"
+           entry (file+headline "todo.txt" "Inbox")
+           "* TODO %?\n Created: %u\n  %i\n %a" :prepend t)
+          ("tw" "Wait"
+           entry (file+headline "todo.txt" "Inbox")
+           "* WAIT @%^{waiting on} %?\n Created: %u\n  %i\n %a" :prepend t)
+          ("m" "Meeting")
+          ("mn" "Meeting Notes" entry
+           (file+function buffer-name (lambda () (goto-char (point))))
+           "* %u %^{Subject}%^{attendees|Randy Lyvers;}p
+** Notes
+- %?
+** Actions
+")
+          ("ma" "Meeting Agenda" entry
+           (file+function buffer-name (lambda () (goto-char (point))))
+           "* %^u %^{Subject}%^{attendees|Randy Lyvers;}p
+ *P*: %^{Purpose} \\
+ *O*: %^{Outcome} \\
+ *S*: Agenda
+      1. %?
+ *T*: %^{Duration} \\
+** Notes
+** Actions
+")
+          ))
   (visual-line-mode t)
   (org-babel-do-load-languages 'org-babel-load-languages
                                '(             ; (python . t)
