@@ -650,10 +650,20 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           ("t" "Tasks")
           ("tt" "Todo"
            entry (file+headline "todo.txt" "Inbox")
-           "* TODO %?\n Created: %u\n  %i\n %a" :prepend t)
+           "* TODO %?
+:PROPERTIES:
+:created: %u
+:link: %a
+:END:
+ %i" :prepend t)
           ("tw" "Wait"
            entry (file+headline "todo.txt" "Inbox")
-           "* WAIT @%^{waiting on} %?\n Created: %u\n  %i\n %a" :prepend t)
+           "* WAIT @%^{waiting on} %?
+:PROPERTIES:
+:created: %u
+:link: %a
+:END:
+ %i" :prepend t)
           ("m" "Meeting")
           ("mn" "Meeting Notes" entry
            (file+function buffer-name (lambda () (goto-char (point))))
@@ -665,12 +675,13 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           ("ma" "Meeting Agenda" entry
            (file+function buffer-name (lambda () (goto-char (point))))
            "* %^u %^{Subject}%^{attendees|Randy Lyvers;}p
- *P*: %^{Purpose} \\
- *O*: %^{Outcome} \\
+ *P*: %^{Purpose} \\\\
+ *O*: %^{Outcome} \\\\
  *S*: Agenda
       1. %?
- *T*: %^{Duration} \\
+ *T*: %^{Duration} \\\\
 ** Notes
+- 
 ** Actions
 ")
           ))
