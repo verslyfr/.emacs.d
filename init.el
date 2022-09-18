@@ -280,13 +280,13 @@
     (define-key map "k"  'describe-bindings)
     (define-key map "r SPC" 'point-to-register)
     (define-key map "rj" 'jump-to-register)
-;    (define-key map "x"  'todocx)
     (define-key map "tm" 'modus-themes-toggle)
     (define-key map "W"  '(frl-browse-lucky))
     (define-key map "w"  '(frl-browse-url-web-search))
     map)
   "My key map.")
 (define-key (current-global-map) (kbd "M-<SPC>") frl-map)
+(define-key (current-global-map) (kbd "C-c") frl-map)
 
 (global-set-key (kbd "C-S-c") 'kill-ring-save)
 (global-set-key (kbd "C-S-x") 'kill-region)
@@ -299,7 +299,7 @@
 (global-set-key (kbd  "C-x ;") 'comment-dwim)
 (global-set-key (kbd  "M-o") 'other-window)
 (global-set-key (kbd  "C-o") 'find-file)
-(global-set-key (kbd  "C-w") 'kill-this-buffer)
+(global-set-key (kbd  "C-c w") 'kill-this-buffer)
 (global-set-key (kbd  "M-1") 'delete-other-windows)
 (global-set-key (kbd  "M-2") 'split-window-vertically)
 (global-set-key (kbd  "M-3") 'split-window-horizontally)
@@ -313,6 +313,11 @@
 (global-set-key (kbd "M-SPC at") 'inverse-add-mode-abbrev) ; add typo
 (global-set-key (kbd "M-SPC al") 'list-abbrevs)            ; list
 (global-set-key (kbd "M-SPC aw") 'write-abbrev-file)       ; save
+(global-set-key (kbd "C-c ae") 'edit-abbrevs)              ; edit
+(global-set-key (kbd "C-c aa") 'add-mode-abbrev)           ; add; c-u word count
+(global-set-key (kbd "C-c at") 'inverse-add-mode-abbrev)   ; add typo
+(global-set-key (kbd "C-c al") 'list-abbrevs)              ; list
+(global-set-key (kbd "C-c aw") 'write-abbrev-file)         ; save
 
 ;; enable abbrev mode in some individual modes
 (dolist (hook '(text-mode-hook          ; the list of modes to enable abbrev
@@ -431,7 +436,7 @@
   :ensure t
   :commands (markdown-mode gfm-mode)
   :bind (:map markdown-mode-map 
-              ("M-SPC h" . markdown-preview))
+              ("C-c p" . markdown-preview))
   :custom
   (markdown-command "pandoc -d html " "Use pandoc for markdown generation.")
   :mode (("README\\.md\\'" . gfm-mode)
@@ -616,6 +621,10 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("M-SPC t s" . org-table-shrink)
          ("M-SPC t e" . org-table-edit-field)
          ("M-SPC TAB" . org-table-toggle-column-width)
+         ("C-c e" . org-emphasize)
+         ("C-c t s" . org-table-shrink)
+         ("C-c t e" . org-table-edit-field)
+         ("C-c TAB" . org-table-toggle-column-width)
          )
   :mode ("\\.txt\\'" . 'org-mode)
   :custom
@@ -731,18 +740,29 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
       :if-new (file+head "%<%Y-%m-%d>.org"
                          "#+title: %<%Y-%m-%d>\n"))))
   :bind (
-         ("M-SPC n b" . org-roam-buffer-toggle)
+         ("C-c n c" . org-roam-capture)
+         ("C-c n d c" . org-roam-dailies-capture-today)
+         ("C-c n d d" . org-roam-dailies-goto-date)
+         ("C-c n d n" . org-roam-dailies-goto-next-note)
+         ("C-c n d p" . org-roam-dailies-goto-previous-note)
+         ("C-c n d t" . org-roam-dailies-goto-today)
+         ("C-c n f" . org-roam-node-find)
          ("M-SPC n c" . org-roam-capture)
          ("M-SPC n d c" . org-roam-dailies-capture-today)
          ("M-SPC n d d" . org-roam-dailies-goto-date)
-         ("M-SPC n d t" . org-roam-dailies-goto-today)
          ("M-SPC n d n" . org-roam-dailies-goto-next-note)
          ("M-SPC n d p" . org-roam-dailies-goto-previous-note)
+         ("M-SPC n d t" . org-roam-dailies-goto-today)
          ("M-SPC n f" . org-roam-node-find)
+         :map org-mode-map 
+         ("C-c n b" . org-roam-buffer-toggle)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n r" . org-roam-refile)
+         ("C-c n t" . org-id-get-create)
+         ("M-SPC n b" . org-roam-buffer-toggle)
          ("M-SPC n i" . org-roam-node-insert)
          ("M-SPC n r" . org-roam-refile)
-         ("M-SPC n t" . org-id-get-create)
-         )
+         ("M-SPC n t" . org-id-get-create))
   :config
   (org-roam-setup)
   ;; for org-roam-buffer-toggle
@@ -909,7 +929,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :after lsp-mode
   ;; Bind `C-c l d` to `dap-hydra` for easy access
   :bind (:map lsp-mode-map
-              ("M-SPC pd" . dap-hydra))
+              ("C-c Pd" . dap-hydra))
   :config
   (add-hook 'dap-stopped-hook
             (lambda (arg) (call-interactively #'dap-hydra)))
@@ -921,7 +941,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
  (use-package python-pytest
    :ensure t
    :after python
-   :bind ("M-SPC pt" . 'python-pytest-dispatch))
+   :bind ("C-c Pt" . 'python-pytest-dispatch))
 
 ;;; rainbow-delimiters
 (use-package rainbow-delimiters
@@ -932,7 +952,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 (use-package rg
   :ensure t
   :commands rg-menu
-  :bind ("M-SPC g" . 'rg-menu))
+  :bind (("M-SPC g" . 'rg-menu)
+         ("C-c g" . 'rg-menu)))
 
 ;;; separedit
 (use-package separedit
