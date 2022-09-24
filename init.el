@@ -616,6 +616,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :bind (("C-c l" . #'org-store-link)
 	 ("C-c a" . #'org-agenda)
 	 ("C-c c" . #'org-capture)
+         ("C-c C" . #'org-capture-goto-last-stored)
          :map org-mode-map
          ("M-SPC e" . org-emphasize)
          ("M-SPC t s" . org-table-shrink)
