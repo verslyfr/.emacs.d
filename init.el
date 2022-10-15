@@ -130,6 +130,7 @@
 (setq-default fill-column 95)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-always-indent 'complete) ; make tab key do indent first then completion.
+(setq-default buffer-file-coding-system 'utf-8-unix)
 (setq create-lockfiles nil)        ; turn off lock files. Causes issues with OneDrive and it is
                                    ; only me.
 
