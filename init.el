@@ -268,6 +268,39 @@
       (browse-url (concat "https://www.google.com/search?q="
                             (url-hexify-string q))))))
 
+;;;; Start git-bash within emacs
+(defcustom git-path (or (getenv "GIT_INSTALL_ROOT") ; for standard install
+                             (getenv "gitdir")           ; for portable git
+                             nil)
+  "Provides the path to the git installation. The environment variables GIT_INSTALL_ROOT or gitdir are used as the default value. If the value is nil, then neither of those were used.
+
+This variable is really only applicable to the Windows environment."
+  :initialize 'custom-initialize-delay
+  :type 'string
+  :group 'frl)
+
+(defun frl-git-bash ()
+  "Launches git-bash as a shell in Emacs.
+
+When in the shell, not all bash escape codes work and so you may
+need to fix up the prompt. The following is an example with a
+simplified prompt.
+
+if [ -n \"$INSIDE_EMACS\" ]; then
+    export PS1='\\=\\[\\033[32m\\\]\\u@\\h \\=\\[\\033[33m\\]\\w\\=\\[\\033[36m\\]\`__git_ps1\\=\`\\=\\[\\033[0m\\]\\n$ '
+fi
+
+Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-windows
+"
+  (interactive)
+       (if git-path
+           (let ((explicit-shell-file-name
+                  (concat git-path "\\bin\\bash.exe"))
+                 (explicit-sh-args '("--" "--cd-to-home" "--login" "-i" "-l")))
+             (call-interactively 'shell))
+         (message "Please customize `git-bash-path' to provide the location of the git installation."))
+       )
+
 ;;; key bindings
 ;; Reference:
 ;;     https://www.masteringemacs.org/article/mastering-key-bindings-emacs
