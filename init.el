@@ -655,6 +655,11 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-ellipsis " ▾")
   (org-html-validation-link nil)
   :config
+  ;; open standard file types in Windows executables if on windows
+  (if (eq system-type 'windows-nt)
+    (add-to-list 'org-file-apps 
+                 '("\\.\\(?:PDF\\|DOCX\\|XLSX?\\|PPTX?\\|pdf\\|docx\\|xlsx?\\|pptx?\\)\\'" . default))
+  )
   ;; todo.txt is found relative to org-directory
   (setq org-capture-templates
         '(
