@@ -643,6 +643,13 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;; always prompt for the css style to use
 (add-hook 'org-export-before-parsing-hook 'set-org-html-style)
 
+;;; org integrity link
+(org-add-link-type "integrity" 'org-integrity-open)
+(defun org-integrity-open (link)
+  "Open the integrity item identified by the unique OneNote URL." 
+  (w32-shell-execute
+   "open"
+   (concat "integrity:" link)))
 ;;; org-mode
 (message "Loading org-mode")
 (use-package org
@@ -753,6 +760,13 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;;    )
   )
 
+;;; org onenote link
+(org-add-link-type "onenote" 'org-onenote-open)
+(defun org-onenote-open (link)
+  "Open the OneNote item identified by the unique OneNote URL." 
+  (w32-shell-execute
+   "open"
+   (concat "onenote:" link)))
 ;;; org-roam
 ;;
 ;; (use-package hi-lock
