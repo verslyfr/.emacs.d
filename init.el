@@ -525,23 +525,23 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
       nil)))
 
 ;; https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html
-(defun frl-org-agenda-hook ()
-  "Sets up my special org-agenda views"
-  (interactive)
-  (setq org-agenda-custom-commands
-        '(("d" "Daily agenda and all TODOs"
-           ((tags "PRIORITY=\"A\""
-                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                   (org-agenda-overriding-header "High-priority unfinished tasks:")))
-            (agenda "" ((org-agenda-ndays 1)))
-            (alltodo ""
-                     ((org-agenda-skip-function '(or (frl-org-skip-subtree-if-habit)
-                                                     (frl-org-skip-subtree-if-priority ?A)
-                                                     (org-agenda-skip-if nil '(scheduled deadline))))
-                      (org-agenda-overriding-header "ALL normal priority tasks:"))))
-           ((org-agenda-compact-blocks t)))))
-  )
-(add-hook 'org-mode-hook 'frl-org-agenda-hook)
+;; (defun frl-org-agenda-hook ()
+;;   "Sets up my special org-agenda views"
+;;   (interactive)
+;;   (setq org-agenda-custom-commands
+;;         '(("d" "Daily agenda and all TODOs"
+;;            ((tags "PRIORITY=\"A\""
+;;                   ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+;;                    (org-agenda-overriding-header "High-priority unfinished tasks:")))
+;;             (agenda "" ((org-agenda-ndays 1)))
+;;             (alltodo ""
+;;                      ((org-agenda-skip-function '(or (frl-org-skip-subtree-if-habit)
+;;                                                      (frl-org-skip-subtree-if-priority ?A)
+;;                                                      (org-agenda-skip-if nil '(scheduled deadline))))
+;;                       (org-agenda-overriding-header "ALL normal priority tasks:"))))
+;;            ((org-agenda-compact-blocks t)))))
+;;   )
+;; (add-hook 'org-mode-hook 'frl-org-agenda-hook)
 
 ;;; org-appear
 (use-package org-appear
@@ -675,6 +675,18 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          )
   :mode ("\\.txt\\'" . 'org-mode)
   :custom
+  (org-agenda-custom-commands
+   '(("d" "Daily agenda and all TODOs"
+      ((tags "PRIORITY=\"A\""
+             ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+              (org-agenda-overriding-header "High-priority unfinished tasks:")))
+       (agenda "" ((org-agenda-ndays 1)))
+       (alltodo ""
+                ((org-agenda-skip-function '(or (frl-org-skip-subtree-if-habit)
+                                                (frl-org-skip-subtree-if-priority ?A)
+                                                (org-agenda-skip-if nil '(scheduled deadline))))
+                 (org-agenda-overriding-header "ALL normal priority tasks:"))))
+      ((org-agenda-compact-blocks t)))))
   (org-agenda-files '("~/OneDrive/notes"))
   (org-agenda-file-regexp "\\`[^.].*\\.txt\\'")
   (org-todo-keywords '((sequence "TODO(t)" "WAIT(w@)" "|" "DONE(d)" "CANCEL(c)")))
@@ -765,7 +777,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   )
 
 ;;; org onenote link
-(add-hook 'org-mode-hook '(lambda () (org-add-link-type "onenote" 'org-onenote-open)))
+(add-hook 'org-mode-hook #'(lambda () (org-add-link-type "onenote" 'org-onenote-open)))
 (defun org-onenote-open (link)
   "Open the OneNote item identified by the unique OneNote URL." 
   (w32-shell-execute
