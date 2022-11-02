@@ -654,8 +654,16 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (w32-shell-execute
    "open"
    (concat "integrity:" link)))
+
 ;;; org-mode
 (message "Loading org-mode")
+(defun frl-copy-cell () "Copy the content of a cell"
+  (interactive) ;copy the content of a cell
+  (when (org-at-table-p)
+    (kill-new
+     (string-trim
+      (substring-no-properties(org-table-get-field))))))
+
 (use-package org
   :ensure t
   :commands org-mode
@@ -672,6 +680,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("C-c t s" . org-table-shrink)
          ("C-c t e" . org-table-edit-field)
          ("C-c TAB" . org-table-toggle-column-width)
+         ("C-c y" . frl-copy-cell)
          )
   :mode ("\\.txt\\'" . 'org-mode)
   :custom
