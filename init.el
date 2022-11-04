@@ -81,13 +81,17 @@
                     ((numberp (cadr alpha)) (cadr alpha)))
               100)
          '(85 . 50) '(100 . 100)))))
-(global-set-key (kbd "C-c t") 'toggle-transparency)
+(global-set-key (kbd "C-c tt") 'toggle-transparency)
 
 ;; Set transparency of emacs
 (defun transparency (value)
   "Sets the transparency of the frame window. 0=transparent/100=opaque"
   (interactive "nTransparency Value 0 - 100 opaque:")
   (set-frame-parameter (selected-frame) 'alpha value))
+
+;; toggle truncate lines
+(global-set-key (kbd "C-c tl") 'toggle-truncate-lines)
+
 
 ;; use window divider
 (window-divider-mode)
@@ -829,22 +833,11 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("C-c n d p" . org-roam-dailies-goto-previous-note)
          ("C-c n d t" . org-roam-dailies-goto-today)
          ("C-c n f" . org-roam-node-find)
-         ("M-SPC n c" . org-roam-capture)
-         ("M-SPC n d c" . org-roam-dailies-capture-today)
-         ("M-SPC n d d" . org-roam-dailies-goto-date)
-         ("M-SPC n d n" . org-roam-dailies-goto-next-note)
-         ("M-SPC n d p" . org-roam-dailies-goto-previous-note)
-         ("M-SPC n d t" . org-roam-dailies-goto-today)
-         ("M-SPC n f" . org-roam-node-find)
          :map org-mode-map 
          ("C-c n b" . org-roam-buffer-toggle)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n r" . org-roam-refile)
          ("C-c n t" . org-id-get-create)
-         ("M-SPC n b" . org-roam-buffer-toggle)
-         ("M-SPC n i" . org-roam-node-insert)
-         ("M-SPC n r" . org-roam-refile)
-         ("M-SPC n t" . org-id-get-create))
   :config
   (org-roam-setup)
   ;; for org-roam-buffer-toggle
