@@ -837,7 +837,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("C-c n b" . org-roam-buffer-toggle)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n r" . org-roam-refile)
-         ("C-c n t" . org-id-get-create)
+         ("C-c n t" . org-id-get-create))
   :config
   (org-roam-setup)
   ;; for org-roam-buffer-toggle
