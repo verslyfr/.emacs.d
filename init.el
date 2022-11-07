@@ -425,6 +425,9 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
   :bind (:map flyspell-mode-map
               ("C-;" . 'flyspell-correct-wrapper)))
 
+;;; google-this
+(google-this-mode 1)
+
 ;;; helpful
 (message "Loading helpful")
 (use-package helpful
@@ -469,6 +472,11 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
   :commands magit)
+
+;;; marginalia
+(use-package marginalia
+  :init
+  (marginalia-mode))
 
 ;;; markdown
 (use-package markdown-mode
@@ -833,11 +841,22 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("C-c n d p" . org-roam-dailies-goto-previous-note)
          ("C-c n d t" . org-roam-dailies-goto-today)
          ("C-c n f" . org-roam-node-find)
+         ("M-n c" . org-roam-capture)
+         ("M-n d c" . org-roam-dailies-capture-today)
+         ("M-n d d" . org-roam-dailies-goto-date)
+         ("M-n d n" . org-roam-dailies-goto-next-note)
+         ("M-n d p" . org-roam-dailies-goto-previous-note)
+         ("M-n d t" . org-roam-dailies-goto-today)
+         ("M-n f" . org-roam-node-find)
          :map org-mode-map 
          ("C-c n b" . org-roam-buffer-toggle)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n r" . org-roam-refile)
          ("C-c n t" . org-id-get-create))
+         ("M-n b" . org-roam-buffer-toggle)
+         ("M-n i" . org-roam-node-insert)
+         ("M-n r" . org-roam-refile)
+         ("M-n t" . org-id-get-create))
   :config
   (org-roam-setup)
   ;; for org-roam-buffer-toggle
