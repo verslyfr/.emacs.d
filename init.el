@@ -852,7 +852,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("C-c n b" . org-roam-buffer-toggle)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n r" . org-roam-refile)
-         ("C-c n t" . org-id-get-create))
+         ("C-c n t" . org-id-get-create)
          ("M-n b" . org-roam-buffer-toggle)
          ("M-n i" . org-roam-node-insert)
          ("M-n r" . org-roam-refile)
