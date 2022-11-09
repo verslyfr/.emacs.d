@@ -90,7 +90,7 @@
   (set-frame-parameter (selected-frame) 'alpha value))
 
 ;; toggle truncate lines
-(global-set-key (kbd "C-c tl") 'toggle-truncate-lines)
+(global-set-key (kbd "C-c t l") 'toggle-truncate-lines)
 
 
 ;; use window divider
