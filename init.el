@@ -900,44 +900,57 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;;; python
 
 ;;;; lsp-mode
-(use-package lsp-mode
-  :ensure t
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-l")
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (python-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :custom
-  (lsp-idle-delay 0.500 "recommended performance value")
-  (lsp-log-io nil "set true takes perf hit")
-  ;; info on disabling elements https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
-   ;; lsp performance adjustment https://emacs-lsp.github.io/lsp-mode/page/performance/
-  (read-process-output-max (* 1024 1024)) ;; 1mb
-  (lsp-ui-doc-enable nil)
-  (lsp-ui-sideline-enable nil)
-  :commands (lsp lsp-deferred))
+;; (use-package lsp-mode
+;;   :ensure t
+;;   :init
+;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+;;   (setq lsp-keymap-prefix "C-l")
+;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+;;          (python-mode . lsp)
+;;          ;; if you want which-key integration
+;;          (lsp-mode . lsp-enable-which-key-integration))
+;;   :custom
+;;   (lsp-idle-delay 0.500 "recommended performance value")
+;;   (lsp-log-io nil "set true takes perf hit")
+;;   ;; info on disabling elements https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
+;;    ;; lsp performance adjustment https://emacs-lsp.github.io/lsp-mode/page/performance/
+;;   (read-process-output-max (* 1024 1024)) ;; 1mb
+;;   (lsp-ui-doc-enable nil)
+;;   (lsp-ui-sideline-enable nil)
+;;   :commands (lsp lsp-deferred))
 
-;;;; lsp-jedi
-(use-package lsp-jedi
-  :ensure t
-  :after lsp-mode 
-  :hook (python-mode . (lambda () (require 'lsp-jedi)
-                         (lsp-deferred))))
-(with-eval-after-load "lsp-mode"
-  (add-to-list 'lsp-disabled-clients 'pyls)
-  (add-to-list 'lsp-enabled-clients 'jedi))
+;; ;;;; lsp-jedi
+;; (use-package lsp-jedi
+;;   :ensure t
+;;   :after lsp-mode 
+;;   :hook (python-mode . (lambda () (require 'lsp-jedi)
+;;                          (lsp-deferred))))
+;; (with-eval-after-load "lsp-mode"
+;;   (add-to-list 'lsp-disabled-clients 'pyls)
+;;   (add-to-list 'lsp-enabled-clients 'jedi))
 
 ;;;; lsp-ui
-(use-package lsp-ui
+;; (use-package lsp-ui
+;;   :ensure t
+;;   :config
+;;   (setq lsp-ui-sideline-enable nil
+;;         lsp-ui-doc-delay 2)
+;;   :hook (lsp-mode . lsp-ui-mode)
+;;   :bind (:map lsp-ui-mode-map
+;;               ("C-c i" . lsp-ui-imenu)))
+
+;;;; eglot
+(use-package eglot
   :ensure t
-  :config
-  (setq lsp-ui-sideline-enable nil
-        lsp-ui-doc-delay 2)
-  :hook (lsp-mode . lsp-ui-mode)
-  :bind (:map lsp-ui-mode-map
-              ("C-c i" . lsp-ui-imenu)))
+  :commands (eglot eglot-ensure)
+  :hook (python-mode . eglot-ensure)
+  :bind (:map eglot-mode-map
+              ("C-c <tab>" . #'company-complete)
+              ("C-c e f n" . #'flymake-goto-next-error)
+              ("C-c e f p" . #'flymake-goto-prev-error)
+              ("C-c e r" . #'eglot-rename)
+              )
+  )
 
 ;;;; blacken
 (use-package blacken
@@ -946,6 +959,11 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 ;;;; python
 ;; Built-in Python utilities
+;; python venv for LSP
+;; python -m venv ~/venvs/<venv>
+;; source ~/venvs/<venv>/bin/activate
+;; pip install jedi-language-server
+;; pip install black
 (use-package python
   :ensure t
   :mode ("\\.py\\'" . python-mode)
