@@ -733,7 +733,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (user-full-name "FR Lyvers")
   (org-directory "~/OneDrive/notes")
   (org-return-follows-link t)
-  (org-ellipsis " ▾")
+  (org-ellipsis "…")
   (org-html-validation-link nil)
   :config
   ;; open standard file types in Windows executables if on windows
@@ -949,8 +949,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
               ("C-c e f n" . #'flymake-goto-next-error)
               ("C-c e f p" . #'flymake-goto-prev-error)
               ("C-c e r" . #'eglot-rename)
-              )
-  )
+              )  )
 
 ;;;; blacken
 (use-package blacken
