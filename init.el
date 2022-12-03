@@ -426,6 +426,8 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
               ("C-;" . 'flyspell-correct-wrapper)))
 
 ;;; google-this
+(use-package google-this
+             :ensure t)
 (google-this-mode 1)
 
 ;;; helpful
@@ -475,6 +477,7 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
 
 ;;; marginalia
 (use-package marginalia
+  :ensure t
   :init
   (marginalia-mode))
 
