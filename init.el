@@ -65,6 +65,10 @@
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 200 1000 1000))
 
+;;;; fonts
+(set-face-attribute 'default nil :family "FiraCode NF")
+(set-face-attribute 'variable-pitch nil :family "NotoSans NF")
+(set-face-attribute 'fixed-pitch nil :family "NotoSansMono NF")
 ;;;; Visuals
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (load-theme 'modus-vivendi t)
@@ -801,6 +805,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
     (add-hook 'org-mode-hook #'org-modern-mode)
 ;;    )
   )
+(add-hook 'org-mode-hook 'variable-pitch-mode)
+
 
 ;;; org onenote link
 (add-hook 'org-mode-hook #'(lambda () (org-add-link-type "onenote" 'org-onenote-open)))
@@ -952,7 +958,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
               ("C-c e f n" . #'flymake-goto-next-error)
               ("C-c e f p" . #'flymake-goto-prev-error)
               ("C-c e r" . #'eglot-rename)
-              )  )
+              )
+  )
 
 ;;;; blacken
 (use-package blacken
