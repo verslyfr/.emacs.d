@@ -695,6 +695,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("M-SPC t s" . org-table-shrink)
          ("M-SPC t e" . org-table-edit-field)
          ("M-SPC TAB" . org-table-toggle-column-width)
+         ("C-c i" . org-time-stamp-inactive)
          ("C-c e" . org-emphasize)
          ("C-c t s" . org-table-shrink)
          ("C-c t e" . org-table-edit-field)
