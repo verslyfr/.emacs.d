@@ -67,7 +67,7 @@
 
 ;;;; fonts
 (set-face-attribute 'default nil :family "FiraCode NF")
-(set-face-attribute 'variable-pitch nil :family "NotoSans NF")
+(set-face-attribute 'variable-pitch nil :family "Calibri")
 (set-face-attribute 'fixed-pitch nil :family "NotoSansMono NF")
 ;;;; Visuals
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
