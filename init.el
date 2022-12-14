@@ -73,6 +73,11 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (load-theme 'modus-vivendi t)
 
+;; emojis
+(use-package emojify
+	     :ensure t
+	     :hook (after-init . global-emojify-mode))
+
 ;; transparency mode
 (defun toggle-transparency ()
   (interactive)
