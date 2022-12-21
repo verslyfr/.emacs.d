@@ -341,7 +341,6 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
 (global-set-key (kbd "C-S-v") 'yank)
 (global-set-key (kbd "C-v") 'yank)
 (global-set-key (kbd "C-z") 'undo)
-(global-set-key (kbd  "M-b") 'switch-to-buffer)
 (global-set-key (kbd  "C--") 'text-scale-adjust)
 (global-set-key (kbd  "C-=") 'text-scale-adjust)
 (global-set-key (kbd  "C-x ;") 'comment-dwim)
@@ -422,6 +421,7 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
          ;; C-x bindings (ctl-x-map)
          ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
          ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
+         ("M-b" . consult-buffer)
          ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
          ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
          ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
