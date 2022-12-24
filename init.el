@@ -1114,6 +1114,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
     (setq python-shell-interpreter "python3"))
    ((executable-find "python2")
     (setq python-shell-interpreter "python2"))
+   ((executable-find "py")
+    (setq python-shell-interpreter "py"))
    (t
     (setq python-shell-interpreter "python"))))
 
