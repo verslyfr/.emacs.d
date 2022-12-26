@@ -32,15 +32,6 @@
   (unless (package-installed-p package)
     (package-install package)))
 
-;;; Packages installed
-;;    (package-install 'company)
-;;    (package-install 'orderless)
-;;    (package-install 'org)
-;;    (package-install 'org-appear)
-;;    (package-install 'org-modern)
-;;    (package-install 'org-roam)
-;;    (package-install 'use-package)
-;;    (package-install 'vertico)
 
 ;;; sample code
 ;; code snippet for how to add keys to a mode
@@ -52,6 +43,11 @@
 ;;             (define-key texinfo-mode-map "\C-cn"
 ;;                         'forward-paragraph)))
 ;;             (define-key texinfo-mode-map "\C-c\C-xx" nil)
+
+;;; plugins initialization
+;; Initialize load-path to include all subdirectories under plugins
+(let ((default-directory "~/.emacs.d/plugins/"))
+  (normal-top-level-add-subdirs-to-load-path))
 
 ;;; use-package
 ;; for profiling use-package
@@ -1190,6 +1186,16 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
    :after python
    :bind ("C-c Pt" . 'python-pytest-dispatch))
 
+;;;; py-pyment
+(use-package py-pyment
+  :config
+  (setq py-pyment-options '("--output=google"))
+  :after python
+  :bind (:map python-mode-map
+  ("C-c p r" . py-pyment-region)
+  ("C-c p b" . py-pyment-buffer))
+  )
+
 ;;; rainbow-delimiters
 (use-package rainbow-delimiters
   :ensure t
@@ -1334,13 +1340,12 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 (use-package yasnippet
   :ensure t
-  :demand t
-  :config
-  (yas-global-mode))
-
-(use-package yasnippet-snippets
-  :demand nil
-  :ensure t)
+  :hook ((text-mode
+          prog-mode
+          conf-mode
+          snippet-mode) . yas-minor-mode-on)
+  :init
+  (setq yas-snippet-dir "~/.emacs.d/snippets"))
 
 ;;; vterm
 (use-package vterm

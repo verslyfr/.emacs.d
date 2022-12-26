@@ -1,0 +1,6 @@
+[submodule "plugins/py-cmd-buffer"]
+	path = plugins/py-cmd-buffer
+	url = git@github.com:humitos/py-cmd-buffer.el.git
+[submodule "plugins/buftra"]
+	path = plugins/buftra
+	url = git@github.com:humitos/buftra.el.git
