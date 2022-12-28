@@ -1028,46 +1028,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 ;;; python
 
-;;;; lsp-mode
-;; (use-package lsp-mode
-;;   :ensure t
-;;   :init
-;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-;;   (setq lsp-keymap-prefix "C-l")
-;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-;;          (python-mode . lsp)
-;;          ;; if you want which-key integration
-;;          (lsp-mode . lsp-enable-which-key-integration))
-;;   :custom
-;;   (lsp-idle-delay 0.500 "recommended performance value")
-;;   (lsp-log-io nil "set true takes perf hit")
-;;   ;; info on disabling elements https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
-;;    ;; lsp performance adjustment https://emacs-lsp.github.io/lsp-mode/page/performance/
-;;   (read-process-output-max (* 1024 1024)) ;; 1mb
-;;   (lsp-ui-doc-enable nil)
-;;   (lsp-ui-sideline-enable nil)
-;;   :commands (lsp lsp-deferred))
-
-;; ;;;; lsp-jedi
-;; (use-package lsp-jedi
-;;   :ensure t
-;;   :after lsp-mode 
-;;   :hook (python-mode . (lambda () (require 'lsp-jedi)
-;;                          (lsp-deferred))))
-;; (with-eval-after-load "lsp-mode"
-;;   (add-to-list 'lsp-disabled-clients 'pyls)
-;;   (add-to-list 'lsp-enabled-clients 'jedi))
-
-;;;; lsp-ui
-;; (use-package lsp-ui
-;;   :ensure t
-;;   :config
-;;   (setq lsp-ui-sideline-enable nil
-;;         lsp-ui-doc-delay 2)
-;;   :hook (lsp-mode . lsp-ui-mode)
-;;   :bind (:map lsp-ui-mode-map
-;;               ("C-c i" . lsp-ui-imenu)))
-
 ;;;; eglot
 (use-package eglot
   :ensure t
@@ -1093,12 +1053,28 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;; source ~/venvs/<venv>/bin/activate
 ;; pip install jedi-language-server
 ;; pip install black
+
+(defun python-google-docstring ()
+  "Generate google-style docstring for python."
+  (interactive)
+  (if (region-active-p)
+      (progn
+        (call-process-region (region-beginning) (region-end)
+                             "python3" nil t t
+                             (expand-file-name "~/.emacs.d/plugins/python-format-g-docs/format-g-docs.py"))
+        (message "Docs are generated")
+        (deactivate-mark))
+    (message "No region active; can't generate docs!"))
+  )
+
 (use-package python
   :ensure t
   :mode ("\\.py\\'" . python-mode)
   :config
   ;; Remove guess indent python message
   (setq python-indent-guess-indent-offset-verbose nil)
+  ;; add the ability to generate google-style document comments
+  (bind-key "C-c pr" #'python-google-docstring python-mode-map)
   ;; Use IPython when available or fall back to regular Python 
   (cond
    ((executable-find "ipython")
@@ -1185,16 +1161,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
    :ensure t
    :after python
    :bind ("C-c Pt" . 'python-pytest-dispatch))
-
-;;;; py-pyment
-(use-package py-pyment
-  :config
-  (setq py-pyment-options '("--output=google"))
-  :after python
-  :bind (:map python-mode-map
-  ("C-c p r" . py-pyment-region)
-  ("C-c p b" . py-pyment-buffer))
-  )
 
 ;;; rainbow-delimiters
 (use-package rainbow-delimiters
