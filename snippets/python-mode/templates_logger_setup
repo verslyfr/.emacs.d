@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# name: logger_setup
+# key: logger_setup>
+# group: templates
+# expand-env: ((yas-indent-line 'fixed) (yas-wrap-around-region 'nil))
+# --
+def _setup_logger(level: int):
+    """Initializes the logger format and level to use for logging.
+
+    Args:
+        level (int):
+    Returns:
+        None: nothing
+    """
+    log_levels = {
+        0: logging.CRITICAL,
+        1: logging.ERROR,
+        2: logging.WARN,
+        3: logging.INFO,
+        4: logging.DEBUG,
+    }
+    logging.basicConfig(
+        level=log_levels[level],
+        format="{asctime}:{name}:{lineno}:{levelname}:{funcName} - {message}",
+        style="{",
+    )
+    _logger.debug(f"Turned on Logging at Level {log_levels[level]}.")
