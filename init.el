@@ -62,12 +62,13 @@
 (setq gc-cons-threshold (* 200 1000 1000))
 
 ;;;; fonts
-(set-face-attribute 'default nil :family "FiraCode NF")
-(set-face-attribute 'variable-pitch nil :family "Calibri")
-(set-face-attribute 'fixed-pitch nil :family "NotoSansMono NF")
+(set-face-attribute 'default nil :family "Iosevka")
+(set-face-attribute 'fixed-pitch nil :family "Iosevka Term")
+(set-face-attribute 'variable-pitch nil :family "Iosevka Aile")
+
 ;;;; Visuals
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(load-theme 'modus-vivendi t)
+(load-theme 'modus-operandi t)
 
 ;; emojis
 (use-package emojify
@@ -921,9 +922,11 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :ensure t
   :commands org-modern-mode
   :init
-;;  (when (display-graphic-p)             
-    (add-hook 'org-mode-hook #'org-modern-mode)
-;;    )
+  (add-hook 'org-mode-hook #'org-modern-mode)
+  (custom-set-variables '(org-modern-table nil))
+  :config
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-modern-symbol nil :family "Iosevka")
   )
 (add-hook 'org-mode-hook 'variable-pitch-mode)
 
