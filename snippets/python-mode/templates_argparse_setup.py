@@ -9,7 +9,7 @@ __VERSION= "0.0.1"
 def getArgs(argv=None):
     parser: argparse.ArgumentParser = argparse.ArgumentParser(description="${1:description of the script}")
     parser.add_argument(
-        "--version",type="version",version=__VERSION
+        "--version",action="version",version=__VERSION
     )
     parser.add_argument(
         "-v",
