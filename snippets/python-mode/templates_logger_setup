@@ -21,6 +21,8 @@ def _setup_logger(level: int):
     }
     logging.basicConfig(
         level=log_levels[level],
+        filename=f'{__file__}.log',
+        encoding='utf-8'
         format="{asctime}:{name}:{lineno}:{levelname}:{funcName} - {message}",
         style="{",
     )
