@@ -1,6 +1,7 @@
 # Makefile to generate installer format-g-docs
 myhome:=$(shell cygpath -u ${HOME})
-VENV:=$(myhome)/venvs/format-g-docs
+myvenv:=$(myhome)/venvs/format-g-docs
+VENV:=$(HOME)/venvs/format-g-docs
 
 all: format-g-docs.exe      ## Target executable
 
@@ -14,7 +15,7 @@ all: format-g-docs.exe      ## Target executable
 
 format-g-docs.exe: requirements.txt format-g-docs.py      ## Target executable
 	python -m venv $(VENV)
-	source $(VENV)/Scripts/activate; pip install -r requirements.txt; pyinstaller --onefile --paths $(VENV)/Lib/site-packages format-g-docs.py
+	source $(myvenv)/Scripts/activate; pip install -r requirements.txt; pyinstaller --onefile --paths $(myvenv)/Lib/site-packages format-g-docs.py
 	mv dist/format-g-docs.exe .
 
 
@@ -22,7 +23,7 @@ clean:             ## clean all of the generated files except the final executab
 	rm -rf ~/venvs/format-g-docs
 	rm -rf dist
 	rm -rf build
-	rm format-g-docs.spec
+	rm -f format-g-docs.spec
 
 
 .PHONY: help clean
