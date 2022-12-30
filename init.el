@@ -1062,9 +1062,11 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (interactive)
   (if (region-active-p)
       (progn
-        (call-process-region (region-beginning) (region-end)
-                             "python3" nil t t
-                             (expand-file-name "~/.emacs.d/plugins/python-format-g-docs/format-g-docs.py"))
+        (call-process-region
+         (region-beginning) (region-end)
+         (expand-file-name
+          "~/.emacs.d/plugins/python-format-g-docs/format-g-docs.exe")
+         nil t t)
         (message "Docs are generated")
         (deactivate-mark))
     (message "No region active; can't generate docs!"))
