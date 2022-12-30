@@ -1085,14 +1085,12 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
       (setq python-shell-buffer-name "IPython")
       (setq python-shell-interpreter "ipython")
       (setq python-shell-interpreter-args "-i --simple-prompt")))
-   ((executable-find "python3")
-    (setq python-shell-interpreter "python3"))
-   ((executable-find "python2")
-    (setq python-shell-interpreter "python2"))
    ((executable-find "py")
     (setq python-shell-interpreter "py"))
+   ((executable-find "python")
+    (setq python-shell-interpreter "python"))
    (t
-    (setq python-shell-interpreter "python"))))
+    (setq python-shell-interpreter "python3"))))
 
 ;;;; pyvenv
 ;; Required to easily switch virtual envs 
