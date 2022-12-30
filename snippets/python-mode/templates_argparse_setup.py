@@ -12,11 +12,18 @@ def get_args(argv=None):
     """Parses the command-line arguments.
 
     Args:
-        argv (t.Any): (default: None) A list of arguments.
-          If None then _sys.argv[1:] is used as the input. Supports testing of inputs via scripts.
+        argv (t.Any): (default: None) A list of arguments.  If None then
+          _sys.argv[1:] is used as the input. Supports testing of inputs via
+          scripts.
     
     Returns:
         the results of calling argparse.ArgumentParser.parse_args
+
+    Notes: To see the actual arguments for the program, utilize the --help
+        option on the script. This will print out a concise summary of the
+        arguments. When adding arguments to the script, just use the help=
+        arguments to help provide a readable cli help.
+        
     """
     parser: argparse.ArgumentParser = argparse.ArgumentParser(description="${1:description of the script}")
     parser.add_argument(
