@@ -6,7 +6,6 @@
 ;;;    user-emacs-directory folder.
 
 ;;; Code:
-
 (message "running my init.el")
 
 
