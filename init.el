@@ -17,6 +17,7 @@
 ;; and `package-pinned-packages`. Most users will not need or want to do this.
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("ox-odt" . "https://kjambunathan.github.io/elpa/") t)  ;; for ox-odt 
 (package-initialize)
 
 ; fetch the list of packages available 
@@ -692,6 +693,21 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-appear-autokeywords t)
   (org-appear-autosubmarkers t)
   )
+
+;;; org ox-odt
+(use-package ox-odt
+  :ensure t
+  :commands org-odt--translate-list-tables )
+
+(with-eval-after-load 'ox-html
+  (unless (featurep 'ox-odt)
+    (require 'ox-odt))
+  (add-to-list
+   'org-export-filter-parse-tree-functions
+   (defun org-html--translate-list-tables (tree backend info)
+     (if (eq backend 'html)
+     (org-odt--translate-list-tables tree backend info)
+       tree))))
 
 ;;; org color link
 (defun frl-setup-color-link-hook ()
