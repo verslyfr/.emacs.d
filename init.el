@@ -61,6 +61,8 @@
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 200 1000 1000))
 
+(setq ad-redefinition-action 'accept)
+
 ;;;; fonts
 (set-face-attribute 'default nil :family "Iosevka")
 (set-face-attribute 'fixed-pitch nil :family "Iosevka Term")
