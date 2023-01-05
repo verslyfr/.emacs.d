@@ -1028,6 +1028,13 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 (with-eval-after-load 'ox
   (require 'ox-pandoc))
 
+;;; placeholder
+;; To use this functionality put <++> into the file and then move
+;; forward and backward to change the elements
+(use-package placeholder
+  :bind (("C-S-n" . placeholder-forward)
+         ("C-S-p" . placeholder-backward)
+         ("C-S-x" . placeholder-insert)))
 ;;; plantuml
 (use-package plantuml-mode
   :ensure t
