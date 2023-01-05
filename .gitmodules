@@ -1,0 +1,3 @@
+[submodule "plugins/placeholder"]
+	path = plugins/placeholder
+	url = https://github.com/oantolin/placeholder.git
