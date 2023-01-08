@@ -395,7 +395,7 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
   :custom
   (ahk-indentation 4)
   :config
-  (setq outline-regexp ";;+\\|^[a-zA-Z]*[(][a-zA-Z, ]*[)]"))
+  (setq outline-regexp ";;+"))
 
 ;;; all-the-icons
 (message "Loading all-the-icons")
