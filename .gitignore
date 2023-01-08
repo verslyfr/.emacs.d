@@ -1,6 +1,7 @@
 .cache/
 .org-id-locations
 auto-save-list/
+org-persist/
 bookmarks
 custom-vars.el
 elpa/

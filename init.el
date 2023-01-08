@@ -387,9 +387,15 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
 (message "Loading ahk")
 (use-package ahk-mode
   :ensure t
+  :init
+  (add-hook 'ahk-mode-hook
+          (lambda() "Initialize outline-mode"
+            (outline-minor-mode)))
   :mode "\\.ahk\\'"
   :custom
-  ahk-indentation 4)
+  (ahk-indentation 4)
+  :config
+  (setq outline-regexp ";;+\\|^[a-zA-Z]*[(][a-zA-Z, ]*[)]"))
 
 ;;; all-the-icons
 (message "Loading all-the-icons")
