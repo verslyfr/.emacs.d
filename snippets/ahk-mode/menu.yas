@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: menu
+# key: menu>
+# --
+${1:<++>} := Func("OpenURL").Bind("${2:<++>}")
+Menu, ${3:<++>}, Add, ${0:<++>}, % $1
