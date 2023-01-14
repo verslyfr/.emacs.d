@@ -19,14 +19,14 @@
 (add-to-list 'package-archives '("ox-odt" . "https://kjambunathan.github.io/elpa/") t)  ;; for ox-odt 
 (package-initialize)
 
-; fetch the list of packages available 
+;; fetch the list of packages available 
 (or (file-exists-p package-user-dir)
     (package-refresh-contents)) 
 ;; (unless package-archive-contents
-  ;; (package-refresh-contents))
+;; (package-refresh-contents))
 
-; install the missing packages
-; list the packages you want
+;; install the missing packages
+;; list the packages you want
 (setq package-list '(use-package))
 (dolist (package package-list)
   (unless (package-installed-p package)
@@ -74,8 +74,8 @@
 
 ;; emojis
 (use-package emojify
-	     :ensure t
-	     :hook (after-init . global-emojify-mode))
+  :ensure t
+  :hook (after-init . global-emojify-mode))
 
 ;; transparency mode
 (defun toggle-transparency ()
@@ -128,23 +128,29 @@
 ;;;; Miscellaneous settings
 (add-to-list 'load-path (expand-file-name "plugins" user-emacs-directory))
 (setq bookmark-save-flag 1)
-(setq comp-deferred-compilation t)     ; Perform jit compilation
-(setq cua-auto-tabify-rectangles nil)  ; Don't tabify after rectangle commands
-(setq frame-title-format "Emacs - %b") ; for autohotkey 
+(setq comp-deferred-compilation t)      ; Perform jit compilation
+(setq cua-auto-tabify-rectangles nil)   ; Don't tabify after rectangle commands
+(setq frame-title-format "Emacs - %b")  ; for autohotkey
 (setq history-length 25)
-(setq inhibit-startup-message t)   ; no splash screen
-(setq initial-scratch-message nil) ; scratch message
+(setq inhibit-startup-message t)        ; no splash screen
+(setq initial-scratch-message nil)      ; scratch message
 (setq package-native-compile t)
-(setq select-active-regions nil)   ; prevents active mark from changing the primary X selection
+(setq select-active-regions nil)        ; prevents active mark from changing
+                                        ; the primary X selection
 (setq text-scale-mode-step 1.05)
 (setq visible-bell t)
 ;; (setq warning-minimum-level :error)
 (setq-default fill-column 79)
 (setq-default indent-tabs-mode nil)
-(setq-default tab-always-indent 'complete) ; make tab key do indent first then completion.
+(setq-default tab-always-indent 'complete) ; make tab key do indent first then
+                                           ; completion.
 (setq-default buffer-file-coding-system 'utf-8-unix)
-(setq create-lockfiles nil)        ; turn off lock files. Causes issues with OneDrive and it is
-                                   ; only me.
+(setq create-lockfiles nil)           ; turn off lock files. Causes issues with
+                                      ; OneDrive and it is only me.
+
+;;;; Save File settings
+(auto-save-visited-mode 1)
+(setq auto-save-interval 1000)          ; save every 1000 characters typed
 
 ;;;; Backup settings
 (setq
@@ -278,12 +284,12 @@
                             (url-hexify-string q))))
     (let ((q (read-from-minibuffer "Search Web:" nil nil nil 'web-search-history)))
       (browse-url (concat "https://www.google.com/search?q="
-                            (url-hexify-string q))))))
+                          (url-hexify-string q))))))
 
 ;;;; Start git-bash within emacs
 (defcustom git-path (or (getenv "GIT_INSTALL_ROOT") ; for standard install
-                             (getenv "gitdir")           ; for portable git
-                             nil)
+                        (getenv "gitdir")           ; for portable git
+                        nil)
   "Provides the path to the git installation. The environment variables GIT_INSTALL_ROOT or gitdir are used as the default value. If the value is nil, then neither of those were used.
 
 This variable is really only applicable to the Windows environment."
@@ -305,13 +311,13 @@ fi
 Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-windows
 "
   (interactive)
-       (if git-path
-           (let ((explicit-shell-file-name
-                  (concat git-path "\\bin\\bash.exe"))
-                 (explicit-sh-args '("--" "--cd-to-home" "--login" "-i" "-l")))
-             (call-interactively 'shell))
-         (message "Please customize `git-bash-path' to provide the location of the git installation."))
-       )
+  (if git-path
+      (let ((explicit-shell-file-name
+             (concat git-path "\\bin\\bash.exe"))
+            (explicit-sh-args '("--" "--cd-to-home" "--login" "-i" "-l")))
+        (call-interactively 'shell))
+    (message "Please customize `git-bash-path' to provide the location of the git installation."))
+  )
 
 ;;; key bindings
 ;; Reference:
@@ -389,8 +395,8 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
   :ensure t
   :init
   (add-hook 'ahk-mode-hook
-          (lambda() "Initialize outline-mode"
-            (outline-minor-mode)))
+            (lambda() "Initialize outline-mode"
+              (outline-minor-mode)))
   :mode "\\.ahk\\'"
   :custom
   (ahk-indentation 4)
@@ -531,16 +537,16 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
   ;; (setq consult-project-function (lambda (_) (vc-root-dir)))
   ;;;; 4. locate-dominating-file
   ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
-)
+  )
 
 ;;; dired
 (message "Loading dired")
 (setq dired-listing-switches "-agho --group-directories-first")
 
 (use-package dired-hide-dotfiles
-   :ensure t
-   :hook (dired-mode . dired-hide-dotfiles-mode)
-   :bind (:map dired-mode-map ("H" . dired-hide-dotfiles-mode )))
+  :ensure t
+  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :bind (:map dired-mode-map ("H" . dired-hide-dotfiles-mode )))
 
 ;;; flycheck
 (use-package flycheck
@@ -559,7 +565,7 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
 
 ;;; google-this
 (use-package google-this
-             :ensure t)
+  :ensure t)
 (google-this-mode 1)
 
 ;;; helpful
@@ -713,7 +719,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
    'org-export-filter-parse-tree-functions
    (defun org-html--translate-list-tables (tree backend info)
      (if (eq backend 'html)
-     (org-odt--translate-list-tables tree backend info)
+         (org-odt--translate-list-tables tree backend info)
        tree))))
 
 ;;; org color link
@@ -808,8 +814,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;;; org integrity link
 (add-hook 'org-mode-hook 'frl-org-integrity-link-hook)
 (defun frl-org-integrity-link-hook ()
-    "hook to initilize the integrity hook"
-    (org-add-link-type "integrity" 'frl-org-integrity-open)
+  "hook to initilize the integrity hook"
+  (org-add-link-type "integrity" 'frl-org-integrity-open)
   )
 (defun frl-org-integrity-open (link)
   "Open the integrity item identified by the unique OneNote URL." 
@@ -820,11 +826,11 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;;; org-mode
 (message "Loading org-mode")
 (defun frl-copy-cell () "Copy the content of a cell"
-  (interactive) ;copy the content of a cell
-  (when (org-at-table-p)
-    (kill-new
-     (string-trim
-      (substring-no-properties(org-table-get-field))))))
+       (interactive) ;copy the content of a cell
+       (when (org-at-table-p)
+         (kill-new
+          (string-trim
+           (substring-no-properties(org-table-get-field))))))
 
 (use-package org
   :ensure t
@@ -889,9 +895,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :config
   ;; open standard file types in Windows executables if on windows
   (if (eq system-type 'windows-nt)
-    (add-to-list 'org-file-apps 
-                 '("\\.\\(?:PDF\\|DOCX\\|XLSX?\\|PPTX?\\|pdf\\|docx\\|xlsx?\\|pptx?\\)\\'" . default))
-  )
+      (add-to-list 'org-file-apps 
+                   '("\\.\\(?:PDF\\|DOCX\\|XLSX?\\|PPTX?\\|pdf\\|docx\\|xlsx?\\|pptx?\\)\\'" . default))
+    )
   ;; todo.txt is found relative to org-directory
   (setq org-capture-templates
         '(
@@ -1190,10 +1196,10 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (setq dap-python-debugger 'debugpy))
 
 ;;;; pytest
- (use-package python-pytest
-   :ensure t
-   :after python
-   :bind ("C-c Pt" . 'python-pytest-dispatch))
+(use-package python-pytest
+  :ensure t
+  :after python
+  :bind ("C-c Pt" . 'python-pytest-dispatch))
 
 ;;; rainbow-delimiters
 (use-package rainbow-delimiters
