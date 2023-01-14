@@ -634,8 +634,7 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
 (message "Loading doom-modeline")
 (use-package doom-modeline
   :ensure t
-  :demand   
-  :init (doom-modeline-mode 1)
+  :hook (after-init . doom-modeline-mode)
   :custom ((doom-modeline-height 15)))
 
 ;;; orderless
