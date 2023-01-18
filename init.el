@@ -1348,8 +1348,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           prog-mode
           conf-mode
           snippet-mode) . yas-minor-mode-on)
-  :init
-  (setq yas-snippet-dir "~/.emacs.d/snippets"))
+)
 
 ;;; vterm
 (use-package vterm
