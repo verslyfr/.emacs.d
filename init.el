@@ -1028,6 +1028,10 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                  (window-width . 0.33)
                  (window-height . fit-window-to-buffer))))
 
+;;; ox-clip
+(use-package ox-clip
+  :ensure t
+  :bind ("C-C x" . ox-clip-formatted-copy))
 ;;; ox-pandoc
 (use-package ox-pandoc
   :ensure t
