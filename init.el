@@ -134,6 +134,7 @@
 (setq history-length 25)
 (setq inhibit-startup-message t)        ; no splash screen
 (setq initial-scratch-message nil)      ; scratch message
+(setq initial-major-mode 'fundamental-mode) ; set the scratch buffer mode
 (setq package-native-compile t)
 (setq select-active-regions nil)        ; prevents active mark from changing
                                         ; the primary X selection
@@ -1031,6 +1032,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;;; ox-clip
 (use-package ox-clip
   :ensure t
+  :custom
+   (ox-clip-w32-cmd "powershell -Command '$input | set-clipboard -ashtml'")
   :bind ("C-C x" . ox-clip-formatted-copy))
 ;;; ox-pandoc
 (use-package ox-pandoc
