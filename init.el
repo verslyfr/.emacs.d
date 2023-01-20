@@ -1164,6 +1164,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (code-cells-mode 1))
 
 (use-package code-cells
+  :ensure t
   :defer t
   :after 'jupyter
   :commands code-cells-mode
