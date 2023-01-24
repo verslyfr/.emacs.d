@@ -1,26 +1,3 @@
-/*
-  Copyright (c) 2017 Chris Patuzzo
-  https://twitter.com/chrispatuzzo
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-  SOFTWARE.
-*/
-/*kbd.css*/
 kbd {
     background-color: #eee;
     border-radius: 3px;
@@ -37,21 +14,9 @@ kbd {
 
 body {
     font-family: Helvetica, arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.2;
-    padding-top: 10px;
-    padding-bottom: 10px;1
-                         background-color: white;
+    background-color: white;
     padding: 30px;
     color: #333;
-}
-
-body > *:first-child {
-    margin-top: 0 !important;
-}
-
-body > *:last-child {
-    margin-bottom: 0 !important;
 }
 
 a {
@@ -59,131 +24,39 @@ a {
     text-decoration: none;
 }
 
-a.absent {
-    color: #cc0000;
-}
-
-a.anchor {
-    display: block;
-    padding-left: 30px;
-    margin-left: -30px;
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    margin: 20px 0 10px;
-    padding: 0;
+h1, h2, h3, h4 {
+    color: darkred;
     font-weight: bold;
-    -webkit-font-smoothing: antialiased;
-    cursor: text;
-    position: relative;
-}
-
-h2:first-child, h1:first-child, h1:first-child + h2, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
-    text-decoration: none;
-}
-
-h1 tt, h1 code {
-    font-size: inherit;
-}
-
-h2 tt, h2 code {
-    font-size: inherit;
-}
-
-h3 tt, h3 code {
-    font-size: inherit;
-}
-
-h4 tt, h4 code {
-    font-size: inherit;
-}
-
-h5 tt, h5 code {
-    font-size: inherit;
-}
-
-h6 tt, h6 code {
-    font-size: inherit;
 }
 
 h1 {
-    font-size: 28px;
-    color: black;
+    font-size: 1.8em;
+    border-bottom: 4px solid #cccccc;
 }
 
 h2 {
-    font-size: 24px;
-    border-bottom: 1px solid #cccccc;
-    color: black;
+    font-size: 1.6em;
+    border-bottom: 3px solid darkred;
 }
 
 h3 {
-    font-size: 18px;
+    font-size: 1.5em;
+    border-bottom: 2px solid #cccccc;
 }
 
 h4 {
-    font-size: 16px;
+    font-size: 1.4em;
+    border-bottom: 1px solid #cccccc;
 }
 
-h5 {
-    font-size: 14px;
-}
-
-h6 {
-    color: #777777;
-    font-size: 14px;
-}
-
-/* p, blockquote, ul, ol, dl, li, table, pre { */
-/*   margin: 15px 0; */
-/* } */
 p, pre {
-    margin: 15px 0;
+    padding-top: 0em;
+    /* padding-bottom: .3em; */
 }
 
 hr {
-    /* border: 0 none; */
-    border: 3px solid grey;
+    border: 3px solid darkred;
     border-radius: 3px;
-}
-
-body > h2:first-child {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-body > h1:first-child {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-body > h1:first-child + h2 {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
-    margin-top: 0;
 }
 
 li p.first {
@@ -358,48 +231,6 @@ span.float-right > span {
     text-align: right;
 }
 
-/* code, tt { */
-/*   margin: 0 2px; */
-/*   padding: 0 5px; */
-/*   white-space: nowrap; */
-/*   border: 1px solid #eaeaea; */
-/*   background-color: #f8f8f8; */
-/*   border-radius: 3px; */
-/* } */
-
-/* pre code { */
-/*   margin: 0; */
-/*   padding: 0; */
-/*   white-space: pre; */
-/*   border: none; */
-/*   background: transparent; */
-/* } */
-
-/* .highlight pre { */
-/*   background-color: #f8f8f8; */
-/*   border: 1px solid #cccccc; */
-/*   font-size: 13px; */
-/*   line-height: 19px; */
-/*   overflow: auto; */
-/*   padding: 6px 10px; */
-/*   border-radius: 3px; */
-/* } */
-
-/* pre { */
-/*   background-color: #f8f8f8; */
-/*   border: 1px solid #cccccc; */
-/*   font-size: 13px; */
-/*   line-height: 19px; */
-/*   overflow: auto; */
-/*   padding: 6px 10px; */
-/*   border-radius: 3px; */
-/* } */
-
-/* pre code, pre tt { */
-/*   background-color: transparent; */
-/*   border: none; */
-/* } */
-
 table {
   border-collapse: collapse;
   margin-left: 4px;
@@ -409,11 +240,26 @@ table {
 }
 
 th, td {
-  text-align: left;
-  padding: 3px;
-  border-bottom: 1px solid #ddd;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 0px;
+    border-right: 0px;
+    line-height: 1em;
 }
 
+.org-center {
+    text-align: center;
+}
+.org-left {
+   text-align: left;
+}
+.org-right  {
+   text-align: right;
+}
 
 tr:nth-child(even){background-color: #f2f2f2}
 
