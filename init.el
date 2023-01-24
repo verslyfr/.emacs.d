@@ -778,6 +778,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;; The org-theme-css-dir has the path where org files are stored.  
 (defvar org-theme-css-dir (expand-file-name "org-css/" user-emacs-directory)
   "Location of css files for org export.")
+(defvar org-theme-skip-style nil "skip styling due to handling somewhere else")
 
 (defun org-theme ()
   "Provides a prompt to collect the CSS theme to use during export."
@@ -790,7 +791,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 (defun set-org-html-style (&optional backend)
   "A hook function to select the CSS html style to incorporate into the export."
   (interactive)
-  (when (or (null backend) (eq backend 'html))
+  (when (and (or (null backend) (eq backend 'html)) (eq org-theme-skip-style nil))
     (let ((f (or (and (boundp 'org-theme-css) org-theme-css) (org-theme))))
       (if (file-exists-p f)
           (progn
@@ -872,6 +873,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-hide-emphasis-markers t)
   (org-log-done 'time)
   (org-log-done-with-time nil)
+  (org-html-postamble nil)
   (org-emphasis-alist
    '(("*"
       (bold :foreground "Orange"))
@@ -1029,12 +1031,68 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                  (window-width . 0.33)
                  (window-height . fit-window-to-buffer))))
 
-;;; ox-clip
-(use-package ox-clip
-  :ensure t
-  :custom
-   (ox-clip-w32-cmd "powershell -Command '$input | set-clipboard -ashtml'")
-  :bind ("C-C x" . ox-clip-formatted-copy))
+
+;;; ox-frl-clip
+(require 'htmlize)
+(defun ox-frl-clip (r1 r2)
+  "Export the selected region to HTML and copy it to the clipboard.
+R1 and R2 define the selected region."
+  (interactive "r")
+  ;; (copy-region-as-kill r1 r2)
+  (if (equal major-mode 'org-mode)
+      (save-window-excursion
+        (let* ((org-html-with-latex 'dvipng)
+               (outfile (expand-file-name "~/.frl-clip.html"))
+               (org-theme-skip-style t)
+               (org-theme-css (concat org-theme-css-dir "github-cleantable.css"))
+	       (buf (org-export-to-buffer 'html "*Formatted Copy*" nil nil t t))
+               (html (with-current-buffer buf (buffer-string)))
+               (f (or (and (boundp 'org-theme-css) org-theme-css) (org-theme))))
+          (message (format "filename=%s" f))
+          (if (file-exists-p f)
+              (with-current-buffer buf
+                (goto-char (point-min))
+                (insert (with-temp-buffer
+                          (insert "<style type=\"text/css\">\n<!--/*--><![CDATA[/*><!--*/\n") 
+                          (insert-file-contents f)
+                          (goto-char (point-max))
+                          (insert "\n/*]]>*/-->\n</style>\n")
+                          (buffer-string))
+                        )
+                (clone-buffer "*lyvers-test-buffer*")
+                (goto-char (point-max))))
+          (cond
+           ((eq system-type 'windows-nt)
+            (with-current-buffer buf
+              (write-region nil nil outfile)
+              (call-process "powershell.exe" nil nil nil
+                            "type" outfile "|" "set-clipboard" "-ashtml")
+              (message "HTML is on the clipboard."))))
+          (kill-buffer buf)))
+    ;; Use htmlize when not in org-mode.
+    (progn
+      (deactivate-mark)
+      (let* ((outfile (expand-file-name "~/.frl-clip.html"))
+             (html (htmlize-region-for-paste r1 r2)))
+      (cond
+       ((eq system-type 'windows-nt)
+        (with-temp-buffer
+          (insert html)
+          (write-region nil nil outfile)
+          (call-process "powershell.exe" nil nil nil
+                        "type" outfile "|" "set-clipboard" "-ashtml")
+          (message "HTML is on the clipboard.")))
+       ((eq system-type 'darwin) (message "Unsupported - see ox-clip"))
+       ((eq system-type 'gnu/linux) (message "Unsupported - see ox-clip"))
+       )))))
+
+(global-set-key (kbd "C-c x") 'ox-frl-clip)
+
+;; (use-package ox-clip
+;;   :ensure t
+;;   :custom
+;;    (ox-clip-w32-cmd "powershell -Command \"$input | set-clipboard -ashtml\"")
+;;   :bind ("C-C x" . ox-clip-formatted-copy))
 ;;; ox-pandoc
 (use-package ox-pandoc
   :ensure t
