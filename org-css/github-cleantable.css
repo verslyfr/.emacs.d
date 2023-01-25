@@ -11,118 +11,103 @@ kbd {
     padding: 2px 4px;
     white-space: nowrap;
 }
-
 body {
     font-family: Calibri, Helvetica, arial, sans-serif;
     background-color: white;
     padding: 30px;
     color: #333;
 }
-
 a {
     color: #4183C4;
     text-decoration: none;
 }
-
-h1, h2, h3, h4 {
+h1 {
+    border-bottom: 4px solid #cccccc;
     color: darkred;
+    font-size: 1.8em;
     font-weight: bold;
 }
-
-h1 {
-    font-size: 1.8em;
-    border-bottom: 4px solid #cccccc;
-}
-
 h2 {
-    font-size: 1.6em;
     border-bottom: 3px solid darkred;
+    color: darkred;
+    font-size: 1.6em;
+    font-weight: bold;
 }
-
 h3 {
-    font-size: 1.5em;
     border-bottom: 2px solid #cccccc;
+    color: darkred;
+    font-size: 1.5em;
+    font-weight: bold;
 }
-
 h4 {
-    font-size: 1.4em;
     border-bottom: 1px solid #cccccc;
+    color: darkred;
+    font-size: 1.4em;
+    font-weight: bold;
 }
-
 p, pre {
-    padding-top: 0em;
-    /* padding-bottom: .3em; */
+    padding-top: 0;
+    /* padding-bottom: .3em;
+     */
 }
-
 hr {
     border: 3px solid darkred;
     border-radius: 3px;
 }
-
-li p.first {
+li .first {
     display: inline-block;
 }
-
 ul, ol {
     padding-left: 30px;
 }
-
 ul :first-child, ol :first-child {
     margin-top: 0;
 }
-
 ul :last-child, ol :last-child {
     margin-bottom: 0;
 }
-
 dl {
     padding: 0;
 }
-
 dl dt {
     font-weight: bold;
     font-style: italic;
     padding: 0;
-    /* margin: 15px 0 5px; */
+    /* margin: 15px 0 5px;
+     */
 }
-
 dl dt:first-child {
     padding: 0;
 }
-
 dl dt > :first-child {
     margin-top: 0;
 }
-
 dl dt > :last-child {
     margin-bottom: 0;
 }
-
 dl dd {
     margin: 0 0 15px;
     padding: 0 15px;
 }
-
 dl dd > :first-child {
     margin-top: 0;
 }
-
 dl dd > :last-child {
     margin-bottom: 0;
 }
-
 blockquote {
     background: #ddd;
     border-left: 10px solid #aaa;
     margin: 1.5em 10px;
     margin-left: 1em;
-    margin-right: 5em; 
+    margin-right: 5em;
     padding: 0.5em 10px;
     quotes: "\201C""\201D""\2018""\2019";
 }
 blockquote:before {
     color: #ccc;
-    /* content: open-quote; */
+    /* content: open-quote;
+     */
     font-size: 4em;
     line-height: 0.1em;
     margin-right: 0.25em;
@@ -130,23 +115,20 @@ blockquote:before {
 }
 blockquote p {
     font: 17px "Times New Roman", serif;
-    /*  display: inline;  */
+    /* display: inline;
+     */
 }
-
 img {
     max-width: 100%;
 }
-
 .underline {
     text-decoration: underline blue;
     font-style: italic;
 }
-
 span.frame {
     display: block;
     overflow: hidden;
 }
-
 span.frame > span {
     border: 1px solid #dddddd;
     display: block;
@@ -156,111 +138,94 @@ span.frame > span {
     padding: 7px;
     width: auto;
 }
-
 span.frame span img {
     display: block;
     float: left;
 }
-
 span.frame span span {
     clear: both;
     color: #333333;
     display: block;
     padding: 5px 0 0;
 }
-
 span.align-center {
     display: block;
     overflow: hidden;
     clear: both;
 }
-
 span.align-center > span {
     display: block;
     overflow: hidden;
     margin: 13px auto 0;
     text-align: center;
 }
-
 span.align-center span img {
     margin: 0 auto;
     text-align: center;
 }
-
 span.align-right {
     display: block;
     overflow: hidden;
     clear: both;
 }
-
 span.align-right > span {
     display: block;
     overflow: hidden;
     margin: 13px 0 0;
     text-align: right;
 }
-
 span.align-right span img {
     margin: 0;
     text-align: right;
 }
-
 span.float-left {
     display: block;
     margin-right: 13px;
     overflow: hidden;
     float: left;
 }
-
 span.float-left span {
     margin: 13px 0 0;
 }
-
 span.float-right {
     display: block;
     margin-left: 13px;
     overflow: hidden;
     float: right;
 }
-
 span.float-right > span {
     display: block;
     overflow: hidden;
     margin: 13px auto 0;
     text-align: right;
 }
-
 table {
-  border-collapse: collapse;
-  margin-left: 2em;
+    border-collapse: collapse;
+    border-radius: 2px;
+    margin-left: 2em;
 }
-
 th, td {
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-bottom: 0px;
-    padding-top: 0px;
+    padding: 0 1em 0 1em;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
-    border-left: 0px;
-    border-right: 0px;
+    border-left: 0;
+    border-right: 0;
     line-height: 1em;
 }
-
-tr:nth-child(even){background-color: #f2f2f2}
-
-th {
-  background-color: darkred;
-  color: white;
+tr:nth-child(even){
+    background-color: #f2f2f2
 }
-
-
+th {
+    background-color: darkred;
+    color: white;
+}
 .org-center {
     text-align: center;
 }
 .org-left {
-   text-align: left;
+    text-align: left;
 }
-.org-right  {
-   text-align: right;
+.org-right {
+    text-align: right;
 }
+
