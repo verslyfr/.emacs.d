@@ -13,7 +13,7 @@ kbd {
 }
 
 body {
-    font-family: Helvetica, arial, sans-serif;
+    font-family: Calibri, Helvetica, arial, sans-serif;
     background-color: white;
     padding: 30px;
     color: #333;
@@ -80,11 +80,10 @@ dl {
 }
 
 dl dt {
-    font-size: 14px;
     font-weight: bold;
     font-style: italic;
     padding: 0;
-    margin: 15px 0 5px;
+    /* margin: 15px 0 5px; */
 }
 
 dl dt:first-child {
@@ -233,10 +232,7 @@ span.float-right > span {
 
 table {
   border-collapse: collapse;
-  margin-left: 4px;
-  margin-right: 6px;
-  font-family: Helvetica, arial, sans-serif;
-  <!-- width: 100%; -->
+  margin-left: 2em;
 }
 
 th, td {
@@ -251,6 +247,14 @@ th, td {
     line-height: 1em;
 }
 
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+  background-color: darkred;
+  color: white;
+}
+
+
 .org-center {
     text-align: center;
 }
@@ -259,11 +263,4 @@ th, td {
 }
 .org-right  {
    text-align: right;
-}
-
-tr:nth-child(even){background-color: #f2f2f2}
-
-th {
-  background-color: #2f4f4f;
-  color: white;
 }
