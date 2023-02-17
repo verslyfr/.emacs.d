@@ -394,15 +394,20 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
 (message "Loading ahk")
 (use-package ahk-mode
   :ensure t
-  :init
-  (add-hook 'ahk-mode-hook
-            (lambda() "Initialize outline-mode"
-              (outline-minor-mode)))
-  :mode "\\.ahk\\'"
+  :hook '((ahk-mode . outline-minor-mode))
+  :mode "\\.ahk[2]*\\'"
   :custom
-  (ahk-indentation 4)
+  (ahk-indentation 2)
   :config
   (setq outline-regexp ";;+"))
+
+(use-package python-mode
+  :ensure nil  ; makes sure that Emacs in-build python-mode is used
+  :hook
+  (python-mode . eglot-ensure)  ; connect to language server when py-file is opened
+  :custom
+  (python-shell-interpreter "python3")
+  )
 
 ;;; all-the-icons
 (message "Loading all-the-icons")
