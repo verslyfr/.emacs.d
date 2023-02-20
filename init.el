@@ -394,7 +394,8 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
 (message "Loading ahk")
 (use-package ahk-mode
   :ensure t
-  :hook '((ahk-mode . outline-minor-mode))
+  :hook '((ahk-mode . outline-minor-mode)
+          (ahk-mode . eglot-ensure))
   :mode "\\.ahk[2]*\\'"
   :custom
   (ahk-indentation 2)
@@ -846,6 +847,10 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 	 ("C-c c" . #'org-capture)
          ("C-c C" . #'org-capture-goto-last-stored)
          :map org-mode-map
+         ("C-S-right" . nil)
+         ("C-S-left" . nil)
+         ("S-right" . nil)
+         ("S-left" . nil)
          ("M-SPC e" . org-emphasize)
          ("M-SPC t s" . org-table-shrink)
          ("M-SPC t e" . org-table-edit-field)
