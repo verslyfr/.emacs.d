@@ -878,7 +878,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
       ((org-agenda-compact-blocks t)))))
   (org-agenda-files '("~/OneDrive/notes"))
   (org-agenda-file-regexp "\\`[^.].*\\.txt\\'")
-  (org-todo-keywords '((sequence "TODO(t)" "WAIT(w@)" "|" "DONE(d)" "CANCEL(c)")))
+  (org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANCEL(c)")))
   (org-support-shift-select t)          ; shift works in special headings
   (org-hide-emphasis-markers t)
   (org-log-done 'time)
