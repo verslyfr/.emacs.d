@@ -881,6 +881,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANCEL(c)")))
   (org-support-shift-select t)          ; shift works in special headings
   (org-hide-emphasis-markers t)
+  (org-use-fast-todo-selection 'expert)
   (org-log-done 'time)
   (org-log-done-with-time nil)
   (org-html-postamble nil)
