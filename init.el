@@ -71,6 +71,7 @@
 ;;;; Visuals
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (load-theme 'modus-operandi t)
+(put 'narrow-to-region 'disabled nil)
 
 ;; emojis
 (use-package emojify
