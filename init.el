@@ -840,6 +840,15 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           (string-trim
            (substring-no-properties(org-table-get-field))))))
 
+
+;;   frl/get-open-org-file      :arrow_right: select a buffer from org buffers
+(defun frl/get-open-org-file ()
+  (buffer-file-name
+   (get-buffer
+    (org-icompleting-read "Buffer: "
+                          (mapcar 'buffer-name
+                                  (org-buffer-list 'files))))))
+
 (use-package org
   :ensure t
   :commands org-mode
@@ -877,6 +886,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                                                 (org-agenda-skip-if nil '(scheduled deadline))))
                  (org-agenda-overriding-header "ALL normal priority tasks:"))))
       ((org-agenda-compact-blocks t)))))
+  (org-refile-targets '((frl/get-open-org-file . (:maxlevel . 1))))
+  (org-outline-path-complete-in-steps nil)
   (org-agenda-files '("~/OneDrive/notes"))
   (org-agenda-file-regexp "\\`[^.].*\\.txt\\'")
   (org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANCEL(c)")))
