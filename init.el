@@ -927,8 +927,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (setq org-capture-templates
         '(
           ;; Templates for tasks
-          ("t" "Tasks")
-          ("tt" "Todo"
+          ("t" "Todo"
            entry (file+headline "todo.txt" "Inbox")
            "* TODO %?
 :PROPERTIES:
@@ -936,23 +935,14 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 :link: %a
 :END:
  %i" :prepend t)
-          ("tw" "Wait"
-           entry (file+headline "todo.txt" "Inbox")
-           "* WAIT @%^{waiting on} %?
-:PROPERTIES:
-:created: %u
-:link: %a
-:END:
- %i" :prepend t)
-          ("m" "Meeting")
-          ("mn" "Meeting Notes" entry
+          ("n" "Meeting Notes" entry
            (file+function buffer-name (lambda () (goto-char (point))))
            "* %u %^{Subject}%^{attendees|Randy Lyvers;}p
 ** Notes
 - %?
 ** Actions
 ")
-          ("ma" "Meeting Agenda" entry
+          ("a" "Meeting Agenda" entry
            (file+function buffer-name (lambda () (goto-char (point))))
            "* %^u %^{Subject}%^{attendees|Randy Lyvers;}p
  *P*: %^{Purpose} \\\\
@@ -965,6 +955,20 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ** Actions
 ")
           ))
+  (add-to-list 'org-capture-templates
+               '("w"                    ; keybinding
+                 "Wait"                 ; short name in template
+                 plain (file+headline
+                        "todo.txt"      ; filename
+                        "Inbox")        ; heading
+                 "%?"
+                 :jump-to-captured t
+                 :hook (lambda ()
+                         (yas-expand-snippet
+                          (yas-lookup-snippet
+                           "wait"       ; yasnippet name
+                           'org-mode t)))))
+
   (visual-line-mode t)
   (org-babel-do-load-languages 'org-babel-load-languages
                                '(             ; (python . t)

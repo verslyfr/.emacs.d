@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: wait
+# key: :wait
+# --
+** WAIT @${wait for} $0
