@@ -16,7 +16,8 @@
 ;; and `package-pinned-packages`. Most users will not need or want to do this.
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("ox-odt" . "https://kjambunathan.github.io/elpa/") t)  ;; for ox-odt 
+(add-to-list 'package-archives '("ox-odt" . "https://kjambunathan.github.io/elpa/") t)  ;; for ox-odt
+(setq package-gnupghome-dir (expand-file-name "elpa/gnupg" user-emacs-directory))
 (package-initialize)
 
 ;; fetch the list of packages available 
@@ -861,14 +862,11 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("C-S-<left>" . nil)
          ("S-<right>" . nil)
          ("S-<left>" . nil)
-         ("M-SPC e" . org-emphasize)
-         ("M-SPC t s" . org-table-shrink)
-         ("M-SPC t e" . org-table-edit-field)
-         ("M-SPC TAB" . org-table-toggle-column-width)
+         ("C-c o n" . org-toggle-narrow-to-subtree)
          ("C-c i" . org-time-stamp-inactive)
          ("C-c e" . org-emphasize)
-         ("C-c t s" . org-table-shrink)
-         ("C-c t e" . org-table-edit-field)
+         ("C-c o t s" . org-table-shrink)
+         ("C-c o t e" . org-table-edit-field)
          ("C-c TAB" . org-table-toggle-column-width)
          ("C-c y" . frl-copy-cell)
          )
