@@ -862,13 +862,14 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("C-S-<left>" . nil)
          ("S-<right>" . nil)
          ("S-<left>" . nil)
+         ("C-c o e" . org-emphasize)
          ("C-c o n" . org-toggle-narrow-to-subtree)
-         ("C-c i" . org-time-stamp-inactive)
-         ("C-c e" . org-emphasize)
+         ("C-c o l" . org-toggle-link-display)
+         ("C-c o i" . org-time-stamp-inactive)
+         ("C-c o t w" . org-table-toggle-column-width)
          ("C-c o t s" . org-table-shrink)
          ("C-c o t e" . org-table-edit-field)
-         ("C-c TAB" . org-table-toggle-column-width)
-         ("C-c y" . frl-copy-cell)
+         ("C-c o c" . frl-copy-cell)
          )
   :mode ("\\.txt\\'" . 'org-mode)
   :custom
@@ -916,6 +917,12 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-ellipsis "…")
   (org-html-validation-link nil)
   :config
+
+  (which-key-add-key-based-replacements
+  "C-c o" "org"
+  "C-c t" "toggle"
+  "C-c o t" "org-table")
+  
   ;; open standard file types in Windows executables if on windows
   (if (eq system-type 'windows-nt)
       (add-to-list 'org-file-apps 
