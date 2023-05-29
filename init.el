@@ -1420,6 +1420,15 @@ R1 and R2 define the selected region."
   :after (treemacs magit)
   :ensure t)
 
+;;; tree-sitter
+(setq major-mode-remap-alist
+ '((yaml-mode . yaml-ts-mode)
+   (bash-mode . bash-ts-mode)
+   (js2-mode . js-ts-mode)
+   (typescript-mode . typescript-ts-mode)
+   (json-mode . json-ts-mode)
+   (css-mode . css-ts-mode)
+   (python-mode . python-ts-mode)))
 ;;; vertico
 (use-package vertico
   :ensure t

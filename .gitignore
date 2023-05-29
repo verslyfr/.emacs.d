@@ -17,3 +17,7 @@ eln-cache/
 eshell/
 emojis/
 fonts/
+init.wip.el
+plugins/eglot-ahk.el
+tramp
+vscode-autohotkey2-lsp/
