@@ -17,7 +17,9 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("ox-odt" . "https://kjambunathan.github.io/elpa/") t)  ;; for ox-odt
-(setq package-gnupghome-dir (expand-file-name "elpa/gnupg" user-emacs-directory))
+;(setq package-gnupghome-dir (expand-file-name "elpa/gnupg" user-emacs-directory))
+(setq package-gnupghome-dir nil)
+(setq package-menu-async nil)
 (package-initialize)
 
 ;; fetch the list of packages available 
@@ -32,7 +34,6 @@
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
-
 
 ;;; sample code
 ;; code snippet for how to add keys to a mode
