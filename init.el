@@ -112,7 +112,7 @@
 (column-number-mode)
 (delete-selection-mode 1)
 (electric-pair-mode 1)
-(global-auto-revert-mode 1)        ; Revert buffers when the underlying file has changed
+(global-auto-revert-mode -1)        ; Revert buffers when the underlying file has changed
 (prefer-coding-system 'utf-8-unix) 
 (recentf-mode 1)
 (save-place-mode 1)                ; Remember and restore the last cursor location
