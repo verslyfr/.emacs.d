@@ -334,7 +334,7 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
     (define-key map "bj" 'bookmark-jump)
     (define-key map "d"  'dired-jump)
     (define-key map "k"  'describe-bindings)
-    (define-key map "r SPC" 'point-to-register)
+    (define-key map "r " 'point-to-register)
     (define-key map "rj" 'jump-to-register)
     (define-key map "tm" 'modus-themes-toggle)
     (define-key map "W"  'frl-browse-lucky)
@@ -342,7 +342,6 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
     (define-key map "rr" 'cua-rectangle-mark-mode)
     map)
   "My key map.")
-(define-key (current-global-map) (kbd "M-<SPC>") frl-map)
 (define-key (current-global-map) (kbd "C-c") frl-map)
 
 (global-set-key (kbd "C-S-c") 'kill-ring-save)
@@ -364,16 +363,12 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
 
 ;;; abbrev
 (message "Loading abbrev")
-(global-set-key (kbd "M-SPC ae") 'edit-abbrevs)            ; edit
-(global-set-key (kbd "M-SPC aa") 'add-mode-abbrev)         ; add; c-u word count
-(global-set-key (kbd "M-SPC at") 'inverse-add-mode-abbrev) ; add typo
-(global-set-key (kbd "M-SPC al") 'list-abbrevs)            ; list
-(global-set-key (kbd "M-SPC aw") 'write-abbrev-file)       ; save
-(global-set-key (kbd "C-c ae") 'edit-abbrevs)              ; edit
-(global-set-key (kbd "C-c aa") 'add-mode-abbrev)           ; add; c-u word count
-(global-set-key (kbd "C-c at") 'inverse-add-mode-abbrev)   ; add typo
-(global-set-key (kbd "C-c al") 'list-abbrevs)              ; list
-(global-set-key (kbd "C-c aw") 'write-abbrev-file)         ; save
+(define-prefix-command 'abbrev-map nil "abbrevs")
+(define-key frl-map (kbd "Ae") 'edit-abbrevs)
+(define-key frl-map (kbd "Aa") 'add-mode-abbrev)           ; add; c-u word count
+(define-key frl-map (kbd "At") 'inverse-add-mode-abbrev)   ; add typo
+(define-key frl-map (kbd "Al") 'list-abbrevs)              ; list
+(define-key frl-map (kbd "Aw") 'write-abbrev-file)         ; save
 
 ;; enable abbrev mode in some individual modes
 (dolist (hook '(text-mode-hook          ; the list of modes to enable abbrev
@@ -1314,8 +1309,7 @@ R1 and R2 define the selected region."
 (use-package rg
   :ensure t
   :commands rg-menu
-  :bind (("M-SPC g" . 'rg-menu)
-         ("C-c g" . 'rg-menu)))
+  :bind (("C-c g" . 'rg-menu)))
 
 ;;; separedit
 (use-package separedit
@@ -1471,7 +1465,6 @@ R1 and R2 define the selected region."
   :bind (:map vterm-mode-map (("C-o" . nil)  ; allow c-o to switch buffers
 			      ("M-b" . nil)  ; allow M-b to list buffers
 			      ("C-S-x" . nil) ; allow to pass thru
-			      ("M-SPC" . nil)
 			      ("C-S-v" . vterm-yank) ; Ctrl-Shift-V
 			      ))
   :custom ((vterm-shell "zsh")))
