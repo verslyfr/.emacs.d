@@ -647,6 +647,12 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
   :hook (after-init . doom-modeline-mode)
   :custom ((doom-modeline-height 15)))
 
+;;; modeline nerd-icons
+;; Install the nerd icons by using, then install the font on Windows 
+;;     M-x nerd-icons-install-fonts
+(use-package nerd-icons
+  :ensure t)
+
 ;;; orderless
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
