@@ -1519,7 +1519,7 @@ R1 and R2 define the selected region."
 (setq custom-file (locate-user-emacs-file (expand-file-name "custom-vars.el" user-emacs-directory)))
 (load custom-file)
 
-;;; the closing
+;;; the closing message
 (message (format "finished running my init.el. Time taken was %s." (emacs-init-time))) 
 
 (provide 'init)
