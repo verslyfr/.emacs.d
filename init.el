@@ -1245,27 +1245,30 @@ R1 and R2 define the selected region."
   ;; Restart the python process when switching environments
   (add-hook 'pyvenv-post-activate-hooks (lambda ()
                                           (pyvenv-restart-python)))
-  :hook (python-mode . pyvenv-mode))
+  :hook (python-ts-mode . pyvenv-mode))
 
 ;;;; code-cells
 (defun frl-code-cells ()
   "Load code-cell-mode and start REPL for Python."
   (interactive)
-  (jupyter-run-repl "python3" nil t nil nil)
+;;  (jupyter-run-repl "python" nil t nil nil)
+  (run-python)
   ;; (jupyter-repl-associate-buffer nil)
   (code-cells-mode 1))
 
 (use-package code-cells
   :ensure t
   :defer t
-  :after 'jupyter
   :commands code-cells-mode
   :bind (:map code-cells-mode-map
               ("M-p" . 'code-cells-backward-cell)
               ("M-n" . 'code-cells-forward-cell)
               ("C-c C-c" . 'code-cells-eval)
-              ([remap jupyter-eval-line-or-region] . 'code-cells-eval
-               )))
+              ([remap jupyter-eval-line-or-region] . 'code-cells-eval)
+              ([remap python-shell-send-region] . 'code-cells-eval))
+  :config
+  (add-to-list 'code-cells-eval-region-commands '(python-ts-mode . python-shell-send-region))
+  )
 
 ;;;; jupyter
 (use-package jupyter
