@@ -868,6 +868,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("C-c o n" . org-toggle-narrow-to-subtree)
          ("C-c o l" . org-toggle-link-display)
          ("C-c o i" . org-time-stamp-inactive)
+         ("C-c o h" . org-toggle-heading)
          ("C-c o t w" . org-table-toggle-column-width)
          ("C-c o t s" . org-table-shrink)
          ("C-c o t e" . org-table-edit-field)
