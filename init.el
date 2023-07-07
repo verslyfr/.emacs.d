@@ -404,8 +404,9 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
   :ensure nil  ; makes sure that Emacs in-build python-mode is used
   :hook
   (python-mode . eglot-ensure)  ; connect to language server when py-file is opened
+  (python-ts-mode . eglot-ensure)
   :custom
-  (python-shell-interpreter "python3")
+  (python-shell-interpreter "python")
   )
 
 ;;; all-the-icons
@@ -1182,7 +1183,8 @@ R1 and R2 define the selected region."
 ;;;; blacken
 (use-package blacken
   :ensure t
-  :hook (python-mode . blacken-mode))
+  :hook ((python-mode
+          python-ts-mode) . blacken-mode))
 
 ;;;; python
 ;; Built-in Python utilities
@@ -1206,6 +1208,13 @@ R1 and R2 define the selected region."
         (deactivate-mark))
     (message "No region active; can't generate docs!"))
   )
+
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :hook ((python-mode
+;;           python-ts-mode) . (lambda ()
+;;                           (require 'lsp-pyright)
+;;                           (lsp))))  ; or lsp-deferred
 
 (use-package python
   :ensure t
