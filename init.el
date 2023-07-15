@@ -153,14 +153,22 @@
                                       ; OneDrive and it is only me.
 
 ;;;; Save File settings
-(auto-save-visited-mode 1)
-(setq auto-save-interval 1000)          ; save every 1000 characters typed
+;; (auto-save-visited-mode 1)
+;; (setq auto-save-interval 1000)          ; save every 1000 characters typed
+(auto-save-mode 1)
+(defvar BACKUPDIR (expand-file-name "~/.saves"))
+(setq backup-directory-alist
+ `((".*" . ,BACKUPDIR)))                   ; don't litter my fs tree
+(setq auto-save-timeout 10)
+(setq auto-save-file-name-transforms
+      `(("\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" ,(concat temporary-file-directory "\\2") t)
+        ("\\`/\\([^/]*/\\)*\\([^/]*\\)\\'" ,(concat BACKUPDIR "\\2") t)
+        ("\\`[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" ,(concat BACKUPDIR "\\2") t)
+        ))
 
 ;;;; Backup settings
 (setq
  backup-by-copying t               ; don't clobber symlinks-
- backup-directory-alist
- '(("." . "~/.saves"))             ; don't litter my fs tree
  delete-old-versions t
  kept-new-versions 6
  kept-old-versions 2
@@ -1496,36 +1504,36 @@ R1 and R2 define the selected region."
 ;; (setenv "SHELL" shell-file-name)
 ;; (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)
 
-;; Ignore modification-time-only changes in files, i.e. ones that
-;; don't really change the contents.  This happens often with
-;; switching between different VC buffers.
+;; ;; Ignore modification-time-only changes in files, i.e. ones that
+;; ;; don't really change the contents.  This happens often with
+;; ;; switching between different VC buffers.
 
-(defun update-buffer-modtime-if-byte-identical ()
-  (let* ((size      (buffer-size))
-         (byte-size (position-bytes size))
-         (filename  buffer-file-name))
-    (when (and byte-size (<= size 1000000))
-      (let* ((attributes (file-attributes filename))
-             (file-size  (nth 7 attributes)))
-        (when (and file-size
-                   (= file-size byte-size)
-                   (string= (buffer-substring-no-properties 1 (1+ size))
-                            (with-temp-buffer
-                              (insert-file-contents filename)
-                              (buffer-string))))
-          (set-visited-file-modtime (nth 5 attributes))
-          t)))))
+;; (defun update-buffer-modtime-if-byte-identical ()
+;;   (let* ((size      (buffer-size))
+;;          (byte-size (position-bytes size))
+;;          (filename  buffer-file-name))
+;;     (when (and byte-size (<= size 1000000))
+;;       (let* ((attributes (file-attributes filename))
+;;              (file-size  (nth 7 attributes)))
+;;         (when (and file-size
+;;                    (= file-size byte-size)
+;;                    (string= (buffer-substring-no-properties 1 (1+ size))
+;;                             (with-temp-buffer
+;;                               (insert-file-contents filename)
+;;                               (buffer-string))))
+;;           (set-visited-file-modtime (nth 5 attributes))
+;;           t)))))
 
-(defun verify-visited-file-modtime--ignore-byte-identical (original &optional buffer)
-  (or (funcall original buffer)
-      (with-current-buffer buffer
-        (update-buffer-modtime-if-byte-identical))))
-(advice-add 'verify-visited-file-modtime :around #'verify-visited-file-modtime--ignore-byte-identical)
+;; (defun verify-visited-file-modtime--ignore-byte-identical (original &optional buffer)
+;;   (or (funcall original buffer)
+;;       (with-current-buffer buffer
+;;         (update-buffer-modtime-if-byte-identical))))
+;; (advice-add 'verify-visited-file-modtime :around #'verify-visited-file-modtime--ignore-byte-identical)
 
-(defun ask-user-about-supersession-threat--ignore-byte-identical (original &rest arguments)
-  (unless (update-buffer-modtime-if-byte-identical)
-    (apply original arguments)))
-(advice-add 'ask-user-about-supersession-threat :around #'ask-user-about-supersession-threat--ignore-byte-identical)
+;; (defun ask-user-about-supersession-threat--ignore-byte-identical (original &rest arguments)
+;;   (unless (update-buffer-modtime-if-byte-identical)
+;;     (apply original arguments)))
+;; (advice-add 'ask-user-about-supersession-threat :around #'ask-user-about-supersession-threat--ignore-byte-identical)
 
 ;;; custom-file
 ;; Move customization variables to a separate file and load it
