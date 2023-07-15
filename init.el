@@ -156,12 +156,12 @@
 ;; (auto-save-visited-mode 1)
 ;; (setq auto-save-interval 1000)          ; save every 1000 characters typed
 (auto-save-mode 1)
-(defvar BACKUPDIR (expand-file-name "~/.saves"))
+(defvar BACKUPDIR (expand-file-name "~/.saves/"))
 (setq backup-directory-alist
  `((".*" . ,BACKUPDIR)))                   ; don't litter my fs tree
-(setq auto-save-timeout 10)
+(setq auto-save-timeout 30)
 (setq auto-save-file-name-transforms
-      `(("\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" ,(concat temporary-file-directory "\\2") t)
+      `(("\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" ,(concat BACKUPDIR "\\2") t)
         ("\\`/\\([^/]*/\\)*\\([^/]*\\)\\'" ,(concat BACKUPDIR "\\2") t)
         ("\\`[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" ,(concat BACKUPDIR "\\2") t)
         ))
