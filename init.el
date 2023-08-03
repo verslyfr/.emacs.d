@@ -92,17 +92,12 @@
                     ((numberp (cadr alpha)) (cadr alpha)))
               100)
          '(85 . 50) '(100 . 100)))))
-(global-set-key (kbd "C-c tt") 'toggle-transparency)
 
 ;; Set transparency of emacs
 (defun transparency (value)
   "Sets the transparency of the frame window. 0=transparent/100=opaque"
   (interactive "nTransparency Value 0 - 100 opaque:")
   (set-frame-parameter (selected-frame) 'alpha value))
-
-;; toggle truncate lines
-(global-set-key (kbd "C-c t l") 'toggle-truncate-lines)
-
 
 ;; use window divider
 (window-divider-mode)
@@ -151,6 +146,8 @@
 (setq-default buffer-file-coding-system 'utf-8-unix)
 (setq create-lockfiles nil)           ; turn off lock files. Causes issues with
                                       ; OneDrive and it is only me.
+(setq native-comp-async-report-warnings-errors 'silent) ; eat the native compile warnings
+
 
 ;;;; Save File settings
 ;; (auto-save-visited-mode 1)
@@ -348,6 +345,8 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
     (define-key map "W"  'frl-browse-lucky)
     (define-key map "w"  'frl-browse-url-web-search)
     (define-key map "rr" 'cua-rectangle-mark-mode)
+    (define-key map "tl" 'toggle-truncate-lines)
+    (define-key map "tt" 'toggle-transparency)
     map)
   "My key map.")
 (define-key (current-global-map) (kbd "C-c") frl-map)
