@@ -1,5 +1,10 @@
 # -*- mode: snippet -*-
 # name: wait
 # key: :wait
+# binding: C-c y w
 # --
 ** WAIT @${wait for} $0
+SCHEDULED: <`(org-read-date nil nil nil "Wait Until" nil nil 'inactive)`>
+:PROPERTIES:
+:created: <`(format-time-string "%Y-%m-%d")`>
+:END:
