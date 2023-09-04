@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: todo
+# key: :todo
+# binding: C-c y t
+# --
+** TODO $0
+:PROPERTIES:
+:created: <`(format-time-string "%Y-%m-%d")`>
+:END:
