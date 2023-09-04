@@ -66,9 +66,9 @@
 (setq ad-redefinition-action 'accept)
 
 ;;;; fonts
-(set-face-attribute 'default nil :family "Iosevka")
-(set-face-attribute 'fixed-pitch nil :family "Iosevka Term")
-(set-face-attribute 'variable-pitch nil :family "Iosevka Aile")
+(set-face-attribute 'default nil :family "Consolas")
+(set-face-attribute 'fixed-pitch nil :family "Consolas")
+(set-face-attribute 'variable-pitch nil :family "Calibri")
 
 ;;;; Visuals
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -1003,7 +1003,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-modern-symbol nil :family "Iosevka")
   )
-(add-hook 'org-mode-hook 'variable-pitch-mode)
+;; (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 
 ;;; org onenote link
