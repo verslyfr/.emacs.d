@@ -645,11 +645,22 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode)))
 ;;; modeline
-(message "Loading doom-modeline")
-(use-package doom-modeline
+(message "Loading simple-modeline")
+;; (use-package doom-modeline
+;;   :ensure t
+;;   :hook (after-init . doom-modeline-mode)
+;;   :custom ((doom-modeline-height 15)))
+(use-package simple-modeline
   :ensure t
-  :hook (after-init . doom-modeline-mode)
-  :custom ((doom-modeline-height 15)))
+  :hook (after-init . simple-modeline-mode)
+  :custom
+  (simple-modeline-segments
+   '((simple-modeline-segment-modified simple-modeline-segment-buffer-name simple-modeline-segment-position)
+     (simple-modeline-segment-input-method
+      simple-modeline-segment-eol simple-modeline-segment-encoding
+      simple-modeline-segment-vc simple-modeline-segment-misc-info
+      simple-modeline-segment-process
+      simple-modeline-segment-major-mode))))
 
 ;;; modeline nerd-icons
 ;; Install the nerd icons by using, then install the font on Windows 
