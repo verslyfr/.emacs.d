@@ -62,7 +62,6 @@
 ;;;; Increase the GC threshold for faster startup
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 200 1000 1000))
-
 (setq ad-redefinition-action 'accept)
 
 ;;;; fonts
@@ -116,6 +115,7 @@
 (set-language-environment "UTF-8")
 (show-paren-mode 1)
 (global-visual-line-mode t)
+(tab-bar-mode t)
 
 ;;;;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
@@ -916,6 +916,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-support-shift-select t)          ; shift works in special headings
   (org-hide-emphasis-markers t)
   (org-use-fast-todo-selection 'expert)
+  (org-log-into-drawer t)               ; use :logbook: drawers 
   (org-log-done 'time)
   (org-log-done-with-time nil)
   (org-html-postamble nil)
@@ -1024,6 +1025,67 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (w32-shell-execute
    "open"
    (concat "onenote:" link)))
+
+;;; denote
+(defvar denote-key-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map "f" '(lambda () (interactive) (consult-ripgrep denote-directory)))
+    map) "denote-key-map")
+(define-key (current-global-map) (kbd "M-d") denote-key-map)
+
+(use-package denote
+  :ensure t
+  :demand t   ; force the loading of denote
+  :custom
+  (denote-directory "~/OneDrive/notes")
+  :bind 
+         ("M-d c" . denote)
+         ("M-d i" . denote-link-or-create)
+         ("M-d I" . denote-add-links)
+         ("M-d b" . denote-backlinks)
+  :config  
+  ;; since I use .txt files as my org-mode file type, I have to declare the
+  ;; following to set org as .txt
+  (setq denote-file-types
+        '((org
+           :extension ".txt"
+           :date-function denote-date-org-timestamp
+           :front-matter denote-org-front-matter
+           :title-key-regexp "^#\\+title\\s-*:"
+           :title-value-function identity
+           :title-value-reverse-function denote-trim-whitespace 
+           :keywords-key-regexp "^#\\+filetags\\s-*:"
+           :keywords-value-function denote-format-keywords-for-org-front-matter
+           :keywords-value-reverse-function denote-extract-keywords-from-front-matter
+           :link denote-org-link-format
+           :link-in-context-regexp denote-org-link-in-context-regexp)
+          (markdown-yaml
+           :extension ".md"
+           :date-function denote-date-rfc3339
+           :front-matter denote-yaml-front-matter
+           :title-key-regexp "^title\\s-*:"
+           :title-value-function denote-surround-with-quotes
+           :title-value-reverse-function denote-trim-whitespace-then-quotes
+           :keywords-key-regexp "^tags\\s-*:"
+           :keywords-value-function denote-format-keywords-for-md-front-matter
+           :keywords-value-reverse-function denote-extract-keywords-from-front-matter
+           :link denote-md-link-format
+           :link-in-context-regexp denote-md-link-in-context-regexp)
+          (markdown-toml
+           :extension ".md"
+           :date-function denote-date-rfc3339
+           :front-matter denote-toml-front-matter
+           :title-key-regexp "^title\\s-*="
+           :title-value-function denote-surround-with-quotes
+           :title-value-reverse-function denote-trim-whitespace-then-quotes
+           :keywords-key-regexp "^tags\\s-*="
+           :keywords-value-function denote-format-keywords-for-md-front-matter
+           :keywords-value-reverse-function denote-extract-keywords-from-front-matter
+           :link denote-md-link-format
+           :link-in-context-regexp denote-md-link-in-context-regexp) ))
+  )
+
+
 ;;; org-roam
 ;;
 ;; (use-package hi-lock
