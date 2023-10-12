@@ -1036,6 +1036,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 (use-package denote
   :ensure t
   :demand t   ; force the loading of denote
+  :hook (dired-mode . denote-dired-mode-in-directories)
   :custom
   (denote-directory "~/OneDrive/notes")
   :bind 
@@ -1043,7 +1044,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("M-d i" . denote-link-or-create)
          ("M-d I" . denote-add-links)
          ("M-d b" . denote-backlinks)
-  :config  
+  :config
   ;; since I use .txt files as my org-mode file type, I have to declare the
   ;; following to set org as .txt
   (setq denote-file-types
