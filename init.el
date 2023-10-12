@@ -8,7 +8,6 @@
 ;;; Code:
 (message "running my init.el")
 
-
 ;;; Initialize package manager
 (require 'package)
 ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -25,11 +24,10 @@
 ;; fetch the list of packages available 
 (or (file-exists-p package-user-dir)
     (package-refresh-contents)) 
-;; (unless package-archive-contents
-;; (package-refresh-contents))
 
 ;; install the missing packages
 ;; list the packages you want
+(defvar package-list "temporary variable for managing package list")
 (setq package-list '(use-package))
 (dolist (package package-list)
   (unless (package-installed-p package)
@@ -1053,7 +1051,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (w32-shell-execute
    "open"
    (concat "onenote:" link)))
-
 
 
 ;;; denote
