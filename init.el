@@ -555,6 +555,34 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
 
 ;;; dired
 (message "Loading dired")
+
+(defvar frl-dired--limit-hist '()
+  "Minibuffer history for `prot-dired-limit-regexp'.")
+
+;;;###autoload
+(defun frl-dired-limit-regexp (regexp omit)
+  "Limit Dired to keep files matching REGEXP.
+
+With optional OMIT argument as a prefix (\\[universal-argument]),
+exclude files matching REGEXP.
+
+Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
+  (interactive
+   (list
+    (read-regexp
+     (concat "Files "
+             (when current-prefix-arg
+               (propertize "NOT " 'face 'warning))
+             "matching PATTERN: ")
+     nil 'frl-dired--limit-hist)
+    current-prefix-arg))
+  (dired-mark-files-regexp regexp)
+  (unless omit (dired-toggle-marks))
+  (dired-do-kill-lines))
+
+(use-package dired
+  :bind (:map dired-mode-map ("/" . 'frl-dired-limit-regexp)))
+
 (setq dired-listing-switches "-agho --group-directories-first")
 
 (use-package dired-hide-dotfiles
@@ -1026,6 +1054,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
    "open"
    (concat "onenote:" link)))
 
+
+
 ;;; denote
 (defvar denote-key-map
   (let ((map (make-sparse-keymap)))
@@ -1044,6 +1074,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("M-d i" . denote-link-or-create)
          ("M-d I" . denote-add-links)
          ("M-d b" . denote-backlinks)
+         (:map dired-mode-map ("/" . 'frl-dired-limit-regexp))
   :config
   ;; since I use .txt files as my org-mode file type, I have to declare the
   ;; following to set org as .txt
