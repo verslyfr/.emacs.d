@@ -1056,7 +1056,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;;; denote
 (defvar denote-key-map
   (let ((map (make-sparse-keymap)))
-    (define-key map "f" '(lambda () (interactive) (consult-ripgrep denote-directory)))
+    (define-key map "g" '(lambda () (interactive) (consult-ripgrep denote-directory)))
+    ;(define-key map "f" '(lambda () (interactive) (consult-fd denote-directory)))
+    (keymap-set map "f" '(lambda () (interactive) (consult-fd denote-directory)))
     map) "denote-key-map")
 (define-key (current-global-map) (kbd "M-d") denote-key-map)
 
