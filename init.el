@@ -1055,11 +1055,12 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 ;;; denote
 ;; different examples using which-key declaration. 
-(defun frl-denote-find-in-files () (interactive) (consult-fd denote-directory))
+(defun frl-denote-find-filename () (interactive) (consult-fd denote-directory))
+(defun frl-denote-find-in-files () (interactive) (consult-ripgrep denote-directory))
 (defvar denote-key-map
   (let ((map (make-sparse-keymap)))
-    (define-key map "g" '("ripgrep" . '(lambda () (interactive) (consult-ripgrep denote-directory))))
-    (define-key map "f" '("fd" . frl-denote-find-in-files))
+    (define-key map "g" '("ripgrep" . frl-denote-find-in-files))
+    (define-key map "f" '("fd" . frl-denote-find-filename))
     map) "denote-key-map")
 (define-key (current-global-map) (kbd "M-d") denote-key-map)
 
