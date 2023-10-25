@@ -1128,6 +1128,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 (message "Loading org-roam")
 (use-package org-roam
   :ensure t
+  :demand t
   :init
   (setq org-roam-v2-ack t)
   :custom
