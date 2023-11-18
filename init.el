@@ -63,9 +63,23 @@
 (setq ad-redefinition-action 'accept)
 
 ;;;; fonts
-(set-face-attribute 'default nil :family "Consolas")
-(set-face-attribute 'fixed-pitch nil :family "Consolas")
-(set-face-attribute 'variable-pitch nil :family "Calibri")
+; Test char and monospace:
+; 0123456789abcdefghijklmnopqrstuwxyz [] () :;,. !@#$^&*
+; 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ {} <> "'`  ~-_/|\?
+(cond 
+ ((find-font (font-spec :name "Hack Nerd Font"))
+  (set-frame-font "Hack Nerd Font-12" t t t))
+ ((find-font (font-spec :name "Iosevka Term Extended"))
+  (set-frame-font "Iosevka Term Extended-12" t t t))
+ ((find-font (font-spec :name "SauceCodePro Nerd Font"))
+  (set-frame-font "SauceCodePro Nerd Font-13" t t t))
+ ((find-font (font-spec :name "Consolas"))
+  (set-frame-font "Consolas-12" t t t))
+ ((find-font (font-spec :name "courier"))
+  (set-frame-font "courier-12") t t t))
+;; (set-face-attribute 'default nil :family "Consolas")
+;; (set-face-attribute 'fixed-pitch nil :family "Consolas")
+;; (set-face-attribute 'variable-pitch nil :family "Calibri")
 
 ;;;; Visuals
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
