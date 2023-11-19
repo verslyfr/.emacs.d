@@ -62,21 +62,41 @@
 (setq gc-cons-threshold (* 200 1000 1000))
 (setq ad-redefinition-action 'accept)
 
+(defun font-exists-p (font) "check if font exists" (if (null (x-list-fonts font)) nil t))
+
 ;;;; fonts
-; Test char and monospace:
-; 0123456789abcdefghijklmnopqrstuwxyz [] () :;,. !@#$^&*
-; 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ {} <> "'`  ~-_/|\?
-(cond 
- ((find-font (font-spec :name "Hack Nerd Font"))
-  (set-frame-font "Hack Nerd Font-12" t t t))
- ((find-font (font-spec :name "Iosevka Term Extended"))
-  (set-frame-font "Iosevka Term Extended-12" t t t))
- ((find-font (font-spec :name "SauceCodePro Nerd Font"))
-  (set-frame-font "SauceCodePro Nerd Font-13" t t t))
- ((find-font (font-spec :name "Consolas"))
-  (set-frame-font "Consolas-12" t t t))
- ((find-font (font-spec :name "courier"))
-  (set-frame-font "courier-12") t t t))
+;; Test char and monospace:
+;; 0123456789abcdefghijklmnopqrstuwxyz [] () :;,. !@#$^&*
+;; 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ {} <> "'`  ~-_/|\?
+(defun frl-select-font (&optional frame)
+  ;; (message "called frl-select-font")
+
+  (with-selected-frame (or frame (selected-frame))
+    ;; (if (font-exists-p "Hack Nerd Font") (message "font exists") (message "font does not exist"))
+    ;; (x-list-fonts "Hack Nerd Font")
+    (cond 
+     ((find-font (font-spec :name "Hack Nerd Font"))
+      (set-frame-font "Hack Nerd Font-11" t t t)
+      (set-face-font 'default "Hack Nerd Font-12"))
+     ((find-font (font-spec :name "FiraCode Nerd Font Mono"))
+      (set-frame-font "FiraCode Nerd Font Mono-12" t t t)
+      (set-face-font 'default "FiraCode Nerd Font Mono-12"))
+     ((find-font (font-spec :name "Iosevka Term Extended"))
+      (set-frame-font "Iosevka Term Extended-12" t t t)
+      (set-face-font 'default "Iosevka Term Extended-12"))
+     ((find-font (font-spec :name "SauceCodePro Nerd Font"))
+      (set-frame-font "SauceCodePro Nerd Font-12" t t t)
+      (set-face-font 'default "SauceCodePro Nerd Font-12"))
+     ((find-font (font-spec :name "Consolas"))
+      (set-frame-font "Consolas-12" t t t)
+      (set-face-font 'default "Consolas-12"))
+     ((find-font (font-spec :name "courier"))
+      (set-frame-font "courier-12" t t t)
+      (set-face-font 'default "courier-12"))
+    )))
+(frl-select-font)
+(add-hook 'after-make-frame-functions 'frl-select-font)
+
 ;; (set-face-attribute 'default nil :family "Consolas")
 ;; (set-face-attribute 'fixed-pitch nil :family "Consolas")
 ;; (set-face-attribute 'variable-pitch nil :family "Calibri")
@@ -1089,6 +1109,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("M-d i" . denote-link-or-create)
          ("M-d I" . denote-add-links)
          ("M-d b" . denote-backlinks)
+         ("M-d r" . denote-rename-file-using-front-matter)
+         ("M-d R" . denote-rename-file)
+         ("M-d a" . denote-add-front-matter)
          (:map dired-mode-map ("/" . 'frl-dired-limit-regexp))
   :config
   ;; since I use .txt files as my org-mode file type, I have to declare the
@@ -1666,3 +1689,5 @@ R1 and R2 define the selected region."
 
 (provide 'init)
 ;;; init.el ends here
+
+; LocalWords:  Calibri Consolas Iosevka FiraCode ABCDEFGHIJKLMNOPQRSTUVWXYZ
