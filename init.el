@@ -62,18 +62,14 @@
 (setq gc-cons-threshold (* 200 1000 1000))
 (setq ad-redefinition-action 'accept)
 
-(defun font-exists-p (font) "check if font exists" (if (null (x-list-fonts font)) nil t))
-
 ;;;; fonts
 ;; Test char and monospace:
 ;; 0123456789abcdefghijklmnopqrstuwxyz [] () :;,. !@#$^&*
 ;; 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ {} <> "'`  ~-_/|\?
 (defun frl-select-font (&optional frame)
-  ;; (message "called frl-select-font")
-
+  "Checks to see if my preferred fonts exists and then changes the
+frame and default fonts. Multiple options are provided"
   (with-selected-frame (or frame (selected-frame))
-    ;; (if (font-exists-p "Hack Nerd Font") (message "font exists") (message "font does not exist"))
-    ;; (x-list-fonts "Hack Nerd Font")
     (cond 
      ((find-font (font-spec :name "Hack Nerd Font"))
       (set-frame-font "Hack Nerd Font-11" t t t)
