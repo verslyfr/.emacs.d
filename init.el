@@ -176,7 +176,7 @@ frame and default fonts. Multiple options are provided"
 (setq create-lockfiles nil)           ; turn off lock files. Causes issues with
                                       ; OneDrive and it is only me.
 (setq native-comp-async-report-warnings-errors 'silent) ; eat the native compile warnings
-
+(setq kill-whole-line t)
 
 ;;;; Save File settings
 ;; (auto-save-visited-mode 1)
