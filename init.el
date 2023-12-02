@@ -775,15 +775,15 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
     (web-mode        . "\\s-*//\\*+")
     (java-mode       . "\\s-*//\\*+")
     (c-mode          . "\\s-*//\\*+")
-    (python-mode     . "\\s-*##\\*+")
-    (python-ts-mode  . "\\s-*##\\*+")
+    ;; (python-mode     . "\\s-*##\\*+")
+    ;; (python-ts-mode  . "\\s-*##\\*+")
     (sh-mode         . "\\s-*##\\*+")))
 
 ;;** hooks
 (add-hook 'emacs-lisp-mode-hook #'my-setup-outline-mode)
 (add-hook 'js2-mode-hook #'my-setup-outline-mode)
-(add-hook 'python-mode-hook #'my-setup-outline-mode)
-(add-hook 'python-ts-mode-hook #'my-setup-outline-mode)
+;; (add-hook 'python-mode-hook #'my-setup-outline-mode)
+;; (add-hook 'python-ts-mode-hook #'my-setup-outline-mode)
 (add-hook 'sh-mode-hook #'my-setup-outline-mode)
 (add-hook 'java-mode-hook #'my-setup-outline-mode)
 (add-hook 'c-mode-hook #'my-setup-outline-mode)
@@ -798,8 +798,10 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
     (indent-for-tab-command)))
 
 ;;** my-python-outline-level
-(defun my-python-outline-level ()
-  (- (match-end 0) (match-beginning 0)))
+;; (defun my-python-outline-level ()
+;;   (- (match-end 0) (match-beginning 0)))
+
+
 
 ;;** my-setup-outline-mode
 (defun my-setup-outline-mode ()
@@ -807,12 +809,54 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
     (when regexp
       (setq-local outline-regexp regexp)
       (outline-minor-mode 1)
-      (define-key outline-minor-mode-map (kbd "TAB") 'my-toggle-outline)
-      (when (eq major-mode 'python-ts-mode)
-        (setq-local outline-heading-end-regexp "\n")
-        (setq-local outline-level #'my-python-outline-level)))))
+      (define-key outline-minor-mode-map (kbd "TAB") 'my-toggle-outline))))
+      ;; (when (eq major-mode 'python-ts-mode)
+      ;;   (setq-local outline-heading-end-regexp "\n")
+      ;;   (setq-local outline-level #'my-python-outline-level)))))
 
+;;* different way to do python outline
 
+(defun python-mode-outline-hook ()
+  (setq outline-level 'python-outline-level)
+
+  (setq outline-regexp
+	(rx (or
+	     ;; Commented outline heading
+	     (group
+	      (* space)	 ; 0 or more spaces
+	      (one-or-more (syntax comment-start))
+	      (one-or-more space)
+	      ;; Heading level
+	      (group (repeat 1 8 "\*"))  ; Outline stars
+	      (one-or-more space))
+
+	     ;; Python keyword heading
+	     (group
+	      ;; Heading level
+	      (group (* space))	; 0 or more spaces
+	      bow
+	      ;; Keywords
+	      (or "class" "def" "else" "elif" "except" "for" "if" "try" "while")
+	      eow)))))
+
+(defun python-outline-level ()
+  (or
+   ;; Commented outline heading
+   (and (string-match (rx
+		       (* space)
+		       (one-or-more (syntax comment-start))
+		       (one-or-more space)
+		       (group (one-or-more "\*"))
+		       (one-or-more space))
+		      (match-string 0))
+	(- (match-end 0) (match-beginning 0)))
+
+   ;; Python keyword heading, set by number of indentions
+   ;; Add 8 (the highest standard outline level) to every Python keyword heading
+   (+ 8 (- (match-end 0) (match-beginning 0)))))
+
+(add-hook 'python-mode-hook 'python-mode-outline-hook)
+(add-hook 'python-ts-mode-hook ' python-mode-outline-hook)
 
 ;;* org-agenda
 (defun frl-org-skip-subtree-if-habit ()
