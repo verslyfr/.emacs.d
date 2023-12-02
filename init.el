@@ -617,6 +617,31 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
   :hook (dired-mode . dired-hide-dotfiles-mode)
   :bind (:map dired-mode-map ("H" . dired-hide-dotfiles-mode )))
 
+;;* ediff
+
+(defun frl-dired-ediff-files ()
+  "Run ediff against marked files in dired."
+  (interactive)
+  (let ((files (dired-get-marked-files))
+        (wnd (current-window-configuration)))
+    (if (<= (length files) 2)
+        (let ((file1 (car files))
+              (file2 (if (cdr files)
+                         (cadr files)
+                       (read-file-name
+                        "file: "
+                        (dired-dwim-target-directory)))))
+          (if (file-newer-than-file-p file1 file2)
+              (ediff-files file2 file1)
+            (ediff-files file1 file2))
+          (add-hook 'ediff-after-quit-hook-internal
+                    (lambda ()
+                      (setq ediff-after-quit-hook-internal nil)
+                      (set-window-configuration wnd))))
+      (error "no more than 2 files should be marked"))))
+
+(define-key dired-mode-map (kbd "~") 'frl-dired-ediff-files)
+
 ;;* flycheck
 (use-package flycheck
   :ensure t
