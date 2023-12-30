@@ -72,7 +72,7 @@ frame and default fonts. Multiple options are provided"
   (with-selected-frame (or frame (selected-frame))
     (cond 
      ((find-font (font-spec :name "Hack Nerd Font"))
-      (set-frame-font "Hack Nerd Font-11" t t t)
+      (set-frame-font "Hack Nerd Font-12" t t t)
       (set-face-font 'default "Hack Nerd Font-12"))
      ((find-font (font-spec :name "FiraCode Nerd Font Mono"))
       (set-frame-font "FiraCode Nerd Font Mono-12" t t t)
