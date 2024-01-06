@@ -1747,6 +1747,15 @@ R1 and R2 define the selected region."
 
 ;;* yas-snippet
 (message "Loading yasnippet.")
+(defun frl-yas-org-collect-tags ()
+  "retrieves the tags for the current heading for inclusion in TODOs with yasnippet"
+       (let (
+             (tags (org-get-tags))
+             (value ":"))
+         (while tags
+           (setq value (concat value (format "%s" (pop tags)) ":")))
+         value
+         ))
 
 (use-package yasnippet
   :ensure t

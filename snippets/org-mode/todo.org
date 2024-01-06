@@ -3,7 +3,7 @@
 # key: :todo
 # binding: C-c y t
 # --
-** TODO $0
+`(make-string (+ 1 (org-current-level)) ?*)` TODO ${0:<++>} `(frl-yas-org-collect-tags)`
 :PROPERTIES:
 :created: <`(format-time-string "%Y-%m-%d")`>
 :END:

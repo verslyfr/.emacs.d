@@ -1,28 +1,15 @@
 # -*- mode: snippet -*-
 # name: meeting
-# key: meeting
+# key: :mtg
 # contributor: FR Lyvers <verslyfr@github.com>
+# binding: C-c y m
 # --
-
-** `(format-time-string "%Y-%m-%d")` ${1:topic}
-
-- Attendees :: ${2:People separated by ;}
-
-*P*: ${Purpose} \\\\
-*O*: ${Outcome} \\\\ 
-*S*: Agenda \\\\
-
-1. ${topic} - ${person} (${min} min)
-2. ${topic} - ${person} (${min} min)
-
-*T*: ${duration} \\\\
-
-Project: +${project}
-
-*** dd$0 $1
-
-- *Attendees* :: $2
-- *Actions* ::
-- *Decisions* ::
-- *Notes* ::
--
+`(make-string (+ 1 (org-current-level)) ?*)` [`(format-time-string "%Y-%m-%d %a")`] ${0:<++>}
+:PROPERTIES:
+:created: <`(format-time-string "%Y-%m-%d")`>
+:attendees: Randy Lyvers; <++>
+:END:
+`(make-string (+ 2 (org-current-level)) ?*)` Notes
+- <++>
+`(make-string (+ 2 (org-current-level)) ?*)` Actions
+# Select [C-c y c] to add an action

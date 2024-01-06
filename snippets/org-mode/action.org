@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: action
+# key: :ac
+# binding: C-c y a
+# expansion: ((yas-indent-line 'auto))
+# --
+- [ ] ${1:@} ${2:<++>}
