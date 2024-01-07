@@ -1288,6 +1288,37 @@ same directory as the org-buffer and insert a link to this file."
 ;;            :link-in-context-regexp denote-md-link-in-context-regexp) ))
 ;;   )
 
+;;* org-refile
+(defvar frl-refiled-location-link nil)
+
+(defun frl-move-todo ()
+  "move the todo to my inbox putting a cross reference to the current location, and add a link to the  current location as an action"
+  (interactive)
+  (let (before-move-loc)
+    (save-excursion
+      (org-back-to-heading)
+      (setq before-move-loc (point-marker)))
+    (org-refile)
+    (when (and before-move-loc
+               frl-refiled-location-link)
+      (let ((buf (marker-buffer before-move-loc)))
+        (when (buffer-live-p buf)
+          (with-current-buffer buf
+            (save-excursion
+              (goto-char before-move-loc)
+              (insert (concat "- [ ] " frl-refiled-location-link "\n"))))))
+      (setq frl-refiled-location-link nil))
+  ))
+
+(defun frl-set-last-refile-link ()
+  "capture the link where the refile occurred"
+  (setq frl-refiled-location-link (org-store-link nil)))
+(add-hook 'org-after-refile-insert-hook #'frl-set-last-refile-link)
+
+(defun frl-org-refile-keybind ()
+  (define-key org-mode-map "\C-com" '("move todo" . frl-move-todo)))
+(add-hook 'org-mode-hook #'frl-org-refile-keybind)
+
 
 ;;* org-roam
 ;;
