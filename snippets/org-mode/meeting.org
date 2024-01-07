@@ -12,4 +12,4 @@
 `(make-string (+ 2 (org-current-level)) ?*)` Notes
 - <++>
 `(make-string (+ 2 (org-current-level)) ?*)` Actions
-# Select [C-c y c] to add an action
+# Select [C-c y a] to add an action
