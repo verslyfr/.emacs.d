@@ -18,7 +18,6 @@
 (add-to-list 'package-archives '("ox-odt" . "https://kjambunathan.github.io/elpa/") t)  ;; for ox-odt
 ;(setq package-gnupghome-dir (expand-file-name "elpa/gnupg" user-emacs-directory))
 (setq package-gnupghome-dir nil)
-(setq package-menu-async nil)
 (package-initialize)
 
 ;; fetch the list of packages available 
@@ -176,6 +175,7 @@ frame and default fonts. Multiple options are provided"
 (setq create-lockfiles nil)           ; turn off lock files. Causes issues with
                                       ; OneDrive and it is only me.
 (setq native-comp-async-report-warnings-errors 'silent) ; eat the native compile warnings
+(setq native-comp-async-jobs-number 1)
 (setq kill-whole-line t)
 
 ;;** Save File settings
