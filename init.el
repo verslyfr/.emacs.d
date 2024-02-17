@@ -1796,6 +1796,9 @@ R1 and R2 define the selected region."
           snippet-mode) . yas-minor-mode-on)
 )
 
+(use-package yasnippet-snippets
+  :ensure t)
+
 ;;* vterm
 (use-package vterm
   :ensure t
