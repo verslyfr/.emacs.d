@@ -133,7 +133,7 @@ frame and default fonts. Multiple options are provided"
 ;;** Enable minor modes
 (column-number-mode)
 (delete-selection-mode 1)
-(electric-pair-mode 1)
+;; (electric-pair-mode 1)
 (global-auto-revert-mode -1)        ; Revert buffers when the underlying file has changed
 (prefer-coding-system 'utf-8-unix) 
 (recentf-mode 1)
@@ -1319,7 +1319,6 @@ same directory as the org-buffer and insert a link to this file."
   (define-key org-mode-map "\C-com" '("move todo" . frl-move-todo)))
 (add-hook 'org-mode-hook #'frl-org-refile-keybind)
 
-
 ;;* org-roam
 ;;
 ;; (use-package hi-lock
@@ -1332,8 +1331,11 @@ same directory as the org-buffer and insert a link to this file."
   :demand t
   :init
   (setq org-roam-v2-ack t)
+  ;; emacs if folder exists
+  (if (file-directory-p "~/OneDrive - Cummins/")
+      (setq org-roam-directory "~/OneDrive - Cummins/__notes")
+    (setq org-roam-directory "~/OneDrive/notes"))
   :custom
-  (org-roam-directory "~/OneDrive/notes")
   (org-roam-completion-everywhere t)
   (org-roam-dailies-directory "daily/")
   (org-roam-extract-new-file-path "%<%Y%m%d>-${slug}.txt")
