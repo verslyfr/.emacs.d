@@ -133,7 +133,7 @@ frame and default fonts. Multiple options are provided"
 ;;** Enable minor modes
 (column-number-mode)
 (delete-selection-mode 1)
-;; (electric-pair-mode 1)
+(electric-pair-mode 1)
 (global-auto-revert-mode -1)        ; Revert buffers when the underlying file has changed
 (prefer-coding-system 'utf-8-unix) 
 (recentf-mode 1)
@@ -949,34 +949,34 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 (add-hook 'org-mode-hook 'frl-setup-color-link-hook)
 
 ;;* org electric pair
-(message "Loading org electric pair")
-(defvar org-electric-pairs '((?/ . ?/) (?= . ?=)
-                             (?\_ . ?\_) (?~ . ?~) (?\* . ?\*))
-  "Electric pairs for org-mode.")
+;; (message "Loading org electric pair")
+;; (defvar org-electric-pairs '((?/ . ?/) (?= . ?=)
+;;                              (?\_ . ?\_) (?~ . ?~) (?\* . ?\*))
+;;   "Electric pairs for org-mode.")
 
-;; The following was derived from this reddit article and response
-;; https://www.reddit.com/r/emacs/comments/getsn7/cant_match_in_electricpairinhibitpredicate/?utm_source=share&utm_medium=web2x&context=3
-;; The key was putting the items in the syntax table as paired delimiters.
-(defun my--org-electric-pair-inhibit-predicate (char)
-  "Return `t' if CHAR is \"<\", \"*\" at the beginning of the line, or "
-  (or (char-equal char ?<)
-      (and (char-equal char ?*) (not(use-region-p))) ; Only insert matching * if region is active
-      ;; Still need to apply the user option.
-      (funcall (default-toplevel-value 'electric-pair-inhibit-predicate)
-               char)))
+;; ;; The following was derived from this reddit article and response
+;; ;; https://www.reddit.com/r/emacs/comments/getsn7/cant_match_in_electricpairinhibitpredicate/?utm_source=share&utm_medium=web2x&context=3
+;; ;; The key was putting the items in the syntax table as paired delimiters.
+;; (defun my--org-electric-pair-inhibit-predicate (char)
+;;   "Return `t' if CHAR is \"<\", \"*\" at the beginning of the line, or "
+;;   (or (char-equal char ?<)
+;;       (and (char-equal char ?*) (not(use-region-p))) ; Only insert matching * if region is active
+;;       ;; Still need to apply the user option.
+;;       (funcall (default-toplevel-value 'electric-pair-inhibit-predicate)
+;;                char)))
 
-(defun org-add-electric-pairs ()
-  (setq-local electric-pair-pairs (append electric-pair-pairs org-electric-pairs))
-  (setq-local electric-pair-text-pairs electric-pair-pairs)
-  (setq-local electric-pair-inhibit-predicate #'my--org-electric-pair-inhibit-predicate)
-  (modify-syntax-entry ?* "$")
-  (modify-syntax-entry ?~ "$")
-  (modify-syntax-entry ?= "$")
-  (modify-syntax-entry ?_ "$")
-  (modify-syntax-entry ?/ "$")
-  )
+;; (defun org-add-electric-pairs ()
+;;   (setq-local electric-pair-pairs (append electric-pair-pairs org-electric-pairs))
+;;   (setq-local electric-pair-text-pairs electric-pair-pairs)
+;;   (setq-local electric-pair-inhibit-predicate #'my--org-electric-pair-inhibit-predicate)
+;;   (modify-syntax-entry ?* "$")
+;;   (modify-syntax-entry ?~ "$")
+;;   (modify-syntax-entry ?= "$")
+;;   (modify-syntax-entry ?_ "$")
+;;   (modify-syntax-entry ?/ "$")
+;;   )
 
-(add-hook 'org-mode-hook 'org-add-electric-pairs)
+;; (add-hook 'org-mode-hook 'org-add-electric-pairs)
 
 ;;* org html export css support
 ;; The following allows me to select the CSS theme to use for the exported html.
