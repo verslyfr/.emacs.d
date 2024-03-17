@@ -18,7 +18,6 @@
 (add-to-list 'package-archives '("ox-odt" . "https://kjambunathan.github.io/elpa/") t)  ;; for ox-odt
 ;(setq package-gnupghome-dir (expand-file-name "elpa/gnupg" user-emacs-directory))
 (setq package-gnupghome-dir nil)
-(setq package-menu-async nil)
 (package-initialize)
 
 ;; fetch the list of packages available 
@@ -182,6 +181,7 @@ frame and default fonts. Multiple options are provided"
 (setq create-lockfiles nil)           ; turn off lock files. Causes issues with
                                       ; OneDrive and it is only me.
 (setq native-comp-async-report-warnings-errors 'silent) ; eat the native compile warnings
+(setq native-comp-async-jobs-number 1)
 (setq kill-whole-line t)
 
 ;;** Save File settings
@@ -955,34 +955,34 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 (add-hook 'org-mode-hook 'frl-setup-color-link-hook)
 
 ;;* org electric pair
-(message "Loading org electric pair")
-(defvar org-electric-pairs '((?/ . ?/) (?= . ?=)
-                             (?\_ . ?\_) (?~ . ?~) (?\* . ?\*))
-  "Electric pairs for org-mode.")
+;; (message "Loading org electric pair")
+;; (defvar org-electric-pairs '((?/ . ?/) (?= . ?=)
+;;                              (?\_ . ?\_) (?~ . ?~) (?\* . ?\*))
+;;   "Electric pairs for org-mode.")
 
-;; The following was derived from this reddit article and response
-;; https://www.reddit.com/r/emacs/comments/getsn7/cant_match_in_electricpairinhibitpredicate/?utm_source=share&utm_medium=web2x&context=3
-;; The key was putting the items in the syntax table as paired delimiters.
-(defun my--org-electric-pair-inhibit-predicate (char)
-  "Return `t' if CHAR is \"<\", \"*\" at the beginning of the line, or "
-  (or (char-equal char ?<)
-      (and (char-equal char ?*) (not(use-region-p))) ; Only insert matching * if region is active
-      ;; Still need to apply the user option.
-      (funcall (default-toplevel-value 'electric-pair-inhibit-predicate)
-               char)))
+;; ;; The following was derived from this reddit article and response
+;; ;; https://www.reddit.com/r/emacs/comments/getsn7/cant_match_in_electricpairinhibitpredicate/?utm_source=share&utm_medium=web2x&context=3
+;; ;; The key was putting the items in the syntax table as paired delimiters.
+;; (defun my--org-electric-pair-inhibit-predicate (char)
+;;   "Return `t' if CHAR is \"<\", \"*\" at the beginning of the line, or "
+;;   (or (char-equal char ?<)
+;;       (and (char-equal char ?*) (not(use-region-p))) ; Only insert matching * if region is active
+;;       ;; Still need to apply the user option.
+;;       (funcall (default-toplevel-value 'electric-pair-inhibit-predicate)
+;;                char)))
 
-(defun org-add-electric-pairs ()
-  (setq-local electric-pair-pairs (append electric-pair-pairs org-electric-pairs))
-  (setq-local electric-pair-text-pairs electric-pair-pairs)
-  (setq-local electric-pair-inhibit-predicate #'my--org-electric-pair-inhibit-predicate)
-  (modify-syntax-entry ?* "$")
-  (modify-syntax-entry ?~ "$")
-  (modify-syntax-entry ?= "$")
-  (modify-syntax-entry ?_ "$")
-  (modify-syntax-entry ?/ "$")
-  )
+;; (defun org-add-electric-pairs ()
+;;   (setq-local electric-pair-pairs (append electric-pair-pairs org-electric-pairs))
+;;   (setq-local electric-pair-text-pairs electric-pair-pairs)
+;;   (setq-local electric-pair-inhibit-predicate #'my--org-electric-pair-inhibit-predicate)
+;;   (modify-syntax-entry ?* "$")
+;;   (modify-syntax-entry ?~ "$")
+;;   (modify-syntax-entry ?= "$")
+;;   (modify-syntax-entry ?_ "$")
+;;   (modify-syntax-entry ?/ "$")
+;;   )
 
-(add-hook 'org-mode-hook 'org-add-electric-pairs)
+;; (add-hook 'org-mode-hook 'org-add-electric-pairs)
 
 ;;* org html export css support
 ;; The following allows me to select the CSS theme to use for the exported html.
@@ -1331,7 +1331,6 @@ same directory as the org-buffer and insert a link to this file."
   (define-key org-mode-map "\C-com" '("move todo" . frl-move-todo)))
 (add-hook 'org-mode-hook #'frl-org-refile-keybind)
 
-
 ;;* org-roam
 ;;
 ;; (use-package hi-lock
@@ -1344,8 +1343,11 @@ same directory as the org-buffer and insert a link to this file."
   :demand t
   :init
   (setq org-roam-v2-ack t)
+  ;; emacs if folder exists
+  (if (file-directory-p "~/OneDrive - Cummins/")
+      (setq org-roam-directory "~/OneDrive - Cummins/__notes")
+    (setq org-roam-directory "~/OneDrive/notes"))
   :custom
-  (org-roam-directory "~/OneDrive/notes")
   (org-roam-completion-everywhere t)
   (org-roam-dailies-directory "daily/")
   (org-roam-extract-new-file-path "%<%Y%m%d>-${slug}.txt")
@@ -1807,6 +1809,9 @@ R1 and R2 define the selected region."
           conf-mode
           snippet-mode) . yas-minor-mode-on)
 )
+
+(use-package yasnippet-snippets
+  :ensure t)
 
 ;;* vterm
 (use-package vterm
