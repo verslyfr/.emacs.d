@@ -100,10 +100,10 @@ frame and default fonts. Multiple options are provided"
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 ;(load-theme 'modus-operandi t)
 (setq modus-themes-headings   
-      (quote ((1 . (rainbow background overline variable-pitch 1.4))
-              (2 . (overline background rainbow variable-pitch 1.3))
+      (quote ((1 . (background overline variable-pitch 1.4))
+              (2 . (overline background variable-pitch 1.3))
               (3 . (overline variable-pitch 1.2))
-              (t . (monochrome variable-pitch 1.1)))))
+              (t . (rainbow variable-pitch 1.1)))))
 (load-theme 'modus-vivendi t)
 
 (put 'narrow-to-region 'disabled nil)
@@ -1057,7 +1057,10 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :ensure t
   :hook
   (org-mode . org-tidy-mode)
-  :bind (("C-c o t" . #'org-tidy-toggle)))
+  :bind (:map org-mode-map
+         ("C-c o t p" . #'org-tidy-toggle)
+         )
+  )
 
 (use-package org
   :ensure t
