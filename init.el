@@ -100,7 +100,13 @@ frame and default fonts. Multiple options are provided"
 ;;** Visuals
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 ;(load-theme 'modus-operandi t)
+(setq modus-themes-headings   
+      (quote ((1 . (rainbow background overline variable-pitch 1.4))
+              (2 . (overline background rainbow variable-pitch 1.3))
+              (3 . (overline variable-pitch 1.2))
+              (t . (monochrome variable-pitch 1.1)))))
 (load-theme 'modus-vivendi t)
+
 (put 'narrow-to-region 'disabled nil)
 
 ;; emojis
@@ -1047,6 +1053,12 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                           (mapcar 'buffer-name
                                   (org-buffer-list 'files))))))
 
+(use-package org-tidy
+  :ensure t
+  :hook
+  (org-mode . org-tidy-mode)
+  :bind (("C-c o t" . #'org-tidy-toggle)))
+
 (use-package org
   :ensure t
   :commands org-mode
@@ -1178,18 +1190,18 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                                '(             ; (python . t)
                                  (emacs-lisp . t)
                                  (shell . t))))
-(add-hook 'org-mode-hook 'org-num-mode)
+;; (add-hook 'org-mode-hook 'org-num-mode)
 ;;* org-modern
-(use-package org-modern
-  :ensure t
-  :commands org-modern-mode
-  :init
-  (add-hook 'org-mode-hook #'org-modern-mode)
-  (custom-set-variables '(org-modern-table nil))
-  :config
-  (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-  (set-face-attribute 'org-modern-symbol nil :family "Iosevka")
-  )
+;; (use-package org-modern
+;;   :ensure t
+;;   :commands org-modern-mode
+;;   :init
+;;   (add-hook 'org-mode-hook #'org-modern-mode)
+;;   (custom-set-variables '(org-modern-table nil))
+;;   :config
+;;   (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+;;   (set-face-attribute 'org-modern-symbol nil :family "Iosevka")
+;;   )
 ;; (add-hook 'org-mode-hook 'variable-pitch-mode)
 
 
