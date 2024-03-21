@@ -661,6 +661,15 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
 ;;* flyspell
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+(defun suppress-messages (old-fun &rest args)
+  (cl-flet ((silence (&rest args1) (ignore)))
+    (advice-add 'message :around #'silence)
+    (unwind-protect
+         (apply old-fun args)
+      (advice-remove 'message #'silence))))
+
+(advice-add 'ispell-init-process :around #'suppress-messages)
+(advice-add 'ispell-kill-ispell :around #'suppress-messages)
 
 (use-package flyspell-correct
   :ensure t
