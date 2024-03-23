@@ -4,11 +4,11 @@
 # contributor: FR Lyvers <verslyfr@github.com>
 # binding: C-c y m
 # --
-`(make-string (+ 1 (org-current-level)) ?*)` [`(format-time-string "%Y-%m-%d %a")`] ${0:<++>}
+`(make-string (+ 1 (org-current-level)) ?*)` `(format-time-string "%Y-%m-%d %a")` ${0:<++>}
 :PROPERTIES:
 :created: <`(format-time-string "%Y-%m-%d")`>
-:attendees: Randy Lyvers; <++>
 :END:
+- attendees: Randy Lyvers; <++>
 `(make-string (+ 2 (org-current-level)) ?*)` Notes
 - <++>
 `(make-string (+ 2 (org-current-level)) ?*)` Actions

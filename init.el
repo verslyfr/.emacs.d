@@ -1064,6 +1064,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 (use-package org-tidy
   :ensure t
+  :custom
+  (org-tidy-protect-overlay nil)
   :hook
   (org-mode . org-tidy-mode)
   :bind (:map org-mode-map
@@ -1811,7 +1813,7 @@ R1 and R2 define the selected region."
              (value ":"))
          (while tags
            (setq value (concat value (format "%s" (pop tags)) ":")))
-         value
+         (if (string= value ":") "" value)
          ))
 
 (use-package yasnippet
