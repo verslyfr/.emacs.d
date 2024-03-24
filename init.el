@@ -1069,7 +1069,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :hook
   (org-mode . org-tidy-mode)
   :bind (:map org-mode-map
-         ("C-c o t p" . #'org-tidy-toggle)
+         ("C-c o p" . #'org-tidy-toggle)
          )
   )
 
