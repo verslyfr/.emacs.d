@@ -100,10 +100,10 @@ frame and default fonts. Multiple options are provided"
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 ;(load-theme 'modus-operandi t)
 (setq modus-themes-headings   
-      (quote ((1 . (background overline variable-pitch 1.04))
-              (2 . (overline background variable-pitch 1.03))
-              (3 . (overline variable-pitch 1.02))
-              (t . (rainbow variable-pitch 1.01)))))
+      (quote ((1 . (background overline 1.04))
+              (2 . (overline background 1.03))
+              (3 . (overline 1.02))
+              (t . (rainbow 1.01)))))
 (load-theme 'modus-vivendi t)
 
 (put 'narrow-to-region 'disabled nil)
