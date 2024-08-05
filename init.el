@@ -1433,7 +1433,7 @@ R1 and R2 define the selected region."
               (with-current-buffer buf
                 (goto-char (point-min))
                 (insert (with-temp-buffer
-                          (insert "<style type=\"text/css\">\n<!--/*--><![CDATA[/*><!--*/\n") 
+                          (insert "<style type=\"text/css\">\n<!--/*--><!--*/\n<![CDATA[/*>\n") 
                           (insert-file-contents f)
                           (goto-char (point-max))
                           (insert "\n/*]]>*/-->\n</style>\n")
