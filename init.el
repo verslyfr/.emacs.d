@@ -1033,9 +1033,11 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 (add-hook 'org-export-before-parsing-hook 'set-org-html-style)
 
 ;;* org integrity link
-(add-hook 'org-mode-hook 'frl-org-integrity-link-hook)
+(if (string-equal-ignore-case (user-login-name) "ba919") 
+    (add-hook 'org-mode-hook 'frl-org-integrity-link-hook))
+
 (defun frl-org-integrity-link-hook ()
-  "hook to initilize the integrity hook"
+  "hook to initialize the integrity link"
   (org-add-link-type "integrity" 'frl-org-integrity-open)
   )
 (defun frl-org-integrity-open (link)
@@ -1238,7 +1240,9 @@ same directory as the org-buffer and insert a link to this file."
 (global-set-key "\C-cs" 'my-org-screenshot)
 
 ;;* org onenote link
-(add-hook 'org-mode-hook #'(lambda () (org-add-link-type "onenote" 'org-onenote-open)))
+(if (string-equal-ignore-case (user-login-name) "ba919")
+    (add-hook 'org-mode-hook #'(lambda () (org-add-link-type "onenote" 'org-onenote-open))))
+
 (defun org-onenote-open (link)
   "Open the OneNote item identified by the unique OneNote URL." 
   (w32-shell-execute
