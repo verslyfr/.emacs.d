@@ -1840,7 +1840,7 @@ R1 and R2 define the selected region."
 			      ("C-S-x" . nil) ; allow to pass thru
 			      ("C-S-v" . vterm-yank) ; Ctrl-Shift-V
 			      ))
-  :custom ((vterm-shell "zsh")))
+  :custom ((vterm-shell "bash")))
 
 ;;* yaml
 (use-package yaml-mode
