@@ -187,7 +187,7 @@ frame and default fonts. Multiple options are provided"
 ;;** Save File settings
 ;; (auto-save-visited-mode 1)
 ;; (setq auto-save-interval 1000)          ; save every 1000 characters typed
-(auto-save-mode 1)
+(setq-default auto-save-default t)
 (defvar BACKUPDIR (expand-file-name "~/.saves/"))
 (setq backup-directory-alist
  `((".*" . ,BACKUPDIR)))                   ; don't litter my fs tree
