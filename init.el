@@ -1460,6 +1460,7 @@ R1 and R2 define the selected region."
                   (write-region nil nil outfile)
                   (call-process "powershell.exe" nil nil nil
                                 "type" wsloutfile "|" "set-clipboard" "-ashtml")
+                  (message (format "Clipboard is loaded from the file, %s." wsloutfile))
                   )
                 )
             ))
