@@ -1451,7 +1451,18 @@ R1 and R2 define the selected region."
               (write-region nil nil outfile)
               (call-process "powershell.exe" nil nil nil
                             "type" outfile "|" "set-clipboard" "-ashtml")
-              (message "HTML is on the clipboard."))))
+              (message "HTML is on the clipboard.")))
+           ((string-match "WSL2" operating-system-release)
+            (if (file-directory-p "~/winhome/")
+                (let* ((outfile (expand-file-name "~/winhome/.frl-clip.html"))
+                       (wsloutfile (string-trim (shell-command-to-string "wslpath -m $(realpath ~/winhome/.frl-clip.html)")))
+                       )
+                  (write-region nil nil outfile)
+                  (call-process "powershell.exe" nil nil nil
+                                "type" wsloutfile "|" "set-clipboard" "-ashtml")
+                  )
+                )
+            ))
           (kill-buffer buf)))
     ;; Use htmlize when not in org-mode.
     (progn
