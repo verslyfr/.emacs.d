@@ -3,6 +3,7 @@
   "Take a screenshot into a time stamped unique-named file in the
 same directory as the org-buffer and insert a link to this file."
   (interactive)
+<<<<<<< HEAD
   (cond
    ((eq system-type 'windows-nt)
    (let* ((filename (concat (make-temp-name (concat (buffer-file-name) "_"
@@ -30,4 +31,3 @@ same directory as the org-buffer and insert a link to this file."
 
 
 
-ssss
