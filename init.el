@@ -1142,7 +1142,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
       (:background "deep sky blue" :foreground "MidnightBlue"))
      ("+"
       (:strike-through t))))
-  (org-export-with-broken-links 'mark)
+  (org-export-with-broken-links t)
   (org-src-preserve-indentation t)
   (org-export-with-toc nil)
   (org-export-with-section-numbers nil)
@@ -1163,6 +1163,28 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
       (add-to-list 'org-file-apps 
                    '("\\.\\(?:PDF\\|DOCX\\|XLSX?\\|PPTX?\\|pdf\\|docx\\|xlsx?\\|pptx?\\)\\'" . default))
     )
+
+  ;; going to use explorer.exe to open files if on WSL
+  (if (string-match "WSL2" operating-system-release)
+        (add-to-list
+         'org-file-apps
+         '("\\.\\(?:PDF\\|DOCX\\|XLSX?\\|PPTX?\\|pdf\\|docx\\|xlsx?\\|pptx?\\|x?html?\\)\\'" . "startwin.sh %s")
+         ))
+;; For this to work you need a startwin.sh in the path containing the following:
+;; #!/bin/env bash
+
+;; filepath="$1";
+;; [ "" == "$1" ] && filepath=".";
+;; if [ ! -e "${filepath}" ]; then
+;;     echo "  Did not find the file, \"$filepath\". Unable to continue.";
+;;     return;
+;; fi;
+;; fullfilepath="$(realpath "${filepath}")"
+;; winfilepath="$(wslpath -m "$fullfilepath")"
+;; echo "  Opening \"${fullfilepath}\" using explorer.exe.";
+;; echo "  Opening \"${winfilepath}\""
+;; explorer.exe "file://${winfilepath}"
+ 
   ;; todo.txt is found relative to org-directory
   (setq org-capture-templates
         '(
@@ -1252,22 +1274,6 @@ same directory as the org-buffer and insert a link to this file."
     )
    )
   (org-display-inline-images))
-
-;; ;;* org capture screen shot
-;; (defun my-org-screenshot ()
-;;   "Take a screenshot into a time stamped unique-named file in the
-;; same directory as the org-buffer and insert a link to this file."
-;;   (interactive)
-;;   (setq filename
-;;         (concat
-;;          (make-temp-name
-;;           (concat (buffer-file-name)
-;;                   "_"
-;;                   (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
-;;   (shell-command "snippingtool /clip")
-;;   (shell-command (concat "powershell -command \"Add-Type -AssemblyName System.Windows.Forms;if ($([System.Windows.Forms.Clipboard]::ContainsImage())) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save('" filename "',[System.Drawing.Imaging.ImageFormat]::Png); Write-Output 'clipboard content saved as file'} else {Write-Output 'clipboard does not contain image data'}\""))
-;;   (insert (concat "[[file:" filename "]]"))
-;;   (org-display-inline-images))
 
 (global-set-key "\C-cs" 'my-org-screenshot)
 
@@ -1374,7 +1380,6 @@ same directory as the org-buffer and insert a link to this file."
                  (direction . right)
                  (window-width . 0.33)
                  (window-height . fit-window-to-buffer))))
-
 
 ;;* ox-frl-clip
 (require 'htmlize)
