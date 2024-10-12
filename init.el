@@ -1284,75 +1284,6 @@ same directory as the org-buffer and insert a link to this file."
    "open"
    (concat "onenote:" link)))
 
-
-;;* denote
-;; different examples using which-key declaration. 
-
-
-;; (defvar denote-key-map
-;;   (let ((map (make-sparse-keymap)))
-;;     (define-key map "g" '("ripgrep" . frl-denote-find-in-files))
-;;     (define-key map "f" '("fd" . frl-denote-find-filename))
-;;     map) "denote-key-map")
-;; (define-key (current-global-map) (kbd "M-d") denote-key-map)
-
-;; (use-package denote
-;;   :ensure t
-;;   :demand t   ; force the loading of denote
-;;   :hook (dired-mode . denote-dired-mode-in-directories)
-;;   :custom
-;;   (denote-directory "~/OneDrive/notes")
-;;   :bind 
-;;          ("M-d c" . denote)
-;;          ("M-d i" . denote-link-or-create)
-;;          ("M-d I" . denote-add-links)
-;;          ("M-d b" . denote-backlinks)
-;;          ("M-d r" . denote-rename-file-using-front-matter)
-;;          ("M-d R" . denote-rename-file)
-;;          ("M-d a" . denote-add-front-matter)
-;;          (:map dired-mode-map ("/" . 'frl-dired-limit-regexp))
-;;   :config
-;;   ;; since I use .txt files as my org-mode file type, I have to declare the
-;;   ;; following to set org as .txt
-;;   (setq denote-file-types
-;;         '((org
-;;            :extension ".txt"
-;;            :date-function denote-date-org-timestamp
-;;            :front-matter denote-org-front-matter
-;;            :title-key-regexp "^#\\+title\\s-*:"
-;;            :title-value-function identity
-;;            :title-value-reverse-function denote-trim-whitespace 
-;;            :keywords-key-regexp "^#\\+filetags\\s-*:"
-;;            :keywords-value-function denote-format-keywords-for-org-front-matter
-;;            :keywords-value-reverse-function denote-extract-keywords-from-front-matter
-;;            :link denote-org-link-format
-;;            :link-in-context-regexp denote-org-link-in-context-regexp)
-;;           (markdown-yaml
-;;            :extension ".md"
-;;            :date-function denote-date-rfc3339
-;;            :front-matter denote-yaml-front-matter
-;;            :title-key-regexp "^title\\s-*:"
-;;            :title-value-function denote-surround-with-quotes
-;;            :title-value-reverse-function denote-trim-whitespace-then-quotes
-;;            :keywords-key-regexp "^tags\\s-*:"
-;;            :keywords-value-function denote-format-keywords-for-md-front-matter
-;;            :keywords-value-reverse-function denote-extract-keywords-from-front-matter
-;;            :link denote-md-link-format
-;;            :link-in-context-regexp denote-md-link-in-context-regexp)
-;;           (markdown-toml
-;;            :extension ".md"
-;;            :date-function denote-date-rfc3339
-;;            :front-matter denote-toml-front-matter
-;;            :title-key-regexp "^title\\s-*="
-;;            :title-value-function denote-surround-with-quotes
-;;            :title-value-reverse-function denote-trim-whitespace-then-quotes
-;;            :keywords-key-regexp "^tags\\s-*="
-;;            :keywords-value-function denote-format-keywords-for-md-front-matter
-;;            :keywords-value-reverse-function denote-extract-keywords-from-front-matter
-;;            :link denote-md-link-format
-;;            :link-in-context-regexp denote-md-link-in-context-regexp) ))
-;;   )
-
 ;;* org-refile
 (defvar frl-refiled-location-link nil)
 
@@ -1948,3 +1879,19 @@ R1 and R2 define the selected region."
 ;;* init.el ends here
 
 ; LocalWords:  Calibri Consolas Iosevka FiraCode ABCDEFGHIJKLMNOPQRSTUVWXYZ
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(delete-selection-mode nil)
+ '(package-vc-selected-packages
+   '((placeholder :vc-backend Git :url "https://github.com/oantolin/placeholder")
+     (vc-use-package :vc-backend Git :url "https://github.com/slotThe/vc-use-package"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(line-number ((t (:inherit fixed-pitch))))
+ '(line-number-current-line ((t (:inherit (hl-line fixed-pitch))))))
