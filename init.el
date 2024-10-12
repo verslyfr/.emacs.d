@@ -31,6 +31,9 @@
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
+(unless (package-installed-p 'vc-use-package)
+  (package-vc-install "https://github.com/slotThe/vc-use-package"))
+(require 'vc-use-package)
 
 ;;* sample code
 ;; code snippet for how to add keys to a mode
@@ -312,6 +315,10 @@ frame and default fonts. Multiple options are provided"
   )
 
 ;;** Browser functions
+
+;; (setq browse-url-browser-function 'browse-url-generic
+;;       browse-url-generic-program "/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe")
+
 (defun frl-browse-lucky (start end)
   (interactive "r")
   (let ((q (buffer-substring-no-properties start end)))
@@ -1046,7 +1053,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
    "open"
    (concat "integrity:" link)))
 
-;;* org-mode
 (message "Loading org-mode")
 (defun frl-copy-cell () "Copy the content of a cell"
        (interactive) ;copy the content of a cell
@@ -1064,6 +1070,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                           (mapcar 'buffer-name
                                   (org-buffer-list 'files))))))
 
+;;* org-tidy
 (use-package org-tidy
   :ensure t
   :custom
@@ -1075,6 +1082,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          )
   )
 
+;;* org-mode
 (use-package org
   :ensure t
   :commands org-mode
@@ -1206,20 +1214,21 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                                '(             ; (python . t)
                                  (emacs-lisp . t)
                                  (shell . t))))
-;; (add-hook 'org-mode-hook 'org-num-mode)
-;;* org-modern
-;; (use-package org-modern
-;;   :ensure t
-;;   :commands org-modern-mode
-;;   :init
-;;   (add-hook 'org-mode-hook #'org-modern-mode)
-;;   (custom-set-variables '(org-modern-table nil))
-;;   :config
-;;   (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-;;   (set-face-attribute 'org-modern-symbol nil :family "Iosevka")
-;;   )
-;; (add-hook 'org-mode-hook 'variable-pitch-mode)
 
+<<<<<<< HEAD
+=======
+;;* org-inlinetask
+(use-package org-inlinetask
+  :bind
+  (
+   :map org-mode-map
+        ("C-c o k" . #'org-inlinetask-insert-task)
+        )
+  :custom (org-inlinetask-min-level 8)
+  (org-inlinetask-export t)
+  )
+
+>>>>>>> f8902d5 (Working on org-indenttask.)
 ;;* org capture screen shot
 (defun my-org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the
@@ -1377,10 +1386,6 @@ same directory as the org-buffer and insert a link to this file."
 
 ;;* org-roam
 ;;
-;; (use-package hi-lock
-;;   :bind (("M-o l" . highlight-lines-matching-regexp)
-;;          ("M-o r" . highlight-regexp)
-;;          ("M-o w" . highlight-phrase)))
 (message "Loading org-roam")
 (use-package org-roam
   :ensure t
@@ -1431,7 +1436,8 @@ same directory as the org-buffer and insert a link to this file."
          ("M-n r" . org-roam-refile)
          ("M-n t" . org-id-get-create))
   :config
-  (org-roam-setup)
+  ;; (org-roam-setup)
+  (org-roam-db-autosync-enable)
   ;; for org-roam-buffer-toggle
   ;; Recommendation in the official manual
   (add-to-list 'display-buffer-alist
@@ -1530,6 +1536,7 @@ R1 and R2 define the selected region."
 ;; To use this functionality put <++> into the file and then move
 ;; forward and backward to change the elements
 (use-package placeholder
+  :vc (:fetcher github :repo oantolin/placeholder)
   :bind (("C-S-n" . placeholder-forward)
          ("C-S-p" . placeholder-backward)
          ("C-S-x" . placeholder-insert)))
