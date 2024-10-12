@@ -1215,8 +1215,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                                  (emacs-lisp . t)
                                  (shell . t))))
 
-<<<<<<< HEAD
-=======
 ;;* org-inlinetask
 (use-package org-inlinetask
   :bind
@@ -1228,7 +1226,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-inlinetask-export t)
   )
 
->>>>>>> f8902d5 (Working on org-indenttask.)
 ;;* org capture screen shot
 (defun my-org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the
