@@ -15,3 +15,24 @@ cd .emacs.d
 git clone https://github.com/fniessen/org-macros
 #+end_src
 
+* WSL - Launch html file into a browser
+
+Will convert a file path from wsl to windows format, prepends file://, and launches it with explorer.exe. This will cause the default browser to open the file. 
+
+#+begin_src bash :tangle "~/.local/bin/startwin.sh" :tangle-mode (identity #o544) :mkdirp yes :comments both :shebang "#!/bin/env bash"
+
+#!/bin/env bash
+
+filepath="$1";
+[ "" == "$1" ] && filepath=".";
+if [ ! -e "${filepath}" ]; then
+    echo "  Did not find the file, \"$filepath\". Unable to continue.";
+    return;
+fi;
+fullfilepath="$(realpath "${filepath}")"
+winfilepath="$(wslpath -m "$fullfilepath")"
+echo "  Opening \"${fullfilepath}\" using explorer.exe.";
+echo "  Opening \"${winfilepath}\""
+explorer.exe "file://${winfilepath}"
+#+end_src
+
