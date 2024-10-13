@@ -52,8 +52,11 @@
   (normal-top-level-add-subdirs-to-load-path))
 
 ;;* Update the path to include plugins
-(setenv "PATH" (concat (getenv "PATH") ":~/.emacs.d/plugins"))
-(setq exec-path (append exec-path '("~/.emacs.d/plugins")))
+(let* ((plugins-folder (concat (expand-file-name user-emacs-directory) "plugins")))
+  (message plugins-folder)
+  (setenv "PATH" (concat (getenv "PATH") ":" plugins-folder))
+  (message (getenv "PATH"))
+  (setq exec-path (append exec-path (list plugins-folder))))
 
 ;;* use-package
 ;; for profiling use-package
@@ -1172,12 +1175,10 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (if (string-match "WSL2" operating-system-release)
         (add-to-list
          'org-file-apps
-         '("\\.\\(?:PDF\\|DOCX\\|XLSX?\\|PPTX?\\|pdf\\|docx\\|xlsx?\\|pptx?\\|x?html?\\)\\'" . "firefox %s")
+         '("\\.\\(?:PDF\\|DOCX\\|XLSX?\\|PPTX?\\|pdf\\|docx\\|xlsx?\\|pptx?\\|x?html?\\)\\'" . "startwin.sh %s")
          ))
 ;; For this to work you need a startwin.sh in the path containing the following:
 ;; #!/bin/env bash
-
-  (executable-find "startwin")
 
 ;; filepath="$1";
 ;; [ "" == "$1" ] && filepath=".";
