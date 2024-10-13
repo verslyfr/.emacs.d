@@ -19,7 +19,7 @@ git clone https://github.com/fniessen/org-macros
 
 Will convert a file path from wsl to windows format, prepends file://, and launches it with explorer.exe. This will cause the default browser to open the file. 
 
-#+begin_src bash :tangle "~/.local/bin/startwin.sh" :tangle-mode (identity #o544) :mkdirp yes :comments both :shebang "#!/bin/env bash"
+#+begin_src bash :tangle "./plugins/startwin.sh" :tangle-mode (identity #o755) :mkdirp yes :comments both :shebang "#!/bin/env bash"
 
 #!/bin/env bash
 

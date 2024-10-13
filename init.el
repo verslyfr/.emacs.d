@@ -51,6 +51,10 @@
 (let ((default-directory "~/.emacs.d/plugins/"))
   (normal-top-level-add-subdirs-to-load-path))
 
+;;* Update the path to include plugins
+(setenv "PATH" (concat (getenv "PATH") ":~/.emacs.d/plugins"))
+(setq exec-path (append exec-path '("~/.emacs.d/plugins")))
+
 ;;* use-package
 ;; for profiling use-package
 ;; to see the report use Alt-X use-package-report
@@ -1888,7 +1892,6 @@ R1 and R2 define the selected region."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(delete-selection-mode nil)
  '(package-vc-selected-packages
    '((placeholder :vc-backend Git :url "https://github.com/oantolin/placeholder")
      (vc-use-package :vc-backend Git :url "https://github.com/slotThe/vc-use-package"))))
