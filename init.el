@@ -1168,10 +1168,12 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (if (string-match "WSL2" operating-system-release)
         (add-to-list
          'org-file-apps
-         '("\\.\\(?:PDF\\|DOCX\\|XLSX?\\|PPTX?\\|pdf\\|docx\\|xlsx?\\|pptx?\\|x?html?\\)\\'" . "startwin.sh %s")
+         '("\\.\\(?:PDF\\|DOCX\\|XLSX?\\|PPTX?\\|pdf\\|docx\\|xlsx?\\|pptx?\\|x?html?\\)\\'" . "firefox %s")
          ))
 ;; For this to work you need a startwin.sh in the path containing the following:
 ;; #!/bin/env bash
+
+  (executable-find "startwin")
 
 ;; filepath="$1";
 ;; [ "" == "$1" ] && filepath=".";
