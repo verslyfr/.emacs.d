@@ -1405,6 +1405,7 @@ R1 and R2 define the selected region."
                (html (with-current-buffer buf (buffer-string)))
                (f (or (and (boundp 'org-theme-css) org-theme-css) (org-theme))))
           (message (format "filename=%s" f))
+          (org-roam-update-org-id-locations)  ;; used to fix up links for html
           (if (file-exists-p f)
               (with-current-buffer buf
                 (goto-char (point-min))
