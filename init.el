@@ -53,9 +53,9 @@
 
 ;;* Update the path to include plugins
 (let* ((plugins-folder (concat (expand-file-name user-emacs-directory) "plugins")))
-  (message plugins-folder)
+  ;; (message plugins-folder)             
   (setenv "PATH" (concat (getenv "PATH") ":" plugins-folder))
-  (message (getenv "PATH"))
+  ;; (message (getenv "PATH"))
   (setq exec-path (append exec-path (list plugins-folder))))
 
 ;;* use-package
