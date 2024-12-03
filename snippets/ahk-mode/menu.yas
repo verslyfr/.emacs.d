@@ -2,5 +2,6 @@
 # name: menu
 # key: :menu
 # --
-${1:<++>} := Func("OpenURL").Bind("${2:<++>}")
-Menu, ${3:<++>}, Add, ${0:<++>}, % $1
+itm${1:<++>} := OpenURL.Bind("`(current-kill 0)`")
+${2:<++>}Menu.Add("$1 ${3:<++>}",itm$1)
+$0
