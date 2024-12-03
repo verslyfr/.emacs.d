@@ -1811,6 +1811,7 @@ R1 and R2 define the selected region."
   :hook ((text-mode
           prog-mode
           conf-mode
+          ahk-mode
           snippet-mode) . yas-minor-mode-on)
 )
 
