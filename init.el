@@ -1,9 +1,9 @@
-;;* Package -- My minimalistic init
+;;; Package --- My minimalistic init
 
-;;* Commentary:
-;;* This minimalistic init loads my real configuration from OneDrive stored in
-;;* an org file, and saves customizations in custom-vars.el in the
-;;* user-emacs-directory folder.
+;;; Commentary:
+;;; This minimalistic init loads my real configuration from OneDrive stored in
+;;; an org file, and saves customizations in custom-vars.el in the
+;;; user-emacs-directory folder.
 
 ;;* Code:
 (message "running my init.el")
@@ -1150,7 +1150,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-html-postamble nil)
   (org-emphasis-alist
    '(("*"
-      (bold :foreground "blue"))
+      (bold :foreground "RosyBrown"))
      ("/" italic)
      ("_" underline)
      ("="
