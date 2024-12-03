@@ -1119,13 +1119,23 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
       ((tags "PRIORITY=\"A\""
              ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
               (org-agenda-overriding-header "High-priority unfinished tasks:")))
-       (agenda "" ((org-agenda-ndays 1)))
-       (alltodo ""
-                ((org-agenda-skip-function '(or (frl-org-skip-subtree-if-habit)
-                                                (frl-org-skip-subtree-if-priority ?A)
-                                                (org-agenda-skip-if nil '(scheduled deadline))))
-                 (org-agenda-overriding-header "ALL normal priority tasks:"))))
-      ((org-agenda-compact-blocks t)))))
+       (tags "project=\"active\"")
+       (tags "project=\"unplanned\"")
+       (tags "project=\"paused\"")
+       (agenda "")
+       ;; (alltodo ""
+       ;;          ((org-agenda-skip-function '(or (frl-org-skip-subtree-if-habit)
+       ;;                                          (frl-org-skip-subtree-if-priority ?A)
+       ;;                                          (org-agenda-skip-if nil '(scheduled deadline))))
+       ;;           (org-agenda-overriding-header "ALL normal priority tasks:"))))
+      ; ((org-agenda-compact-blocks t))
+      ))
+
+     ("p" . "Projects" )
+     ("pa" "Active" tags "+project=\"active\"")
+     ("pu" "Unplanned" tags "+project=\"unplanned\"")
+     ("pp" "Paused" tags "+project=\"paused\"")))
+
   (org-refile-targets '((frl/get-open-org-file . (:maxlevel . 1))))
   (org-outline-path-complete-in-steps nil)
   (org-agenda-files '("~/OneDrive/notes"))
@@ -1140,7 +1150,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-html-postamble nil)
   (org-emphasis-alist
    '(("*"
-      (bold :foreground "Orange"))
+      (bold :foreground "blue"))
      ("/" italic)
      ("_" underline)
      ("="
@@ -1159,6 +1169,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-ellipsis "…")
   (org-html-validation-link nil)
   :config
+  ;; set up a project property to use to find projects for agenda views
+  (add-to-list 'org-global-properties-fixed '("project_ALL" . "no unplanned active paused complete canceled"))
+  (setq org-global-properties '(("project" . "no")))
 
   (which-key-add-key-based-replacements
   "C-c o" "org"
