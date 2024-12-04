@@ -1122,14 +1122,13 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
        (tags "project=\"active\"")
        (tags "project=\"unplanned\"")
        (tags "project=\"paused\"")
-       (agenda "")
-       ;; (alltodo ""
-       ;;          ((org-agenda-skip-function '(or (frl-org-skip-subtree-if-habit)
-       ;;                                          (frl-org-skip-subtree-if-priority ?A)
-       ;;                                          (org-agenda-skip-if nil '(scheduled deadline))))
-       ;;           (org-agenda-overriding-header "ALL normal priority tasks:"))))
+       (agenda "" ((org-agenda-ndays 1)))
+       (alltodo ""
+                 ((org-agenda-skip-function '(or (frl-org-skip-subtree-if-habit)
+                                                (frl-org-skip-subtree-if-priority ?A)
+                                                (org-agenda-skip-if nil '(scheduled deadline))))
+                 (org-agenda-overriding-header "ALL normal priority tasks:")))))
       ; ((org-agenda-compact-blocks t))
-      ))
 
      ("p" . "Projects" )
      ("pa" "Active" tags "+project=\"active\"")
