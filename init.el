@@ -1119,9 +1119,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
       ((tags "PRIORITY=\"A\""
              ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
               (org-agenda-overriding-header "High-priority unfinished tasks:")))
-       (tags "project=\"active\"")
-       (tags "project=\"unplanned\"")
-       (tags "project=\"paused\"")
+       (tags "project=\"active\"|project=\"unplanned\"|project=\"paused\"")
        (agenda "" ((org-agenda-ndays 1)))
        (alltodo ""
                  ((org-agenda-skip-function '(or (frl-org-skip-subtree-if-habit)
