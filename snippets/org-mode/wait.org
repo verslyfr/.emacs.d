@@ -3,9 +3,8 @@
 # key: :wait
 # binding: C-c y w
 # --
-******** WAIT @${<++>} ${0:<++>} `(frl-yas-org-collect-tags)`
+`(make-string (+ 1 (org-current-level)) ?*)` WAIT @${<++>} ${0:<++>} `(frl-yas-org-collect-tags)`
 SCHEDULED: <`(org-read-date nil nil nil "Wait Until" nil nil 'inactive)`>
 :PROPERTIES:
 :created: <`(format-time-string "%Y-%m-%d")`>
 :END:
-******** END
