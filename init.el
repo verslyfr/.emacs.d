@@ -1082,6 +1082,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :ensure t
   :custom
   (org-tidy-protect-overlay nil)
+  (org-tidy-properties-style 'fringe)
+  (org-tidy-top-property-style 'keep)
   :hook
   (org-mode . org-tidy-mode)
   :bind (:map org-mode-map
