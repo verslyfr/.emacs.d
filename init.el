@@ -1257,15 +1257,15 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                                  (shell . t))))
 
 ;;* org-inlinetask
-(use-package org-inlinetask
-  :bind
-  (
-   :map org-mode-map
-        ("C-c o k" . #'org-inlinetask-insert-task)
-        )
-  :custom (org-inlinetask-min-level 8)
-  (org-inlinetask-export t)
-  )
+;; (use-package org-inlinetask
+;;   :bind
+;;   (
+;;    :map org-mode-map
+;;         ("C-c o k" . #'org-inlinetask-insert-task)
+;;         )
+;;   :custom (org-inlinetask-min-level 8)
+;;   (org-inlinetask-export t)
+;;   )
 
 ;;* org capture screen shot
 (defun my-org-screenshot ()

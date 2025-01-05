@@ -4,8 +4,7 @@
 # binding: C-c y t
 #`(make-string (+ 1 (org-current-level)) ?*)` TODO ${0:<++>} `(frl-yas-org-collect-tags)`
 # --
-******** TODO ${0:<++>} `(frl-yas-org-collect-tags)`
+`(make-string (+ 1 (org-current-level)) ?*)` TODO ${0:<++>} `(frl-yas-org-collect-tags)`
 :PROPERTIES:
 :created: <`(format-time-string "%Y-%m-%d")`>
 :END:
-******** END
