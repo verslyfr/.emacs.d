@@ -1196,7 +1196,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (if (string-match "WSL2" operating-system-release)
         (add-to-list
          'org-file-apps
-         '("\\.\\(?:PDF\\|DOCX\\|XLS[BMX]\\|PPTX?\\|pdf\\|docx\\|xls[bmx]\\|pptx?\\|x?html?\\)\\'" . "startwin.sh %s")
+         '("\\.\\(?:PDF\\|DOCX\\|XLS[BMX]?\\|PPTX?\\|pdf\\|docx\\|xls[bmx]?\\|pptx?\\|x?html?\\)\\'" . "startwin.sh %s")
          ))
 ;; For this to work you need a startwin.sh in the path containing the following:
 ;; #!/bin/env bash
