@@ -97,8 +97,13 @@ frame and default fonts. Multiple options are provided"
       (set-face-font 'default "Consolas-11"))
      ((find-font (font-spec :name "courier"))
       (set-frame-font "courier-11" t t t)
-      (set-face-font 'default "courier-11"))
-    )))
+      (set-face-font 'default "courier-11")))
+    (cond
+     ((find-font (font-spec :name "Aptos Light"))
+      (set-face-font 'variable-pitch "Aptos Light-18"))
+     ((find-font (font-spec :name "OpenSans Light"))
+      (set-face-font 'variable-pitch "OpenSans Light-15"))
+     )))
 (frl-select-font)
 (add-hook 'after-make-frame-functions 'frl-select-font)
 
@@ -1052,10 +1057,13 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 (defun frl-org-integrity-link-hook ()
   "hook to initialize the integrity link"
-  (org-add-link-type "integrity" 'frl-org-integrity-open)
+  (let ((inhibit-message t)
+        (message-log-max nil))
+    (org-add-link-type "integrity" 'frl-org-integrity-open))
   )
+
 (defun frl-org-integrity-open (link)
-  "Open the integrity item identified by the unique OneNote URL." 
+  "Open the integrity item identified by the link." 
   (w32-shell-execute
    "open"
    (concat "integrity:" link)))
@@ -1171,7 +1179,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   ;; set up a project property to use to find projects for agenda views
   (add-to-list 'org-global-properties-fixed '("project_ALL" . "no unplanned active paused complete canceled"))
   (setq org-global-properties '(("project" . "no")))
-
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch :foreground "tomato")
+  
   (which-key-add-key-based-replacements
   "C-c o" "org"
   "C-c t" "toggle"
@@ -1298,7 +1307,8 @@ same directory as the org-buffer and insert a link to this file."
 
 ;;* org onenote link
 (if (string-equal-ignore-case (user-login-name) "ba919")
-    (add-hook 'org-mode-hook #'(lambda () (org-add-link-type "onenote" 'org-onenote-open))))
+    (add-hook 'org-mode-hook #'(lambda () (let ((inhibit-message t)
+        (message-log-max nil)) (org-add-link-type "onenote" 'org-onenote-open)))))
 
 (defun org-onenote-open (link)
   "Open the OneNote item identified by the unique OneNote URL." 
