@@ -1611,8 +1611,10 @@ R1 and R2 define the selected region."
   (setq pyvenv-menu t)
   (pyvenv-mode 1)
   ;; Restart the python process when switching environments
-  (add-hook 'pyvenv-post-activate-hooks (lambda ()
-                                          (pyvenv-restart-python)))
+  ;; This was causing a lot of restarts of the python environment. Moving around a buffer
+  ;; would cause it to restart. Removed fro now. 
+  ;; (add-hook 'pyvenv-post-activate-hooks (lambda ()
+  ;;                                         (pyvenv-restart-python)))
   :hook (python-ts-mode . pyvenv-mode))
 
 ;;** code-cells
