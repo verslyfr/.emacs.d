@@ -1142,7 +1142,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
      ("pa" "Active" tags "+project=\"active\"")
      ("pu" "Unplanned" tags "+project=\"unplanned\"")
      ("pp" "Paused" tags "+project=\"paused\"")))
-
+  (org-attach-preferred-new-method 'dir)
+  (org-attach-directory "projects/")
+  (org-attach-use-inheritance t)
   (org-refile-targets '((frl/get-open-org-file . (:maxlevel . 1))))
   (org-outline-path-complete-in-steps nil)
   (org-agenda-files '("~/OneDrive/notes"))
@@ -1612,8 +1614,10 @@ Providing a prefix argument (c-u) will update the org-roam ids."
   (setq pyvenv-menu t)
   (pyvenv-mode 1)
   ;; Restart the python process when switching environments
-  (add-hook 'pyvenv-post-activate-hooks (lambda ()
-                                          (pyvenv-restart-python)))
+  ;; This was causing a lot of restarts of the python environment. Moving around a buffer
+  ;; would cause it to restart. Removed fro now. 
+  ;; (add-hook 'pyvenv-post-activate-hooks (lambda ()
+  ;;                                         (pyvenv-restart-python)))
   :hook (python-ts-mode . pyvenv-mode))
 
 ;;** code-cells
