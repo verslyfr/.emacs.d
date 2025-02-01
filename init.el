@@ -1412,10 +1412,11 @@ same directory as the org-buffer and insert a link to this file."
 
 ;;* ox-frl-clip
 (require 'htmlize)
-(defun ox-frl-clip (r1 r2)
+(defun ox-frl-clip (r1 r2 &optional prefix)
   "Export the selected region to HTML and copy it to the clipboard.
-R1 and R2 define the selected region."
-  (interactive "r")
+R1 and R2 define the selected region.
+Providing a prefix argument (c-u) will update the org-roam ids."
+  (interactive "r\nP")
   ;; (copy-region-as-kill r1 r2)
   (if (equal major-mode 'org-mode)
       (save-window-excursion
@@ -1426,8 +1427,10 @@ R1 and R2 define the selected region."
 	       (buf (org-export-to-buffer 'html "*Formatted Copy*" nil nil t t))
                (html (with-current-buffer buf (buffer-string)))
                (f (or (and (boundp 'org-theme-css) org-theme-css) (org-theme))))
-          (message (format "filename=%s" f))
-          (org-roam-update-org-id-locations)  ;; used to fix up links for html
+          ;; (message (format "filename=%s" f))
+          (if prefix 
+              (progn (message "ox-frl-clip: Updating org-roam ids.")
+                     (org-roam-update-org-id-locations)))  ;; used to fix up links for html
           (if (file-exists-p f)
               (with-current-buffer buf
                 (goto-char (point-min))
@@ -1455,7 +1458,7 @@ R1 and R2 define the selected region."
                   (write-region nil nil outfile)
                   (call-process "powershell.exe" nil nil nil
                                 "type" wsloutfile "|" "set-clipboard" "-ashtml")
-                  (message (format "Clipboard is loaded from the file, %s." wsloutfile))
+                  (message (format "ox-frl-clip: Clipboard is loaded from the file, %s." wsloutfile))
                   )
                 )
             ))
