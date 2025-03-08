@@ -1368,8 +1368,8 @@ same directory as the org-buffer and insert a link to this file."
   (org-roam-file-extensions '("org" "txt"))
   (org-roam-capture-templates
    '(("d" "default" plain "%?" :target
-      (file+head "%<%Y%m%d>-${slug}.txt" "#+title: ${title}
-")
+      (file+head "%<%Y%m%d>-${slug}.txt"
+                 "#+title: ${title}\n\n* ${title}\n")
       :unnarrowed t)))
   (org-roam-dailies-capture-templates
    '(("d" "default" entry
