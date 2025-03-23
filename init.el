@@ -430,6 +430,7 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
 (global-set-key (kbd  "M-0") 'delete-window)
 (global-set-key (kbd  "<RET>") 'newline-and-indent)
 
+
 ;;* abbrev
 (message "Loading abbrev")
 (define-prefix-command 'abbrev-map nil "abbrevs")
