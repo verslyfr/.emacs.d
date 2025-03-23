@@ -8,6 +8,14 @@
 ;;* Code:
 (message "running my init.el")
 
+;; Set the custom-file variable if it is nil
+;; If you want to override the location of the custom-vars.el location
+;; then put in code in early-init.el
+(if (not custom-file)
+    (setq custom-file
+          (locate-user-emacs-file
+           (expand-file-name "custom-vars.el" user-emacs-directory))))
+
 ;;* Initialize package manager
 (require 'package)
 ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -26,14 +34,14 @@
 
 ;; install the missing packages
 ;; list the packages you want
-(defvar package-list "temporary variable for managing package list")
-(setq package-list '(use-package))
-(dolist (package package-list)
-  (unless (package-installed-p package)
-    (package-install package)))
-(unless (package-installed-p 'vc-use-package)
-  (package-vc-install "https://github.com/slotThe/vc-use-package"))
-(require 'vc-use-package)
+;; (defvar package-list "temporary variable for managing package list")
+;; (setq package-list '(use-package))
+;; (dolist (package package-list)
+;;   (unless (package-installed-p package)
+;;     (package-install package)))
+;; (unless (package-installed-p 'vc-use-package)
+;;   (package-vc-install "https://github.com/slotThe/vc-use-package"))
+;; (require 'vc-use-package)
 
 ;;* sample code
 ;; code snippet for how to add keys to a mode
@@ -1368,8 +1376,8 @@ same directory as the org-buffer and insert a link to this file."
   (org-roam-file-extensions '("org" "txt"))
   (org-roam-capture-templates
    '(("d" "default" plain "%?" :target
-      (file+head "%<%Y%m%d>-${slug}.txt" "#+title: ${title}
-")
+      (file+head "%<%Y%m%d>-${slug}.txt"
+                 "#+title: ${title}\n\n* ${title}\n")
       :unnarrowed t)))
   (org-roam-dailies-capture-templates
    '(("d" "default" entry
@@ -1504,10 +1512,12 @@ Providing a prefix argument (c-u) will update the org-roam ids."
 ;; To use this functionality put <++> into the file and then move
 ;; forward and backward to change the elements
 (use-package placeholder
-  :vc (:fetcher github :repo oantolin/placeholder)
+  :vc (:url "https://github.com/oantolin/placeholder.git"
+        :rev :newest)
   :bind (("C-S-n" . placeholder-forward)
          ("C-S-p" . placeholder-backward)
          ("C-S-x" . placeholder-insert)))
+
 ;;* plantuml
 (use-package plantuml-mode
   :ensure t
@@ -1624,9 +1634,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
 (defun frl-code-cells ()
   "Load code-cell-mode and start REPL for Python."
   (interactive)
-;;  (jupyter-run-repl "python" nil t nil nil)
   (run-python)
-  ;; (jupyter-repl-associate-buffer nil)
   (code-cells-mode 1))
 
 (use-package code-cells
@@ -1637,19 +1645,11 @@ Providing a prefix argument (c-u) will update the org-roam ids."
               ("M-p" . 'code-cells-backward-cell)
               ("M-n" . 'code-cells-forward-cell)
               ("C-c C-c" . 'code-cells-eval)
-              ([remap jupyter-eval-line-or-region] . 'code-cells-eval)
               ([remap python-shell-send-region] . 'code-cells-eval))
   :config
   (add-to-list 'code-cells-eval-region-commands '(python-ts-mode . python-shell-send-region))
   )
 
-;;** jupyter
-(use-package jupyter
-  :ensure t
-  :commands (jupyter-repl-associate-buffer
-             jupyter-run-server-repl
-             jupyter-run-repl
-             emacs jupyter-server-list-kernels))
 ;;** dap
 (use-package dap-mode
   :ensure t
@@ -1908,8 +1908,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
 ;; (advice-add 'ask-user-about-supersession-threat :around #'ask-user-about-supersession-threat--ignore-byte-identical)
 
 ;;* custom-file
-;; Move customization variables to a separate file and load it
-(setq custom-file (locate-user-emacs-file (expand-file-name "custom-vars.el" user-emacs-directory)))
+;; Load the custom-file which can have variables and other code added
 (load custom-file)
 
 ;;* the closing message
@@ -1919,20 +1918,3 @@ Providing a prefix argument (c-u) will update the org-roam ids."
 ;;* init.el ends here
 
 ; LocalWords:  Calibri Consolas Iosevka FiraCode ABCDEFGHIJKLMNOPQRSTUVWXYZ
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(delete-selection-mode nil)
- '(package-vc-selected-packages
-   '((placeholder :vc-backend Git :url "https://github.com/oantolin/placeholder")
-     (vc-use-package :vc-backend Git :url
-                     "https://github.com/slotThe/vc-use-package"))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(line-number ((t (:inherit fixed-pitch))))
- '(line-number-current-line ((t (:inherit (hl-line fixed-pitch))))))
