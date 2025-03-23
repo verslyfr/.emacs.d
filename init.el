@@ -415,7 +415,7 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
 (global-set-key (kbd  "C-x ;") 'comment-dwim)
 (global-set-key (kbd  "M-o") 'other-window)
 (global-set-key (kbd  "C-o") 'find-file)
-(global-set-key (kbd  "C-c w") 'kill-this-buffer)
+(global-set-key (kbd  "C-c w") 'kill-current-buffer)
 (global-set-key (kbd  "M-1") 'delete-other-windows)
 (global-set-key (kbd  "M-2") 'split-window-vertically)
 (global-set-key (kbd  "M-3") 'split-window-horizontally)
@@ -1924,9 +1924,11 @@ Providing a prefix argument (c-u) will update the org-roam ids."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(delete-selection-mode nil)
  '(package-vc-selected-packages
    '((placeholder :vc-backend Git :url "https://github.com/oantolin/placeholder")
-     (vc-use-package :vc-backend Git :url "https://github.com/slotThe/vc-use-package"))))
+     (vc-use-package :vc-backend Git :url
+                     "https://github.com/slotThe/vc-use-package"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

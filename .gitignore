@@ -22,3 +22,4 @@ plugins/eglot-ahk.el
 tramp
 vscode-autohotkey2-lsp/
 /.lsp-session-v1
+projects
