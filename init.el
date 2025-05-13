@@ -1190,7 +1190,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   ;; set up a project property to use to find projects for agenda views
   (add-to-list 'org-global-properties-fixed '("project_ALL" . "no unplanned active paused complete canceled"))
   (setq org-global-properties '(("project" . "no")))
-  (set-face-attribute 'org-table nil :inherit 'fixed-pitch :foreground "tomato")
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch :foreground "light cyan")
   
   (which-key-add-key-based-replacements
   "C-c o" "org"
