@@ -1152,7 +1152,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
      ("pu" "Unplanned" tags "+project=\"unplanned\"")
      ("pp" "Paused" tags "+project=\"paused\"")))
   (org-attach-preferred-new-method 'dir)
-  (org-attach-directory "projects/")
   (org-attach-use-inheritance t)
   (org-refile-targets '((frl/get-open-org-file . (:maxlevel . 1))))
   (org-outline-path-complete-in-steps nil)
