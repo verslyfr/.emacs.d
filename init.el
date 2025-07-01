@@ -1362,7 +1362,7 @@ same directory as the org-buffer and insert a link to this file."
 (message "Loading org-roam")
 (use-package org-roam
   :ensure t
-  :demand t
+  :defer t
   :init
   (setq org-roam-v2-ack t)
   ;; emacs if folder exists
@@ -1410,7 +1410,7 @@ same directory as the org-buffer and insert a link to this file."
          ("M-n t" . org-id-get-create))
   :config
   ;; (org-roam-setup)
-  (org-roam-db-autosync-enable)
+  (run-with-idle-timer 5 nil (lambda () (org-roam-db-autosync-mode)))
   ;; for org-roam-buffer-toggle
   ;; Recommendation in the official manual
   (add-to-list 'display-buffer-alist
