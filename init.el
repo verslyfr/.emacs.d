@@ -71,6 +71,7 @@
 ;; to see the report use Alt-X use-package-report
 (setq use-package-compute-statistics t)
 (eval-when-compile (require 'use-package))
+(setq use-package-always-defer t)
 
 ;;* Settings
 (message "Loading settings")
@@ -646,16 +647,6 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
   (unless omit (dired-toggle-marks))
   (dired-do-kill-lines))
 
-(use-package dired
-  :bind (:map dired-mode-map ("/" . 'frl-dired-limit-regexp)))
-
-(setq dired-listing-switches "-agho --group-directories-first")
-
-(use-package dired-hide-dotfiles
-  :ensure t
-  :hook (dired-mode . dired-hide-dotfiles-mode)
-  :bind (:map dired-mode-map ("H" . dired-hide-dotfiles-mode )))
-
 ;;* ediff
 
 (defun frl-dired-ediff-files ()
@@ -679,7 +670,16 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
                       (set-window-configuration wnd))))
       (error "no more than 2 files should be marked"))))
 
-(define-key dired-mode-map (kbd "~") 'frl-dired-ediff-files)
+(use-package dired
+  :bind (:map dired-mode-map ("/" . 'frl-dired-limit-regexp)
+              ("~" . 'frl-dired-ediff-files)))
+
+(setq dired-listing-switches "-agho --group-directories-first")
+
+(use-package dired-hide-dotfiles
+  :ensure t
+  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :bind (:map dired-mode-map ("H" . dired-hide-dotfiles-mode )))
 
 ;;* flycheck
 (use-package flycheck
