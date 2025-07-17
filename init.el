@@ -1369,6 +1369,8 @@ same directory as the org-buffer and insert a link to this file."
   (if (file-directory-p "~/OneDrive - Cummins/")
       (setq org-roam-directory "~/OneDrive - Cummins/__notes")
     (setq org-roam-directory "~/OneDrive/notes"))
+  :hook ((after-init-hook . org-roam-db-autosync-enable))
+  
   :custom
   (org-roam-completion-everywhere t)
   (org-roam-dailies-directory "daily/")
@@ -1410,7 +1412,7 @@ same directory as the org-buffer and insert a link to this file."
          ("M-n t" . org-id-get-create))
   :config
   ;; (org-roam-setup)
-  (run-with-idle-timer 5 nil (lambda () (org-roam-db-autosync-mode)))
+;  (run-with-idle-timer 5 nil (lambda () (org-roam-db-autosync-mode)))
   ;; for org-roam-buffer-toggle
   ;; Recommendation in the official manual
   (add-to-list 'display-buffer-alist
