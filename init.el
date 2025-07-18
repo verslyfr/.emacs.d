@@ -1122,6 +1122,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ("S-<right>" . nil)
          ("S-<left>" . nil)
          ("C-c o e" . org-emphasize)
+         ("C-b" .  org-emphasize)
          ("C-c o n" . org-toggle-narrow-to-subtree)
          ("C-c o l" . org-toggle-link-display)
          ("C-c o i" . org-time-stamp-inactive)
