@@ -128,7 +128,7 @@ frame and default fonts. Multiple options are provided"
               (2 . (overline background 1.03))
               (3 . (overline 1.02))
               (t . (rainbow 1.01)))))
-(load-theme 'modus-vivendi t)
+(load-theme 'modus-vivendi-tinted t)
 
 (put 'narrow-to-region 'disabled nil)
 
@@ -404,7 +404,7 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
     (define-key map "k"  'describe-bindings)
     (define-key map "r " 'point-to-register)
     (define-key map "rj" 'jump-to-register)
-    (define-key map "tm" 'modus-themes-toggle)
+    (define-key map "tm" 'modus-themes-select)
     (define-key map "W"  'frl-browse-lucky)
     (define-key map "w"  'frl-browse-url-web-search)
     (define-key map "rr" 'cua-rectangle-mark-mode)
