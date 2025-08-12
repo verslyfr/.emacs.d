@@ -54,6 +54,15 @@
 ;;                         'forward-paragraph)))
 ;;             (define-key texinfo-mode-map "\C-c\C-xx" nil)
 
+;;* Add some themes
+(message "Some themes: leuven, alect, kaolin")
+(use-package leuven-theme
+  :ensure t)
+(use-package alect-themes
+  :ensure t)
+(use-package kaolin-themes
+  :ensure t)
+
 ;;* plugins initialization
 ;; Initialize load-path to include all subdirectories under plugins
 (let ((default-directory "~/.emacs.d/plugins/"))
@@ -1152,6 +1161,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
      ("pa" "Active" tags "+project=\"active\"")
      ("pu" "Unplanned" tags "+project=\"unplanned\"")
      ("pp" "Paused" tags "+project=\"paused\"")))
+  ;; Fontify the whole line for headings (with a background color).
+  (org-fontify-whole-heading-line t)
   (org-attach-preferred-new-method 'dir)
   (org-attach-use-inheritance t)
   (org-refile-targets '((frl/get-open-org-file . (:maxlevel . 1))))
