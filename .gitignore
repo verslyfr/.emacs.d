@@ -1,8 +1,6 @@
 .cache/
 .org-id-locations
-abbrev_defs*
-./abbrev_defs
-*abbrev_defs*
+abbrev_defs
 auto-save-list/
 org-persist/
 bookmarks
