@@ -690,6 +690,32 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
   :hook (dired-mode . dired-hide-dotfiles-mode)
   :bind (:map dired-mode-map ("H" . dired-hide-dotfiles-mode )))
 
+;;* eglot-ltex-plus
+(use-package eglot-ltex-plus
+  :vc (:url "https://github.com/emacs-languagetool/eglot-ltex-plus.git" )
+  :ensure t
+  :hook (text-mode . (lambda ()
+                       (require 'eglot-ltex-plus)
+                       (eglot-ensure)))
+  :init
+  (let* ((default-dir (expand-file-name "~/.local"))
+         (lt-dir (car (file-expand-wildcards (concat default-dir "/ltex-ls-plus*")))))
+    (unless (and lt-dir (file-directory-p lt-dir))
+      (message "⚠️ ltex-ls-plus not found in ~/.local. To install it:")
+      (message "     Releases located at https://github.com/ltex-plus/ltex-ls-plus/releases")
+      (message "   1. Run the following commands in your terminal:")
+      (message "      cd ~/.local")
+      (message "      curl -L  https://github.com/ltex-plus/ltex-ls-plus/releases/download/18.5.1/ltex-ls-plus-18.5.1-linux-x64.tar.gz -o ltex-ls-plus.tar.gz ; tar xvf ltex-ls-plus.tar.gz")
+      (message "        or for Windows")
+      (message "      curl -L https://github.com/ltex-plus/ltex-ls-plus/releases/download/18.5.1/ltex-ls-plus-18.5.1-windows-x64.zip -o ltex-ls-plus.zip ; unzip ltex-ls-plus.zip")))
+  ;; Automatically detect installed LanguageTool jar
+  (let* ((default-dir (expand-file-name "~/.local"))
+         (llp-dir (car (file-expand-wildcards (concat default-dir "/ltex-ls-plus*"))))
+         (llp-path (and llp-dir (expand-file-name "bin/ltex-ls-plus" llp-dir))))
+    (when (and llp-path (file-exists-p llp-path))
+      (setq eglot-ltex-plus-server-path llp-path
+            eglot-ltex-plus-communication-channel 'tcp))))
+
 ;;* flycheck
 (use-package flycheck
   :ensure t
