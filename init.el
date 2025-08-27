@@ -740,41 +740,41 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
   :bind (:map flyspell-mode-map
               ("C-;" . 'flyspell-correct-wrapper)))
 
-;;* flymake-languagetool
-(defun flymake-languagetool-correct-wrapper (arg)
-  "Correct Flymake diagnostics using LanguageTool.
-With no prefix ARG, correct the nearest previous diagnostic.
-With prefix ARG, correct all previous diagnostics from point upward."
-  (interactive "P")
-  (flymake-languagetool-previous 1)
-  (flymake-languagetool-correct-dwim))
+;; * flymake-languagetool
+;; (defun flymake-languagetool-correct-wrapper (arg)
+;;   "Correct Flymake diagnostics using LanguageTool.
+;; With no prefix ARG, correct the nearest previous diagnostic.
+;; With prefix ARG, correct all previous diagnostics from point upward."
+;;   (interactive "P")
+;;   (flymake-languagetool-previous 1)
+;;   (flymake-languagetool-correct-dwim))
 
-(defun frl/org-flymake-languagetool-setup ()
-  "Enable flymake and languagetool support."
-  (flymake-mode 1)
-  (flymake-languagetool-load))
+;; (defun frl/org-flymake-languagetool-setup ()
+;;   "Enable flymake and languagetool support."
+;;   (flymake-mode 1)
+;;   (flymake-languagetool-load))
 
-(use-package flymake-languagetool
-  :ensure t
-  :bind ("C-M-;" . #'flymake-languagetool-correct-wrapper)
-  :init
-  (let* ((default-dir (expand-file-name "~/.local"))
-         (lt-dir (car (file-expand-wildcards (concat default-dir "/LanguageTool*")))))
-    (unless (and lt-dir (file-directory-p lt-dir))
-      (message "⚠️ LanguageTool not found in ~/.local. To install it:")
-      (message "   1. Install OpenJDK (e.g., sudo apt install openjdk-17-jdk or use your package manager)")
-      (message "   2. Run the following commands in your terminal:")
-      (message "      cd ~/.local")
-      (message "      curl -L https://raw.githubusercontent.com/languagetool-org/languagetool/master/install.sh -o install.sh")
-      (message "      bash install.sh")))
-  :hook ((text-mode org-mode markdown-mode latex-mode) . frl/org-flymake-languagetool-setup)
-  :config
-  ;; Automatically detect installed LanguageTool jar
-  (let* ((default-dir (expand-file-name "~/.local"))
-         (lt-dir (car (file-expand-wildcards (concat default-dir "/LanguageTool*"))))
-         (jar-path (and lt-dir (expand-file-name "languagetool-server.jar" lt-dir))))
-    (when (and jar-path (file-exists-p jar-path))
-      (setq flymake-languagetool-server-jar jar-path))))
+;; (use-package flymake-languagetool
+;;   :ensure t
+;;   :bind ("C-M-;" . #'flymake-languagetool-correct-wrapper)
+;;   :init
+;;   (let* ((default-dir (expand-file-name "~/.local"))
+;;          (lt-dir (car (file-expand-wildcards (concat default-dir "/LanguageTool*")))))
+;;     (unless (and lt-dir (file-directory-p lt-dir))
+;;       (message "⚠️ LanguageTool not found in ~/.local. To install it:")
+;;       (message "   1. Install OpenJDK (e.g., sudo apt install openjdk-17-jdk or use your package manager)")
+;;       (message "   2. Run the following commands in your terminal:")
+;;       (message "      cd ~/.local")
+;;       (message "      curl -L https://raw.githubusercontent.com/languagetool-org/languagetool/master/install.sh -o install.sh")
+;;       (message "      bash install.sh")))
+;;   :hook ((text-mode org-mode markdown-mode latex-mode) . frl/org-flymake-languagetool-setup)
+;;   :config
+;;   ;; Automatically detect installed LanguageTool jar
+;;   (let* ((default-dir (expand-file-name "~/.local"))
+;;          (lt-dir (car (file-expand-wildcards (concat default-dir "/LanguageTool*"))))
+;;          (jar-path (and lt-dir (expand-file-name "languagetool-server.jar" lt-dir))))
+;;     (when (and jar-path (file-exists-p jar-path))
+;;       (setq flymake-languagetool-server-jar jar-path))))
 
 ;;* google-this
 (use-package google-this
