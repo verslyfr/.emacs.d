@@ -714,13 +714,18 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
          (llp-path (and llp-dir (expand-file-name "bin/ltex-ls-plus" llp-dir))))
     (when (and llp-path (file-exists-p llp-path))
       (setq eglot-ltex-plus-server-path llp-path
-            eglot-ltex-plus-communication-channel 'tcp))))
+            eglot-ltex-plus-communication-channel 'tcp)))
+  (setq eglot-workspace-configuration
+        '((:ltex
+           :language "en-US"
+           :disabledRules (:en-US ["MORFOLOGIK_RULE_EN_US"])))))
 
 ;;* flycheck
 (use-package flycheck
   :ensure t
   :hook ((text-mode org-mode prog-mode) . flycheck-mode)
   )
+
 ;;* flyspell
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
