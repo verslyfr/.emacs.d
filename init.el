@@ -691,12 +691,31 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
   :bind (:map dired-mode-map ("H" . dired-hide-dotfiles-mode )))
 
 ;;* eglot-ltex-plus
+;; Define a custom function to navigate diagnostics and trigger code actions
+(defun frl/flymake-diagnostic-and-code-action (arg)
+  "Go to a Flymake diagnostic and then run `eglot-code-actions`.
+If ARG (prefix argument) is non-nil (e.g., via C-u), go forward to the next error.
+Otherwise, go backward to the previous error."
+  (interactive "P") ;; "P" passes raw prefix argument (nil or non-nil)
+  (if arg
+      ;; With prefix argument → go forward
+      (flymake-goto-next-error)
+    ;; Without prefix argument → go backward
+    (flymake-goto-prev-error))
+  ;; After moving to the diagnostic, trigger Eglot's code actions
+  (call-interactively #'eglot-code-actions))
+
 (use-package eglot-ltex-plus
   :vc (:url "https://github.com/emacs-languagetool/eglot-ltex-plus.git" )
   :ensure t
   :hook (text-mode . (lambda ()
                        (require 'eglot-ltex-plus)
                        (eglot-ensure)))
+  :bind
+  ;; Bind M-C-; globally to our helper
+  ;; If you want it only in text-mode or org-mode, use :bind (:map text-mode-map ...)
+  (("M-C-;" . frl/flymake-diagnostic-and-code-action))
+
   :init
   (let* ((default-dir (expand-file-name "~/.local"))
          (lt-dir (car (file-expand-wildcards (concat default-dir "/ltex-ls-plus*")))))
