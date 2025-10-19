@@ -141,12 +141,29 @@ frame and default fonts. Multiple options are provided"
 
 (put 'narrow-to-region 'disabled nil)
 
-;; emojis
+;;*** emojis
+;; to use emojis effectively please install some fonts.
+;; the set-fontset-font below will choose from the list
+;; assuming it finds one of those;
 (use-package emojify
   :ensure t
-  :hook (after-init . global-emojify-mode))
+  :hook (after-init . global-emojify-mode)
 
-;; transparency mode
+  :config
+  (set-fontset-font
+   t
+   'emoji
+   (cond
+    ((member "Apple Color Emoji") (font-family-list) "Apple Color Emoji")
+    ((member "Noto Color Emoji" (font-family-list)) "Noto Color Emoji")
+    ((member "EmojiOne Color" (font-family-list)) "EmojiOne Color")
+    ))
+  
+  (setq emojify-display-style 'unicode)
+  ;; (setq emojify-emoji-styles '(unicode))
+  )
+
+;;*** transparency mode
 (defun toggle-transparency ()
   (interactive)
   (let ((alpha (frame-parameter nil 'alpha)))
@@ -165,7 +182,7 @@ frame and default fonts. Multiple options are provided"
   (interactive "nTransparency Value 0 - 100 opaque:")
   (set-frame-parameter (selected-frame) 'alpha value))
 
-;; use window divider
+;;*** use window divider
 (window-divider-mode)
 (set-face-foreground 'window-divider "red3")
 
@@ -480,15 +497,6 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
   :config
   (setq outline-regexp ";;+"))
 
-(use-package python-mode
-  :ensure nil  ; makes sure that Emacs in-build python-mode is used
-  :hook
-  (python-mode . eglot-ensure)  ; connect to language server when py-file is opened
-  (python-ts-mode . eglot-ensure)
-  :custom
-  (python-shell-interpreter "python")
-  )
-
 ;;* all-the-icons
 (message "Loading all-the-icons")
 (use-package all-the-icons
@@ -656,6 +664,17 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
   (unless omit (dired-toggle-marks))
   (dired-do-kill-lines))
 
+(use-package dired
+  :bind (:map dired-mode-map ("/" . 'frl-dired-limit-regexp)
+              ("~" . 'frl-dired-ediff-files)))
+
+(setq dired-listing-switches "-agho --group-directories-first")
+
+(use-package dired-hide-dotfiles
+  :ensure t
+  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :bind (:map dired-mode-map ("H" . dired-hide-dotfiles-mode )))
+
 ;;* ediff
 
 (defun frl-dired-ediff-files ()
@@ -678,66 +697,6 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
                       (setq ediff-after-quit-hook-internal nil)
                       (set-window-configuration wnd))))
       (error "no more than 2 files should be marked"))))
-
-(use-package dired
-  :bind (:map dired-mode-map ("/" . 'frl-dired-limit-regexp)
-              ("~" . 'frl-dired-ediff-files)))
-
-(setq dired-listing-switches "-agho --group-directories-first")
-
-(use-package dired-hide-dotfiles
-  :ensure t
-  :hook (dired-mode . dired-hide-dotfiles-mode)
-  :bind (:map dired-mode-map ("H" . dired-hide-dotfiles-mode )))
-
-;;* eglot-ltex-plus
-;; Define a custom function to navigate diagnostics and trigger code actions
-(defun frl/flymake-diagnostic-and-code-action (arg)
-  "Go to a Flymake diagnostic and then run `eglot-code-actions`.
-If ARG (prefix argument) is non-nil (e.g., via C-u), go forward to the next error.
-Otherwise, go backward to the previous error."
-  (interactive "P") ;; "P" passes raw prefix argument (nil or non-nil)
-  (if arg
-      ;; With prefix argument → go forward
-      (flymake-goto-next-error)
-    ;; Without prefix argument → go backward
-    (flymake-goto-prev-error))
-  ;; After moving to the diagnostic, trigger Eglot's code actions
-  (call-interactively #'eglot-code-actions))
-
-(use-package eglot-ltex-plus
-  :vc (:url "https://github.com/emacs-languagetool/eglot-ltex-plus.git" )
-  :ensure t
-  :hook (text-mode . (lambda ()
-                       (require 'eglot-ltex-plus)
-                       (eglot-ensure)))
-  :bind
-  ;; Bind M-C-; globally to our helper
-  ;; If you want it only in text-mode or org-mode, use :bind (:map text-mode-map ...)
-  (("M-C-;" . frl/flymake-diagnostic-and-code-action))
-
-  :init
-  (let* ((default-dir (expand-file-name "~/.local"))
-         (lt-dir (car (file-expand-wildcards (concat default-dir "/ltex-ls-plus*")))))
-    (unless (and lt-dir (file-directory-p lt-dir))
-      (message "⚠️ ltex-ls-plus not found in ~/.local. To install it:")
-      (message "     Releases located at https://github.com/ltex-plus/ltex-ls-plus/releases")
-      (message "   1. Run the following commands in your terminal:")
-      (message "      cd ~/.local")
-      (message "      curl -L  https://github.com/ltex-plus/ltex-ls-plus/releases/download/18.5.1/ltex-ls-plus-18.5.1-linux-x64.tar.gz -o ltex-ls-plus.tar.gz ; tar xvf ltex-ls-plus.tar.gz")
-      (message "        or for Windows")
-      (message "      curl -L https://github.com/ltex-plus/ltex-ls-plus/releases/download/18.5.1/ltex-ls-plus-18.5.1-windows-x64.zip -o ltex-ls-plus.zip ; unzip ltex-ls-plus.zip")))
-  ;; Automatically detect installed LanguageTool jar
-  (let* ((default-dir (expand-file-name "~/.local"))
-         (llp-dir (car (file-expand-wildcards (concat default-dir "/ltex-ls-plus*"))))
-         (llp-path (and llp-dir (expand-file-name "bin/ltex-ls-plus" llp-dir))))
-    (when (and llp-path (file-exists-p llp-path))
-      (setq eglot-ltex-plus-server-path llp-path
-            eglot-ltex-plus-communication-channel 'tcp)))
-  (setq eglot-workspace-configuration
-        '((:ltex
-           :language "en-US"
-           :disabledRules (:en-US ["MORFOLOGIK_RULE_EN_US"])))))
 
 ;;* flycheck
 (use-package flycheck
@@ -764,42 +723,6 @@ Otherwise, go backward to the previous error."
   :bind (:map flyspell-mode-map
               ("C-;" . 'flyspell-correct-wrapper)))
 
-;; * flymake-languagetool
-;; (defun flymake-languagetool-correct-wrapper (arg)
-;;   "Correct Flymake diagnostics using LanguageTool.
-;; With no prefix ARG, correct the nearest previous diagnostic.
-;; With prefix ARG, correct all previous diagnostics from point upward."
-;;   (interactive "P")
-;;   (flymake-languagetool-previous 1)
-;;   (flymake-languagetool-correct-dwim))
-
-;; (defun frl/org-flymake-languagetool-setup ()
-;;   "Enable flymake and languagetool support."
-;;   (flymake-mode 1)
-;;   (flymake-languagetool-load))
-
-;; (use-package flymake-languagetool
-;;   :ensure t
-;;   :bind ("C-M-;" . #'flymake-languagetool-correct-wrapper)
-;;   :init
-;;   (let* ((default-dir (expand-file-name "~/.local"))
-;;          (lt-dir (car (file-expand-wildcards (concat default-dir "/LanguageTool*")))))
-;;     (unless (and lt-dir (file-directory-p lt-dir))
-;;       (message "⚠️ LanguageTool not found in ~/.local. To install it:")
-;;       (message "   1. Install OpenJDK (e.g., sudo apt install openjdk-17-jdk or use your package manager)")
-;;       (message "   2. Run the following commands in your terminal:")
-;;       (message "      cd ~/.local")
-;;       (message "      curl -L https://raw.githubusercontent.com/languagetool-org/languagetool/master/install.sh -o install.sh")
-;;       (message "      bash install.sh")))
-;;   :hook ((text-mode org-mode markdown-mode latex-mode) . frl/org-flymake-languagetool-setup)
-;;   :config
-;;   ;; Automatically detect installed LanguageTool jar
-;;   (let* ((default-dir (expand-file-name "~/.local"))
-;;          (lt-dir (car (file-expand-wildcards (concat default-dir "/LanguageTool*"))))
-;;          (jar-path (and lt-dir (expand-file-name "languagetool-server.jar" lt-dir))))
-;;     (when (and jar-path (file-exists-p jar-path))
-;;       (setq flymake-languagetool-server-jar jar-path))))
-
 ;;* google-this
 (use-package google-this
   :ensure t)
@@ -815,16 +738,6 @@ Otherwise, go backward to the previous error."
   ([remap describe-command] . helpful-command) 
   ([remap describe-key] . helpful-key))
 
-;;* hideshow (Not used)
-;; (use-package hideshow
-;;   :ensure t
-;;   :init (add-hook #'prog-mode-hook #'hs-minor-mode)
-;;   :bind (:map hs-minor-mode-map ("C-<tab>" . hs-toggle-hiding)
-;;               ("C-M-<tab>" . hs-show-all))
-;;   :config
-;;   (define-key hs-minor-mode-map (kbd "M-SPC @")
-;;     (lookup-key hs-minor-mode-map (kbd "C-c @")))
-;;   (define-key hs-minor-mode-map (kbd "C-c @") nil))
 ;;* htmlize
 (message "Loading htmlize")
 (use-package htmlize
@@ -842,6 +755,32 @@ Otherwise, go backward to the previous error."
    '(line-number-current-line ((t (:inherit (hl-line fixed-pitch)))))
    '(line-number ((t (:inherit fixed-pitch))))))
 
+
+;;* languagetool
+(use-package languagetool
+  :ensure t
+  :defer t
+  :commands (languagetool-check
+             languagetool-clear-suggestions
+             languagetool-correct-at-point
+             languagetool-correct-buffer
+             languagetool-set-language
+             languagetool-server-mode
+             languagetool-server-start
+             languagetool-server-stop)
+  :init
+  (let* ((default-dir (expand-file-name "~/.local"))
+         (lt-dir (car (file-expand-wildcards (concat default-dir "/LanguageTool-stable")))))
+    (unless (and lt-dir (file-directory-p lt-dir))
+      (message "⚠️ LanguageTool-stable not found in ~/.local. To install it:")
+      (message "     Releases located at https://languagetool.org/download")
+      (message "   1. Run the following commands in your terminal:")
+      (message "      cd ~/.local")
+      (message "      curl -L -o LanguageTool.zip https://languagetool.org/download/LanguageTool-stable.zip; tmpdir=$(mktemp -d); unzip LanguageTool.zip -d \"$tmpdir\"; inner_dir=$(find \"$tmpdir\" -mindepth 1 -maxdepth 1 -type d); mv \"$inner_dir\" ./LanguageTool-stable; rm LanguageTool.zip ; rmdir \"$tmpdir\"")))
+  :config
+  (setq languagetool-java-arguments '("-Dfile.encoding=UTF-8")
+        languagetool-console-command "~/.local/LanguageTool-stable/languagetool-commandline.jar"
+        languagetool-server-command "~/.local/LanguageTool-stable/languagetool-server.jar"))
 
 ;;* magit
 (use-package magit
@@ -1679,13 +1618,6 @@ Providing a prefix argument (c-u) will update the org-roam ids."
     (message "No region active; can't generate docs!"))
   )
 
-;; (use-package lsp-pyright
-;;   :ensure t
-;;   :hook ((python-mode
-;;           python-ts-mode) . (lambda ()
-;;                           (require 'lsp-pyright)
-;;                           (lsp))))  ; or lsp-deferred
-
 (use-package python
   :ensure t
   :mode ("\\.py\\'" . python-mode)
@@ -2017,3 +1949,4 @@ Providing a prefix argument (c-u) will update the org-roam ids."
 ;;* init.el ends here
 
 ; LocalWords:  Calibri Consolas Iosevka FiraCode ABCDEFGHIJKLMNOPQRSTUVWXYZ
+; LocalWords:  languagetool dir LanguageTool arg flyspell init flycheck ltex
