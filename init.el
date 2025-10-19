@@ -154,9 +154,10 @@ frame and default fonts. Multiple options are provided"
    t
    'emoji
    (cond
-    ((member "Apple Color Emoji") (font-family-list) "Apple Color Emoji")
+    ((member "Apple Color Emoji" (font-family-list)) "Apple Color Emoji")
     ((member "Noto Color Emoji" (font-family-list)) "Noto Color Emoji")
     ((member "EmojiOne Color" (font-family-list)) "EmojiOne Color")
+    ((member "Segoe UI Emoji" (font-family-list)) "Segoe UI Emoji")
     ))
   
   (setq emojify-display-style 'unicode)
