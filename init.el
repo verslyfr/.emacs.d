@@ -1268,7 +1268,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
            "* TODO %?
 :PROPERTIES:
 :created: %u
-:link: %a
 :END:
  %i" :prepend t)
           ("n" "Meeting Notes" entry
