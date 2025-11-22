@@ -137,7 +137,7 @@ frame and default fonts. Multiple options are provided"
               (2 . (overline background 1.03))
               (3 . (overline 1.02))
               (t . (rainbow 1.01)))))
-(load-theme 'modus-vivendi-tinted t)
+(load-theme 'leuven t)
 
 (put 'narrow-to-region 'disabled nil)
 
@@ -1310,6 +1310,119 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                                '(             ; (python . t)
                                  (emacs-lisp . t)
                                  (shell . t))))
+
+;;* org PROJECT_ROOT
+;; --- Org Project Root Helpers ---
+(defun frl/org-find-project-root ()
+  "Find PROJECT_ROOT property by walking up the Org tree.
+If none is found, default to ./project relative to the current buffer file."
+  (let ((root nil))
+    ;; Walk up the tree until we find PROJECT_ROOT
+    (save-excursion
+      (while (and (not root) (org-up-heading-safe))
+        (setq root (org-entry-get (point) "PROJECT_ROOT"))))
+    ;; If not found at parent, check current node
+    (unless root
+      (setq root (org-entry-get (point) "PROJECT_ROOT")))
+    ;; Default if still nil
+    (setq root (or root "./project"))
+    ;; Expand relative to file
+    (expand-file-name root (file-name-directory (buffer-file-name)))))
+
+(defun frl/org-set-project-root (dir)
+  "Set PROJECT_ROOT property for current Org node.
+DIR is stored relative to the current buffer file."
+  (interactive "DProject root directory: ")
+  (let* ((file-dir (file-name-directory (buffer-file-name)))
+         (rel (file-relative-name dir file-dir)))
+    (org-entry-put (point) "PROJECT_ROOT" rel)
+    (message "PROJECT_ROOT set to %s" rel)))
+
+(defun frl/org-open-project-root ()
+  "Open PROJECT_ROOT folder for current Org node or its parents in dired."
+  (interactive)
+  (let ((root (frl/org-find-project-root)))
+    (dired root)))
+
+;; --- Keybindings ---
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c n p") #'frl/org-set-project-root)
+  (define-key org-mode-map (kbd "C-c n o") #'frl/org-open-project-root)
+;; --- Org Project Root Helpers ---
+(defun frl/org-find-project-root ()
+  "Find PROJECT_ROOT property by walking up the Org tree.
+If none is found, default to ./project relative to the current buffer file."
+  (let ((root nil))
+    ;; Walk up the tree until we find PROJECT_ROOT
+    (save-excursion
+      (while (and (not root) (org-up-heading-safe))
+        (setq root (org-entry-get (point) "PROJECT_ROOT"))))
+    ;; If not found at parent, check current node
+    (unless root
+      (setq root (org-entry-get (point) "PROJECT_ROOT")))
+    ;; Default if still nil
+    (setq root (or root "./project"))
+    ;; Expand relative to file
+    (expand-file-name root (file-name-directory (buffer-file-name)))))
+
+(defun frl/org-set-project-root (dir)
+  "Set PROJECT_ROOT property for current Org node.
+DIR is stored relative to the current buffer file."
+  (interactive "DProject root directory: ")
+  (let* ((file-dir (file-name-directory (buffer-file-name)))
+         (rel (file-relative-name dir file-dir)))
+    (org-entry-put (point) "PROJECT_ROOT" rel)
+    (message "PROJECT_ROOT set to %s" rel)))
+
+(defun frl/org-open-project-root ()
+  "Open PROJECT_ROOT folder for current Org node or its parents in dired."
+  (interactive)
+  (let ((root (frl/org-find-project-root)))
+    (dired root)))
+
+;; --- Keybindings ---
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c n p") #'frl/org-set-project-root)
+  (define-key org-mode-map (kbd "C-c n o") #'frl/org-open-project-root))
+;; --- Org Project Root Helpers ---
+(defun frl/org-find-project-root ()
+  "Find PROJECT_ROOT property by walking up the Org tree.
+If none is found, default to ./project relative to the current buffer file."
+  (let ((root nil))
+    ;; Walk up the tree until we find PROJECT_ROOT
+    (save-excursion
+      (while (and (not root) (org-up-heading-safe))
+        (setq root (org-entry-get (point) "PROJECT_ROOT"))))
+    ;; If not found at parent, check current node
+    (unless root
+      (setq root (org-entry-get (point) "PROJECT_ROOT")))
+    ;; Default if still nil
+    (setq root (or root "./project"))
+    ;; Expand relative to file
+    (expand-file-name root (file-name-directory (buffer-file-name)))))
+
+(defun frl/org-set-project-root (dir)
+  "Set PROJECT_ROOT property for current Org node.
+DIR is stored relative to the current buffer file."
+  (interactive "DProject root directory: ")
+  (let* ((file-dir (file-name-directory (buffer-file-name)))
+         (rel (file-relative-name dir file-dir)))
+    (org-entry-put (point) "PROJECT_ROOT" rel)
+    (message "PROJECT_ROOT set to %s" rel)))
+
+(defun frl/org-open-project-root ()
+  "Open PROJECT_ROOT folder for current Org node or its parents in dired."
+  (interactive)
+  (let ((root (frl/org-find-project-root)))
+    (dired root)))
+
+;; --- Keybindings ---
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-c n p") #'frl/org-set-project-root)
+  (define-key org-mode-map (kbd "C-c n o") #'frl/org-open-project-root))
+  ; Meta-n variants
+  (define-key org-mode-map (kbd "M-n p") #'frl/org-set-project-root)
+  (define-key org-mode-map (kbd "M-n o") #'frl/org-open-project-root))
 
 ;;* org-inlinetask
 ;; (use-package org-inlinetask
