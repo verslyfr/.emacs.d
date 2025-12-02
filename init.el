@@ -5,7 +5,7 @@
 ;;; an org file, and saves customizations in custom-vars.el in the
 ;;; user-emacs-directory folder.
 
-;;* Code:
+;;; Code:
 (message "running my init.el")
 
 ;; Set the custom-file variable if it is nil
@@ -16,7 +16,7 @@
           (locate-user-emacs-file
            (expand-file-name "custom-vars.el" user-emacs-directory))))
 
-;;* Initialize package manager
+;;; Initialize package manager
 (require 'package)
 ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
@@ -43,7 +43,7 @@
 ;;   (package-vc-install "https://github.com/slotThe/vc-use-package"))
 ;; (require 'vc-use-package)
 
-;;* sample code
+;;; sample code
 ;; code snippet for how to add keys to a mode
 ;; this is done in a hook
 ;; (add-hook 'texinfo-mode-hook
@@ -54,7 +54,7 @@
 ;;                         'forward-paragraph)))
 ;;             (define-key texinfo-mode-map "\C-c\C-xx" nil)
 
-;;* Add some themes
+;;; Add some themes
 (message "Some themes: leuven, alect, kaolin")
 (use-package leuven-theme
   :ensure t)
@@ -63,33 +63,33 @@
 (use-package kaolin-themes
   :ensure t)
 
-;;* plugins initialization
+;;; plugins initialization
 ;; Initialize load-path to include all subdirectories under plugins
 (let ((default-directory "~/.emacs.d/plugins/"))
   (normal-top-level-add-subdirs-to-load-path))
 
-;;* Update the path to include plugins
+;;; Update the path to include plugins
 (let* ((plugins-folder (concat (expand-file-name user-emacs-directory) "plugins")))
   ;; (message plugins-folder)             
   (setenv "PATH" (concat (getenv "PATH") ":" plugins-folder))
   ;; (message (getenv "PATH"))
   (setq exec-path (append exec-path (list plugins-folder))))
 
-;;* use-package
+;;; use-package
 ;; for profiling use-package
 ;; to see the report use Alt-X use-package-report
 (setq use-package-compute-statistics t)
 (eval-when-compile (require 'use-package))
 (setq use-package-always-defer t)
 
-;;* Settings
+;;; Settings
 (message "Loading settings")
-;;** Increase the GC threshold for faster startup
+;;;* Increase the GC threshold for faster startup
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 200 1000 1000))
 (setq ad-redefinition-action 'accept)
 
-;;** fonts
+;;;* fonts
 ;; Test char and monospace:
 ;; 0123456789abcdefghijklmnopqrstuwxyz [] () :;,. !@#$^&*
 ;; 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ {} <> "'`  ~-_/|\?
@@ -129,7 +129,7 @@ frame and default fonts. Multiple options are provided"
 ;; (set-face-attribute 'fixed-pitch nil :family "Consolas")
 ;; (set-face-attribute 'variable-pitch nil :family "Calibri")
 
-;;** Visuals
+;;;* Visuals
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 ;(load-theme 'modus-operandi t)
 (setq modus-themes-headings   
@@ -141,7 +141,7 @@ frame and default fonts. Multiple options are provided"
 
 (put 'narrow-to-region 'disabled nil)
 
-;;*** emojis
+;;;** emojis
 ;; to use emojis effectively please install some fonts.
 ;; the set-fontset-font below will choose from the list
 ;; assuming it finds one of those;
@@ -164,7 +164,7 @@ frame and default fonts. Multiple options are provided"
   ;; (setq emojify-emoji-styles '(unicode))
   )
 
-;;*** transparency mode
+;;;** transparency mode
 (defun toggle-transparency ()
   (interactive)
   (let ((alpha (frame-parameter nil 'alpha)))
@@ -183,11 +183,11 @@ frame and default fonts. Multiple options are provided"
   (interactive "nTransparency Value 0 - 100 opaque:")
   (set-frame-parameter (selected-frame) 'alpha value))
 
-;;*** use window divider
+;;;** use window divider
 (window-divider-mode)
 (set-face-foreground 'window-divider "red3")
 
-;;** Enable minor modes
+;;;* Enable minor modes
 (column-number-mode)
 (delete-selection-mode 1)
 (electric-pair-mode 1)
@@ -201,14 +201,14 @@ frame and default fonts. Multiple options are provided"
 (global-visual-line-mode t)
 (tab-bar-mode t)
 
-;;*** Disable line numbers for some modes
+;;;** Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
                 term-mode-hook
                 shell-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-;;** Miscellaneous settings
+;;;* Miscellaneous settings
 (add-to-list 'load-path (expand-file-name "plugins" user-emacs-directory))
 (setq bookmark-save-flag 1)
 (setq comp-deferred-compilation t)      ; Perform jit compilation
@@ -235,7 +235,7 @@ frame and default fonts. Multiple options are provided"
 (setq native-comp-async-jobs-number 1)
 (setq kill-whole-line t)
 
-;;** Save File settings
+;;;* Save File settings
 ;; (auto-save-visited-mode 1)
 ;; (setq auto-save-interval 1000)          ; save every 1000 characters typed
 (setq-default auto-save-default t)
@@ -249,7 +249,7 @@ frame and default fonts. Multiple options are provided"
         ("\\`[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'" ,(concat BACKUPDIR "\\2") t)
         ))
 
-;;** Backup settings
+;;;* Backup settings
 (setq
  backup-by-copying t               ; don't clobber symlinks-
  delete-old-versions t
@@ -257,7 +257,7 @@ frame and default fonts. Multiple options are provided"
  kept-old-versions 2
  version-control t)                ; use versioned backups
 
-;;** When using a server, Ctrl-x k will end the server edit
+;;;* When using a server, Ctrl-x k will end the server edit
 (add-hook 'server-switch-hook
           (lambda ()
             (when (current-local-map)
@@ -265,8 +265,8 @@ frame and default fonts. Multiple options are provided"
             (when server-buffer-clients
               (local-set-key (kbd "C-x k") 'server-edit))))
 
-;;* Function Definitions
-;;** Delete File and Buffer
+;;; Function Definitions
+;;;* Delete File and Buffer
 ;; based on http://emacsredux.com/blog/2013/04/03/delete-file-and-buffer/
 ;; https://gist.github.com/hyOzd/23b87e96d43bca0f0b52
 (defun frl/delete-file-and-buffer ()
@@ -281,7 +281,7 @@ frame and default fonts. Multiple options are provided"
               (kill-buffer)))
       (message "Not a file visiting buffer!"))))
 
-;;** Client Save and then Kill Emacs 
+;;;* Client Save and then Kill Emacs 
 (defun client-save-kill-emacs(&optional display)
   " This is a function that can bu used to save buffers and 
   shutdown the emacs daemon. It should be called using 
@@ -362,7 +362,7 @@ frame and default fonts. Multiple options are provided"
     )
   )
 
-;;** Browser functions
+;;;* Browser functions
 
 ;; (setq browse-url-browser-function 'browse-url-generic
 ;;       browse-url-generic-program "/mnt/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe")
@@ -385,7 +385,7 @@ frame and default fonts. Multiple options are provided"
       (browse-url (concat "https://www.google.com/search?q="
                           (url-hexify-string q))))))
 
-;;** Start git-bash within emacs
+;;;* Start git-bash within emacs
 (defcustom git-path (or (getenv "GIT_INSTALL_ROOT") ; for standard install
                         (getenv "gitdir")           ; for portable git
                         nil)
@@ -418,7 +418,7 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
     (message "Please customize `git-bash-path' to provide the location of the git installation."))
   )
 
-;;* key bindings
+;;; key bindings
 ;; Reference:
 ;;     https://www.masteringemacs.org/article/mastering-key-bindings-emacs
 ;; (global-set-key (kbd "") 'interactive-command)
@@ -459,7 +459,7 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
 (global-set-key (kbd  "<RET>") 'newline-and-indent)
 
 
-;;* abbrev
+;;; abbrev
 (message "Loading abbrev")
 (define-prefix-command 'abbrev-map nil "abbrevs")
 (define-key frl-map (kbd "Ae") 'edit-abbrevs)
@@ -486,7 +486,7 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
       (expand-file-name "abbrev_defs" user-emacs-directory))  
 (read-abbrev-file)                      ; read abbrevs in
 
-;;* ahk
+;;; ahk
 (message "Loading ahk")
 (use-package ahk-mode
   :ensure t
@@ -495,10 +495,9 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
   :mode "\\.ahk[2]*\\'"
   :custom
   (ahk-indentation 2)
-  :config
-  (setq outline-regexp ";;+"))
+  )
 
-;;* all-the-icons
+;;; all-the-icons
 (message "Loading all-the-icons")
 (use-package all-the-icons
   :ensure t
@@ -508,14 +507,14 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
   :ensure t
   :hook (dired-mode . all-the-icons-dired-mode))
 
-;;* company
+;;; company
 (use-package company
   :ensure t
   :commands global-company-mode
   )
 (add-hook 'after-init-hook 'global-company-mode)
 
-;;* consult
+;;; consult
 (defun frl-org-find-filename () (interactive) (consult-fd org-directory))
 (defun frl-org-find-in-files () (interactive) (consult-ripgrep org-directory))
 
@@ -575,29 +574,29 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
          ("M-s" . consult-history)                 ;; orig. next-matching-history-element
          ("M-r" . consult-history))                ;; orig. previous-matching-history-element
 
-  ;;** Enable automatic preview at point in the *Completions* buffer. This is
+  ;;;* Enable automatic preview at point in the *Completions* buffer. This is
   ;; relevant when you use the default completion UI.
   :hook (completion-list-mode . consult-preview-at-point-mode)
 
-  ;;** The :init configuration is always executed (Not lazy)
+  ;;;* The :init configuration is always executed (Not lazy)
   :init
 
-  ;;** Optionally configure the register formatting. This improves the register
+  ;;;* Optionally configure the register formatting. This improves the register
   ;; preview for `consult-register', `consult-register-load',
   ;; `consult-register-store' and the Emacs built-ins.
   (setq register-preview-delay 0.5
         register-preview-function #'consult-register-format)
 
-  ;;** Optionally tweak the register preview window.
+  ;;;* Optionally tweak the register preview window.
   ;; This adds thin lines, sorting and hides the mode line of the window.
   (advice-add #'register-preview :override #'consult-register-window)
 
-  ;;** Use Consult to select xref locations with preview
+  ;;;* Use Consult to select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
 
-  ;;** Configure other variables and modes in the :config section,
-  ;;** after lazily loading the package.
+  ;;;* Configure other variables and modes in the :config section,
+  ;;;* after lazily loading the package.
   :config
 
   ;; Optionally configure preview. The default value
@@ -638,7 +637,7 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
   ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
   )
 
-;;* dired
+;;; dired
 (message "Loading dired")
 
 (defvar frl-dired--limit-hist '()
@@ -676,7 +675,7 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
   :hook (dired-mode . dired-hide-dotfiles-mode)
   :bind (:map dired-mode-map ("H" . dired-hide-dotfiles-mode )))
 
-;;* ediff
+;;; ediff
 
 (defun frl-dired-ediff-files ()
   "Run ediff against marked files in dired."
@@ -699,13 +698,13 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
                       (set-window-configuration wnd))))
       (error "no more than 2 files should be marked"))))
 
-;;* flycheck
+;;; flycheck
 (use-package flycheck
   :ensure t
   :hook ((text-mode org-mode prog-mode) . flycheck-mode)
   )
 
-;;* flyspell
+;;; flyspell
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 (defun suppress-messages (old-fun &rest args)
@@ -724,12 +723,12 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
   :bind (:map flyspell-mode-map
               ("C-;" . 'flyspell-correct-wrapper)))
 
-;;* google-this
+;;; google-this
 (use-package google-this
   :ensure t)
 (google-this-mode 1)
 
-;;* helpful
+;;; helpful
 (message "Loading helpful")
 (use-package helpful
   :ensure t
@@ -739,7 +738,7 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
   ([remap describe-command] . helpful-command) 
   ([remap describe-key] . helpful-key))
 
-;;* htmlize
+;;; htmlize
 (message "Loading htmlize")
 (use-package htmlize
   :ensure t
@@ -749,7 +748,7 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
              htmlize-many-files-dired
              htmlize-region))
 
-;;* linum
+;;; linum
 (eval-after-load "linum"
   (custom-theme-set-faces
    'user
@@ -757,7 +756,7 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
    '(line-number ((t (:inherit fixed-pitch))))))
 
 
-;;* languagetool
+;;; languagetool
 (use-package languagetool
   :ensure t
   :defer t
@@ -783,20 +782,20 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
         languagetool-console-command "~/.local/LanguageTool-stable/languagetool-commandline.jar"
         languagetool-server-command "~/.local/LanguageTool-stable/languagetool-server.jar"))
 
-;;* magit
+;;; magit
 (use-package magit
   :ensure t
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
   :commands magit)
 
-;;* marginalia
+;;; marginalia
 (use-package marginalia
   :ensure t
   :init
   (marginalia-mode))
 
-;;* markdown
+;;; markdown
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
@@ -807,7 +806,7 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode)))
-;;* modeline
+;;; modeline
 (message "Loading simple-modeline")
 ;; (use-package doom-modeline
 ;;   :ensure t
@@ -825,13 +824,13 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
       simple-modeline-segment-process
       simple-modeline-segment-major-mode))))
 
-;;* modeline nerd-icons
+;;; modeline nerd-icons
 ;; Install the nerd icons by using, then install the font on Windows 
 ;;     M-x nerd-icons-install-fonts
 (use-package nerd-icons
   :ensure t)
 
-;;* orderless
+;;; orderless
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
   :ensure t
@@ -843,61 +842,18 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
 	completion-category-defaults nil
 	completion-category-overrides '((file (styles partial-completion)))))
 
-;;* outline-minor-mode
-(setq outline-minor-mode-cycle t)
-(add-hook 'prog-mode-hook
-	  (lambda() "Initialize outline-mode"
-	    (outline-minor-mode)))
-(with-eval-after-load "outline"
-  (require 'foldout))
-;;* outline mode - change to use comments
-;;** variables
-(defvar my-outline-regexp-alist
-  '((emacs-lisp-mode . "\\s-*;;\\*+")
-    (js2-mode        . "\\s-*//\\*+")
-    (web-mode        . "\\s-*//\\*+")
-    (java-mode       . "\\s-*//\\*+")
-    (c-mode          . "\\s-*//\\*+")
-    ;; (python-mode     . "\\s-*##\\*+")
-    ;; (python-ts-mode  . "\\s-*##\\*+")
-    (sh-mode         . "\\s-*##\\*+")))
 
-;;** hooks
-(add-hook 'emacs-lisp-mode-hook #'my-setup-outline-mode)
-(add-hook 'js2-mode-hook #'my-setup-outline-mode)
-;; (add-hook 'python-mode-hook #'my-setup-outline-mode)
-;; (add-hook 'python-ts-mode-hook #'my-setup-outline-mode)
-(add-hook 'sh-mode-hook #'my-setup-outline-mode)
-(add-hook 'java-mode-hook #'my-setup-outline-mode)
-(add-hook 'c-mode-hook #'my-setup-outline-mode)
-(add-hook 'web-mode-hook #'my-setup-outline-mode)
+;;; Outli
+(use-package outli
+  :ensure t
+  ;:after lispy ; uncomment only if you use lispy; it also sets speed keys on headers!
+  :bind (:map outli-mode-map ; convenience key to get back to containing heading
+	      ("C-c C-p" . (lambda () (interactive) (outline-back-to-heading))))
+  :config
+  (push '(ahk-mode ";" 59 t t) outli-heading-config)
+  :hook ((ahk-mode prog-mode text-mode) . outli-mode)) ; or whichever modes you prefer
 
-;;** my-toggle-outline
-(defun my-toggle-outline ()
-  "Toggle outline visibility using `outline-toggle-children'."
-  (interactive)
-  (if (outline-on-heading-p t)
-      (outline-toggle-children)
-    (indent-for-tab-command)))
-
-;;** my-python-outline-level
-;; (defun my-python-outline-level ()
-;;   (- (match-end 0) (match-beginning 0)))
-
-
-
-;;** my-setup-outline-mode
-(defun my-setup-outline-mode ()
-  (let ((regexp (cdr (assoc major-mode my-outline-regexp-alist))))
-    (when regexp
-      (setq-local outline-regexp regexp)
-      (outline-minor-mode 1)
-      (define-key outline-minor-mode-map (kbd "TAB") 'my-toggle-outline))))
-      ;; (when (eq major-mode 'python-ts-mode)
-      ;;   (setq-local outline-heading-end-regexp "\n")
-      ;;   (setq-local outline-level #'my-python-outline-level)))))
-
-;;* different way to do python outline
+;;; different way to do python outline
 
 (defun python-mode-outline-hook ()
   (setq outline-level 'python-outline-level)
@@ -941,7 +897,7 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
 (add-hook 'python-mode-hook 'python-mode-outline-hook)
 (add-hook 'python-ts-mode-hook ' python-mode-outline-hook)
 
-;;* org-agenda
+;;; org-agenda
 (defun frl-org-skip-subtree-if-habit ()
   "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
   (let ((subtree-end (save-excursion (org-end-of-subtree t))))
@@ -979,7 +935,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;;   )
 ;; (add-hook 'org-mode-hook 'frl-org-agenda-hook)
 
-;;* org-appear
+;;; org-appear
 (use-package org-appear
   :ensure t
   :hook (org-mode . org-appear-mode)
@@ -990,7 +946,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-appear-autosubmarkers t)
   )
 
-;;* org ox-odt
+;;; org ox-odt
 (use-package ox-odt
   :ensure t
   :commands org-odt--translate-list-tables )
@@ -1005,7 +961,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          (org-odt--translate-list-tables tree backend info)
        tree))))
 
-;;* org color link
+;;; org color link
 (defun frl-setup-color-link-hook ()
   "Setup the color link support in org-mode."
   (org-link-set-parameters "color"
@@ -1026,7 +982,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 (add-hook 'org-mode-hook 'frl-setup-color-link-hook)
 
-;;* org electric pair
+;;; org electric pair
 ;; (message "Loading org electric pair")
 ;; (defvar org-electric-pairs '((?/ . ?/) (?= . ?=)
 ;;                              (?\_ . ?\_) (?~ . ?~) (?\* . ?\*))
@@ -1056,7 +1012,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 ;; (add-hook 'org-mode-hook 'org-add-electric-pairs)
 
-;;* org html export css support
+;;; org html export css support
 ;; The following allows me to select the CSS theme to use for the exported html.
 ;; The org-theme-css-dir has the path where org files are stored.  
 (defvar org-theme-css-dir (expand-file-name "org-css/" user-emacs-directory)
@@ -1095,7 +1051,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;; always prompt for the css style to use
 (add-hook 'org-export-before-parsing-hook 'set-org-html-style)
 
-;;* org integrity link
+;;; org integrity link
 (if (string-equal-ignore-case (user-login-name) "ba919") 
     (add-hook 'org-mode-hook 'frl-org-integrity-link-hook))
 
@@ -1129,7 +1085,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                           (mapcar 'buffer-name
                                   (org-buffer-list 'files))))))
 
-;;* org-tidy
+;;; org-tidy
 (use-package org-tidy
   :ensure t
   :custom
@@ -1143,7 +1099,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          )
   )
 
-;;* org-mode
+;;; org-mode
 (use-package org
   :ensure t
   :commands org-mode
@@ -1311,7 +1267,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                                  (emacs-lisp . t)
                                  (shell . t))))
 
-;;* org PROJECT_ROOT
+;;; org PROJECT_ROOT
 ;; --- Org Project Root Helpers ---
 (defun frl/org-find-project-root ()
   "Find PROJECT_ROOT property by walking up the Org tree.
@@ -1424,7 +1380,7 @@ DIR is stored relative to the current buffer file."
   (define-key org-mode-map (kbd "M-n p") #'frl/org-set-project-root)
   (define-key org-mode-map (kbd "M-n o") #'frl/org-open-project-root))
 
-;;* org-inlinetask
+;;; org-inlinetask
 ;; (use-package org-inlinetask
 ;;   :bind
 ;;   (
@@ -1435,7 +1391,7 @@ DIR is stored relative to the current buffer file."
 ;;   (org-inlinetask-export t)
 ;;   )
 
-;;* org capture screen shot
+;;; org capture screen shot
 (defun my-org-screenshot ()
   "Take a screenshot into a time stamped unique-named file in the
 same directory as the org-buffer and insert a link to this file."
@@ -1464,7 +1420,7 @@ same directory as the org-buffer and insert a link to this file."
 
 (global-set-key "\C-cs" 'my-org-screenshot)
 
-;;* org onenote link
+;;; org onenote link
 (if (string-equal-ignore-case (user-login-name) "ba919")
     (add-hook 'org-mode-hook #'(lambda () (let ((inhibit-message t)
         (message-log-max nil)) (org-add-link-type "onenote" 'org-onenote-open)))))
@@ -1475,7 +1431,7 @@ same directory as the org-buffer and insert a link to this file."
    "open"
    (concat "onenote:" link)))
 
-;;* org-refile
+;;; org-refile
 (defvar frl-refiled-location-link nil)
 
 (defun frl-move-todo ()
@@ -1506,7 +1462,7 @@ same directory as the org-buffer and insert a link to this file."
   (define-key org-mode-map "\C-com" '("move todo" . frl-move-todo)))
 (add-hook 'org-mode-hook #'frl-org-refile-keybind)
 
-;;* org-roam
+;;; org-roam
 ;;
 (message "Loading org-roam")
 (use-package org-roam
@@ -1571,7 +1527,7 @@ same directory as the org-buffer and insert a link to this file."
                  (window-width . 0.33)
                  (window-height . fit-window-to-buffer))))
 
-;;* ox-frl-clip
+;;; ox-frl-clip
 (require 'htmlize)
 (defun ox-frl-clip (r1 r2 &optional prefix)
   "Export the selected region to HTML and copy it to the clipboard.
@@ -1648,7 +1604,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
 ;;   :custom
 ;;    (ox-clip-w32-cmd "powershell -Command \"$input | set-clipboard -ashtml\"")
 ;;   :bind ("C-C x" . ox-clip-formatted-copy))
-;;* ox-pandoc
+;;; ox-pandoc
 (use-package ox-pandoc
   :ensure t
   :commands ox-pandoc
@@ -1659,7 +1615,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
 (with-eval-after-load 'ox
   (require 'ox-pandoc))
 
-;;* placeholder
+;;; placeholder
 ;; To use this functionality put <++> into the file and then move
 ;; forward and backward to change the elements
 (use-package placeholder
@@ -1669,7 +1625,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
          ("C-S-p" . placeholder-backward)
          ("C-S-x" . placeholder-insert)))
 
-;;* plantuml
+;;; plantuml
 (use-package plantuml-mode
   :ensure t
   :after org-mode
@@ -1687,9 +1643,9 @@ Providing a prefix argument (c-u) will update the org-roam ids."
   :config
   (flycheck-plantuml-setup))
 
-;;* python
+;;; python
 
-;;** eglot
+;;;; eglot
 (use-package eglot
   :ensure t
   :commands (eglot eglot-ensure)
@@ -1702,13 +1658,13 @@ Providing a prefix argument (c-u) will update the org-roam ids."
               )
   )
 
-;;** blacken
+;;;; blacken
 (use-package blacken
   :ensure t
   :hook ((python-mode
           python-ts-mode) . blacken-mode))
 
-;;** python
+;;;; python
 ;; Built-in Python utilities
 ;; python venv for LSP
 ;; python -m venv ~/venvs/<venv>
@@ -1753,7 +1709,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
    (t
     (setq python-shell-interpreter "python3"))))
 
-;;** pyvenv
+;;;; pyvenv
 ;; Required to easily switch virtual envs 
 ;; via the menu bar or with `pyvenv-workon` 
 ;; Setting the `WORKON_HOME` environment variable points 
@@ -1774,7 +1730,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
   ;;                                         (pyvenv-restart-python)))
   :hook (python-ts-mode . pyvenv-mode))
 
-;;** code-cells
+;;;; code-cells
 (defun frl-code-cells ()
   "Load code-cell-mode and start REPL for Python."
   (interactive)
@@ -1794,7 +1750,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
   (add-to-list 'code-cells-eval-region-commands '(python-ts-mode . python-shell-send-region))
   )
 
-;;** dap
+;;;; dap
 (use-package dap-mode
   :ensure t
   ;; Uncomment the config below if you want all UI panes to be hidden by default!
@@ -1814,24 +1770,24 @@ Providing a prefix argument (c-u) will update the org-roam ids."
   (dap-auto-configure-mode)
   (setq dap-python-debugger 'debugpy))
 
-;;** pytest
+;;;; pytest
 (use-package python-pytest
   :ensure t
   :after python
   :bind ("C-c Pt" . 'python-pytest-dispatch))
 
-;;* rainbow-delimiters
+;;; rainbow-delimiters
 (use-package rainbow-delimiters
   :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;;* ripgrep
+;;; ripgrep
 (use-package rg
   :ensure t
   :commands rg-menu
   :bind (("C-c g" . 'rg-menu)))
 
-;;* separedit
+;;; separedit
 (use-package separedit
   :ensure t
   :commands separedit
@@ -1840,21 +1796,21 @@ Providing a prefix argument (c-u) will update the org-roam ids."
   (setq separedit-default-mode 'markdown-mode)
   )
 
-;;* savehist
+;;; savehist
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
   :ensure t
   :init
   (savehist-mode))
 
-;;* tab jump out
+;;; tab jump out
 (use-package tab-jump-out
   :ensure t
   :after yasnippet-mode
   :config
   (setq yas-fallback-behavior '(apply tab-jump-out 1)))
 
-;;* treemacs
+;;; treemacs
 (use-package treemacs
   :ensure t
   :defer t
@@ -1941,7 +1897,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
   :after (treemacs magit)
   :ensure t)
 
-;;* tree-sitter
+;;; tree-sitter
 (setq major-mode-remap-alist
  '((yaml-mode . yaml-ts-mode)
    (bash-mode . bash-ts-mode)
@@ -1950,7 +1906,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
    (json-mode . json-ts-mode)
    (css-mode . css-ts-mode)
    (python-mode . python-ts-mode)))
-;;* vertico
+;;; vertico
 (use-package vertico
   :ensure t
   :init
@@ -1958,7 +1914,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
   )
 
 
-;;* which-key
+;;; which-key
 (use-package which-key
   :ensure t
   :init (which-key-mode)
@@ -1967,7 +1923,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
   (setq which-key-idle-delay 1))
 
 
-;;* yas-snippet
+;;; yas-snippet
 (message "Loading yasnippet.")
 (defun frl-yas-org-collect-tags ()
   "retrieves the tags for the current heading for inclusion in TODOs with yasnippet"
@@ -1991,7 +1947,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
 (use-package yasnippet-snippets
   :ensure t)
 
-;;* vterm
+;;; vterm
 (use-package vterm
   :ensure t
   :commands vterm
@@ -2002,7 +1958,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
 			      ))
   :custom ((vterm-shell "bash")))
 
-;;* yaml
+;;; yaml
 (use-package yaml-mode
   :ensure t
   :commands yaml-mode
@@ -2012,7 +1968,7 @@ Providing a prefix argument (c-u) will update the org-roam ids."
 
 (put 'upcase-region 'disabled nil)
 
-;;* Unused content
+;;; Unused content
 ;; msys64 -- not using
 ;; (setq explicit-shell-file-name "c:/Users/versl/msys64/usr/bin/bash.exe")
 ;; (setq shell-file-name "bash")
@@ -2051,15 +2007,15 @@ Providing a prefix argument (c-u) will update the org-roam ids."
 ;;     (apply original arguments)))
 ;; (advice-add 'ask-user-about-supersession-threat :around #'ask-user-about-supersession-threat--ignore-byte-identical)
 
-;;* custom-file
+;;; custom-file
 ;; Load the custom-file which can have variables and other code added
 (load custom-file)
 
-;;* the closing message
+;;; the closing message
 (message (format "finished running my init.el. Time taken was %s." (emacs-init-time))) 
 
 (provide 'init)
-;;* init.el ends here
+;;; init.el ends here
 
 ; LocalWords:  Calibri Consolas Iosevka FiraCode ABCDEFGHIJKLMNOPQRSTUVWXYZ
 ; LocalWords:  languagetool dir LanguageTool arg flyspell init flycheck ltex
