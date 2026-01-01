@@ -806,6 +806,25 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode)))
+;;; mermaid
+;;;; ob-mermaid
+(use-package ob-mermaid
+  :ensure t
+  :after org)
+
+;;;; Mermaid
+(use-package mermaid-mode
+  :ensure t
+  :after org
+  :mode "\\.mmd\\'"
+  :custom
+  (mermaid-output-format ".png")
+  :config
+  (define-key mermaid-mode-map (kbd "C-c C-c") 'mermaid-compile-buffer)
+  (define-key mermaid-mode-map (kbd "C-c C-o") 'mermaid-open-browser)
+  (add-to-list 'org-src-lang-modes '("mermaid" . mermaid))
+  )
+
 ;;; modeline
 (message "Loading simple-modeline")
 ;; (use-package doom-modeline
@@ -916,24 +935,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
         subtree-end
       nil)))
 
-;; https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html
-;; (defun frl-org-agenda-hook ()
-;;   "Sets up my special org-agenda views"
-;;   (interactive)
-;;   (setq org-agenda-custom-commands
-;;         '(("d" "Daily agenda and all TODOs"
-;;            ((tags "PRIORITY=\"A\""
-;;                   ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-;;                    (org-agenda-overriding-header "High-priority unfinished tasks:")))
-;;             (agenda "" ((org-agenda-ndays 1)))
-;;             (alltodo ""
-;;                      ((org-agenda-skip-function '(or (frl-org-skip-subtree-if-habit)
-;;                                                      (frl-org-skip-subtree-if-priority ?A)
-;;                                                      (org-agenda-skip-if nil '(scheduled deadline))))
-;;                       (org-agenda-overriding-header "ALL normal priority tasks:"))))
-;;            ((org-agenda-compact-blocks t)))))
-;;   )
-;; (add-hook 'org-mode-hook 'frl-org-agenda-hook)
 
 ;;; org-appear
 (use-package org-appear
@@ -1149,7 +1150,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-attach-use-inheritance t)
   (org-refile-targets '((frl/get-open-org-file . (:maxlevel . 1))))
   (org-outline-path-complete-in-steps nil)
-  (org-agenda-files '("~/OneDrive/notes"))
+  (org-agenda-files (list
+                     "todo.txt" (expand-file-name "active/" org-directory)))
   (org-agenda-file-regexp "\\`[^.].*\\.txt\\'")
   (org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANCEL(c)")))
   (org-support-shift-select t)          ; shift works in special headings
@@ -1482,10 +1484,44 @@ same directory as the org-buffer and insert a link to this file."
   (org-roam-extract-new-file-path "%<%Y%m%d>-${slug}.txt")
   (org-roam-file-extensions '("org" "txt"))
   (org-roam-capture-templates
-   '(("d" "default" plain "%?" :target
-      (file+head "%<%Y%m%d>-${slug}.txt"
-                 "#+title: ${title}\n\n* ${title}\n")
-      :unnarrowed t)))
+   '(
+     ("d"
+      "default" plain
+      "%?"
+      :target (file+head "%<%Y%m%d>-${slug}.txt"
+                         "#+title: ${title}\n\n* ${title}\n")
+      :jump-to-captured t
+      :unnarrowed t)
+     ("p"
+      "project" plain
+      "#+title: ${title}
+#+category: %^{shortname}
+#+filetags: :%\\1:
+#+startup: content
+
+* ${title} :project:
+:PROPERTIES:
+:PROJECT_ROOT: ../projects
+:END:
+
+# A crisp paragraph: scope, why now, how it ladders to strategy.
+<++>
+** Links
+
+** Tasks
+
+** Notes
+
+** Meetings
+
+%?"
+      :jump-to-captured t
+      :unnarrowed t
+      :target (file+head
+               "active/%<%Y%m%d>-${slug}.txt"
+               "\n"
+               ))))
+      
   (org-roam-dailies-capture-templates
    '(("d" "default" entry
       "* %?"
