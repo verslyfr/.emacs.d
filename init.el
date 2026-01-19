@@ -454,7 +454,9 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
 (global-set-key (kbd  "C-c w") 'kill-current-buffer)
 (global-set-key (kbd  "M-1") 'delete-other-windows)
 (global-set-key (kbd  "M-2") 'split-window-vertically)
+(global-set-key (kbd  "C-_") 'split-window-vertically)
 (global-set-key (kbd  "M-3") 'split-window-horizontally)
+(global-set-key (kbd  "C-|") 'split-window-horizontally)
 (global-set-key (kbd  "M-0") 'delete-window)
 (global-set-key (kbd  "<RET>") 'newline-and-indent)
 
