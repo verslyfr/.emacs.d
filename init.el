@@ -782,6 +782,11 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
         languagetool-console-command "~/.local/LanguageTool-stable/languagetool-commandline.jar"
         languagetool-server-command "~/.local/LanguageTool-stable/languagetool-server.jar"))
 
+;;; lua
+(use-package lua-mode
+  :ensure t
+  )
+
 ;;; magit
 (use-package magit
   :ensure t
