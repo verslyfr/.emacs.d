@@ -677,6 +677,22 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
   :hook (dired-mode . dired-hide-dotfiles-mode)
   :bind (:map dired-mode-map ("H" . dired-hide-dotfiles-mode )))
 
+;;; eat
+(use-package eat
+  :defer t
+  :init
+
+  ;; Allow Alt-o to switch between eat buffer and other buffers
+  (with-eval-after-load 'eat
+    (setq eat-semi-char-non-bound-keys
+          (delete-dups (cons [?\e ?o] eat-semi-char-non-bound-keys)))
+    (add-hook 'eat-mode-hook
+              (lambda ()
+                (eat-update-semi-char-mode-map)
+                (unless (bound-and-true-p eat--reloaded-once)
+                  (setq-local eat--reloaded-once t)
+                  (eat-reload))))))
+
 ;;; ediff
 
 (defun frl-dired-ediff-files ()
