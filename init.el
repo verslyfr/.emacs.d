@@ -454,7 +454,9 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
 (global-set-key (kbd  "C-c w") 'kill-current-buffer)
 (global-set-key (kbd  "M-1") 'delete-other-windows)
 (global-set-key (kbd  "M-2") 'split-window-vertically)
+(global-set-key (kbd  "C-_") 'split-window-vertically)
 (global-set-key (kbd  "M-3") 'split-window-horizontally)
+(global-set-key (kbd  "C-|") 'split-window-horizontally)
 (global-set-key (kbd  "M-0") 'delete-window)
 (global-set-key (kbd  "<RET>") 'newline-and-indent)
 
@@ -675,6 +677,22 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
   :hook (dired-mode . dired-hide-dotfiles-mode)
   :bind (:map dired-mode-map ("H" . dired-hide-dotfiles-mode )))
 
+;;; eat
+(use-package eat
+  :defer t
+  :init
+
+  ;; Allow Alt-o to switch between eat buffer and other buffers
+  (with-eval-after-load 'eat
+    (setq eat-semi-char-non-bound-keys
+          (delete-dups (cons [?\e ?o] eat-semi-char-non-bound-keys)))
+    (add-hook 'eat-mode-hook
+              (lambda ()
+                (eat-update-semi-char-mode-map)
+                (unless (bound-and-true-p eat--reloaded-once)
+                  (setq-local eat--reloaded-once t)
+                  (eat-reload))))))
+
 ;;; ediff
 
 (defun frl-dired-ediff-files ()
@@ -781,6 +799,11 @@ Restore the buffer with \\<dired-mode-map>`\\[revert-buffer]'."
   (setq languagetool-java-arguments '("-Dfile.encoding=UTF-8")
         languagetool-console-command "~/.local/LanguageTool-stable/languagetool-commandline.jar"
         languagetool-server-command "~/.local/LanguageTool-stable/languagetool-server.jar"))
+
+;;; lua
+(use-package lua-mode
+  :ensure t
+  )
 
 ;;; magit
 (use-package magit
