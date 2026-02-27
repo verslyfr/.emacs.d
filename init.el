@@ -1576,7 +1576,7 @@ same directory as the org-buffer and insert a link to this file."
          ("M-n t" . org-id-get-create))
   :config
   ;; (org-roam-setup)
-;;  (run-with-idle-timer 9 nil 'org-roam-db-autosync-mode)
+  (run-with-idle-timer 9 nil 'org-roam-db-autosync-mode)
   ;; for org-roam-buffer-toggle
   ;; Recommendation in the official manual
   (add-to-list 'display-buffer-alist
