@@ -1200,7 +1200,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-export-with-toc nil)
   (org-export-with-section-numbers nil)
   (user-full-name "FR Lyvers")
-  (org-directory "~/OneDrive/notes")
+  (org-directory "~/notes")
   (org-return-follows-link t)
   (org-ellipsis "…")
   (org-html-validation-link nil)
@@ -1498,7 +1498,7 @@ same directory as the org-buffer and insert a link to this file."
   ;; emacs if folder exists
   (if (file-directory-p "~/OneDrive - Cummins/")
       (setq org-roam-directory "~/OneDrive - Cummins/__notes")
-    (setq org-roam-directory "~/OneDrive/notes"))
+    (setq org-roam-directory "~/notes"))
 ; :hook ((after-init-hook . org-roam-db-autosync-enable))
   
   :custom
