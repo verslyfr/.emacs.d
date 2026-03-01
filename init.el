@@ -150,6 +150,7 @@ frame and default fonts. Multiple options are provided"
   :hook (after-init . global-emojify-mode)
 
   :config
+  (when (fboundp 'set-fontset-font)
   (set-fontset-font
    t
    'emoji
@@ -157,8 +158,7 @@ frame and default fonts. Multiple options are provided"
     ((member "Apple Color Emoji" (font-family-list)) "Apple Color Emoji")
     ((member "Noto Color Emoji" (font-family-list)) "Noto Color Emoji")
     ((member "EmojiOne Color" (font-family-list)) "EmojiOne Color")
-    ((member "Segoe UI Emoji" (font-family-list)) "Segoe UI Emoji")
-    ))
+    ((member "Segoe UI Emoji" (font-family-list)) "Segoe UI Emoji"))))
   
   (setq emojify-display-style 'unicode)
   ;; (setq emojify-emoji-styles '(unicode))
@@ -612,8 +612,8 @@ Source: https://emacs.stackexchange.com/questions/22049/git-bash-in-emacs-on-win
    consult-theme :preview-key '(:debounce 0.2 any)
    consult-ripgrep consult-git-grep consult-grep
    consult-bookmark consult-recent-file consult-xref
-   consult--source-bookmark consult--source-file-register
-   consult--source-recent-file consult--source-project-recent-file
+   consult-source-bookmark consult-source-file-register
+   consult-source-recent-file consult-source-project-recent-file
    ;; :preview-key (kbd "M-.")
    :preview-key '(:debounce 0.4 any))
 
