@@ -63,6 +63,13 @@
 (use-package kaolin-themes
   :ensure t)
 
+(defun frl/set-theme (theme)
+    "Disable all active themes and load THEME."
+      (interactive
+          (list (intern (completing-read "Theme: " (custom-available-themes)))))
+        (mapc #'disable-theme custom-enabled-themes)
+          (load-theme theme t))
+
 ;;; plugins initialization
 ;; Initialize load-path to include all subdirectories under plugins
 (let ((default-directory "~/.emacs.d/plugins/"))
