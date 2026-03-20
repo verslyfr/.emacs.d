@@ -1519,7 +1519,7 @@ same directory as the org-buffer and insert a link to this file."
       "default" plain
       "%?"
       :target (file+head "%<%Y%m%d>-${slug}.txt"
-                         "#+title: ${title}\n\n* ${title}\n")
+                         "#+title: ${title}\n#+startup: show2levels\n\n* ${title}\n")
       :jump-to-captured t
       :unnarrowed t)
      ("p"
