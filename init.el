@@ -1527,7 +1527,7 @@ same directory as the org-buffer and insert a link to this file."
       "#+title: ${title}
 #+category: %^{shortname}
 #+filetags: :%\\1:
-#+startup: content
+#+startup: show2levels
 
 * ${title} :project:
 :PROPERTIES:
