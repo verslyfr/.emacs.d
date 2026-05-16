@@ -1,3 +1,4 @@
+;;   -*- lexical-binding: t -*-
 ;;; Package --- My minimalistic init
 
 ;;; Commentary:

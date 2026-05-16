@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: export-time-stamp
+# key: :etp
+# --
+# The following will allow a file to be exported with a timestamp appended to
+# the base name. If using a subheading, then when exporting make certain to
+# change the option to subtree. Put the Local Variables at the bottom of the
+# file in a comment.
+#
+# Example Under Subtree: :EXPORT_FILE_NAME: my-file-name-2026-04-22-184538
+# Example as file property: #+EXPORT_FILE_NAME: my-file-name-
+#
+# Local Variables:
+# eval: (add-hook 'before-save-hook 'time-stamp nil t)
+# time-stamp-active: t
+# time-stamp-line-limit: 0
+# time-stamp-count: 100
+# time-stamp-start: "^\\(?:#\\+\\|[ \t]*:\\)EXPORT_FILE_NAME:[ \t]+[^0-9\n]+-"
+# time-stamp-end: "$"
+# time-stamp-format: "%Y-%m-%d-%H%M%S"
+# End:
