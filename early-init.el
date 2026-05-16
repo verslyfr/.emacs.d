@@ -1,12 +1,19 @@
 ;; -*- lexical-binding: t -*-
 ;; Display the architecture using:
-;;   gcc -march=native -Q --help=target | grep march
+;;   gcc -march=native -Q --help=target | grep march=
 ;;
 ;; The above command asks the compiler to resolve native for your current CPU
 ;; and display the resulting target. For example, if the output shows
 ;; -march=skylake, you know that skylake is the identifier you should pass to
 ;; -mtune and -march.
-(defvar my-cpu-architecture "znver4")
+
+(defvar my-cpu-architecture
+  (let ((gcc-output (shell-command-to-string "gcc -march=native -Q --help=target")))
+    (if (string-match "-march=\\s-+\\(\\S-+\\)" gcc-output)
+        (match-string 1 gcc-output)
+      "znver4")) ; Fallback value if gcc execution fails
+  "The current CPU architecture detected via GCC.")
+
 
 ;; `native-comp-compiler-options' specifies flags passed directly to the C
 ;; compiler (for example, GCC) when compiling the Lisp-to-C output
