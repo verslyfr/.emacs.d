@@ -1596,6 +1596,13 @@ same directory as the org-buffer and insert a link to this file."
 
 ;;; ox-frl-clip
 (require 'htmlize)
+(require 'ox-html)
+;; Declare external variables as dynamic to prevent lexical binding conflicts
+(defvar org-html-with-latex)
+(defvar org-theme-skip-style)
+(defvar org-theme-css)
+(defvar org-theme-css-dir)
+
 (defun ox-frl-clip (r1 r2 &optional prefix)
   "Export the selected region to HTML and copy it to the clipboard.
 R1 and R2 define the selected region.
