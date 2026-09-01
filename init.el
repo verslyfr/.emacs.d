@@ -2021,16 +2021,16 @@ Providing a prefix argument (c-u) will update the org-roam ids."
 (use-package yasnippet-snippets
   :ensure t)
 
-;;; vterm
-(use-package vterm
-  :ensure t
-  :commands vterm
-  :bind (:map vterm-mode-map (("C-o" . nil)  ; allow c-o to switch buffers
-			      ("M-b" . nil)  ; allow M-b to list buffers
-			      ("C-S-x" . nil) ; allow to pass thru
-			      ("C-S-v" . vterm-yank) ; Ctrl-Shift-V
-			      ))
-  :custom ((vterm-shell "bash")))
+;; ;;; vterm
+;; (use-package vterm
+;;   :ensure t
+;;   :commands vterm
+;;   :bind (:map vterm-mode-map (("C-o" . nil)  ; allow c-o to switch buffers
+;; 			      ("M-b" . nil)  ; allow M-b to list buffers
+;; 			      ("C-S-x" . nil) ; allow to pass thru
+;; 			      ("C-S-v" . vterm-yank) ; Ctrl-Shift-V
+;; 			      ))
+;;   :custom ((vterm-shell "bash")))
 
 ;;; yaml
 (use-package yaml-mode
