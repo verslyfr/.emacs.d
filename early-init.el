@@ -35,5 +35,7 @@
 (when (featurep 'android)
   (let ((termux-bin "/data/data/com.termux/files/usr/bin"))
     (setenv "PATH" (format "%s:%s" termux-bin (getenv "PATH")))
-    (push termux-bin exec-path)))
+    (push termux-bin exec-path)
+    (setq package-check-signature nil)
+    ))
 
