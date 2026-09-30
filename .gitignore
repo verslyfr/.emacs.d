@@ -28,3 +28,7 @@ projects
 multisession/
 url/
 bookmarks.eld
+elisp-autofmt-cache/
+places.eld
+projects.eld
+recentf.eld

@@ -1,4 +1,4 @@
-;; -*- lexical-binding: t -*-
+;;; early-init.el --- Early Initialization -*- lexical-binding: t; -*- 
 ;; Display the architecture using:
 ;;   gcc -march=native -Q --help=target | grep march=
 ;;
@@ -8,7 +8,8 @@
 ;; -mtune and -march.
 
 (defvar my-cpu-architecture
-  (let ((gcc-output (shell-command-to-string "gcc -march=native -Q --help=target")))
+  (let ((gcc-output
+         (shell-command-to-string "gcc -march=native -Q --help=target")))
     (if (string-match "-march=\\s-+\\(\\S-+\\)" gcc-output)
         (match-string 1 gcc-output)
       "znver4")) ; Fallback value if gcc execution fails
@@ -19,13 +20,20 @@
 ;; compiler (for example, GCC) when compiling the Lisp-to-C output
 ;; produced by the native compilation process. These flags affect code
 ;; generation, optimization, and debugging information.
-(setq native-comp-compiler-options '("-O2"
-                                     "-g0"
-                                     "-fno-omit-frame-pointer"
-                                     "-fno-finite-math-only"))
+(setq native-comp-compiler-options
+      '("-O2" "-g0" "-fno-omit-frame-pointer" "-fno-finite-math-only"))
 
 ;; `native-comp-driver-options' specifies additional flags passed to the native
 ;; compilation driver process, which may invoke the compiler and linker with
 ;; certain parameters.
-(setq native-comp-driver-options `(,(format "-mtune=%s" my-cpu-architecture)
-                                   ,(format "-march=%s" my-cpu-architecture)))
+(setq native-comp-driver-options
+      `(,(format "-mtune=%s" my-cpu-architecture)
+        ,(format "-march=%s" my-cpu-architecture)))
+
+
+;; Place any additional Android-only early setup below  
+(when (featurep 'android)
+  (let ((termux-bin "/data/data/com.termux/files/usr/bin"))
+    (setenv "PATH" (format "%s:%s" termux-bin (getenv "PATH")))
+    (push termux-bin exec-path)))
+
