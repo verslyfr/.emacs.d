@@ -3,11 +3,11 @@
 # key: :mass
 # --
 `(make-string (org-current-level) ?*)` ${1:Date} ${2:Title}
+#+begin_verse
 Entrance: <++>, <++>
 Respond and Acclaim: ${3:Response Page}, <++>
 Gospel Acclamation: ${4:Gospel Page}
 Preparation of the Gifts: <++>, <++>
 Communion: <++>, <++>
 Sending Forth: <++>, <++>
-
-
+#+end_verses
