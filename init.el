@@ -978,6 +978,38 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   (org-appear-autosubmarkers t)
   )
 
+;;; org-journal
+;; ==========================================
+;;       ORG-JOURNAL KEYBINDINGS
+;; ==========================================
+;;
+;; --- Global ---
+;; C-c C-j : Default global binding for a new entry (replaced by C-c o j in
+;;           your config)
+;; C-c C-s : Search across your journal entries
+;;
+;; --- Within a Journal File ---
+;; C-c C-f : Open the next journal entry file
+;; C-c C-b : Open the previous journal entry file
+;; C-c C-j : Insert a new entry into the current file
+;;
+;; --- Within the Emacs Calendar (M-x calendar) ---
+;; j       : View the journal entry for the currently selected date
+;; C-j     : Create a new journal entry for the currently selected date
+;; ]       : Move forward to the next date that contains a journal entry
+;; [       : Move backward to the previous date that contains a journal entry
+;; ==========================================
+(use-package org-journal
+  :ensure t
+  :bind 
+  ("C-c o j" . org-journal-new-entry)
+  :custom
+  (org-journal-dir "~/notes/journal")
+  (org-journal-file-type 'yearly)
+  (org-journal-date-format "%Y-%m-%d")
+  (org-journal-file-format "journal-%Y.txt"))
+
+
 ;;; org ox-odt
 (use-package ox-odt
   :ensure t
